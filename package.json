@@ -1,0 +1,17 @@
+{
+  "name": "debtify",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Debtify - MERN debt settlement enrollment app with accounts (React + Express + MongoDB)",
+  "scripts": {
+    "install:all": "npm install && npm --prefix server install && npm --prefix client install",
+    "dev": "concurrently -n api,web -c cyan,magenta \"npm --prefix server run dev\" \"npm --prefix client run dev\"",
+    "build": "npm --prefix client run build",
+    "start": "npm --prefix server start",
+    "test": "npm --prefix server test",
+    "seed": "npm --prefix server run seed"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

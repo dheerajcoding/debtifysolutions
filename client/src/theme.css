@@ -1,0 +1,109 @@
+/* Theme layer (loaded last): original Debtify palette — spruce-tinted canvas, white cards,
+   money-green teal (#0B7A6E) for trust and in-app CTAs, marigold (#F2A93B) on dark blocks,
+   bold tight headings, 16–20px rounded corners, soft tinted shadows. */
+
+body { font-family: var(--body); color: var(--ink); background: var(--paper); -webkit-font-smoothing: antialiased }
+h1, h2, h3, .s-h1, .s-h2, .content h1, .content h2, .adm-head h1 { font-family: var(--display); font-weight: 800; color: var(--ink); text-wrap: balance }
+h1 { line-height: 1.15 }
+h2, h3 { line-height: 1.2 }
+.s-h1 { font-size: clamp(36px, 5.6vw, 64px); line-height: 1.02; letter-spacing: -.02em }
+.s-h2 { font-size: clamp(28px, 3.6vw, 42px); line-height: 1.08; letter-spacing: -.015em; max-width: 24ch }
+.content h1 { letter-spacing: -.02em }
+.content h2 { letter-spacing: -.015em }
+.s-sub, .lede, .sub { color: var(--soft) }
+.s-sub, .lede { max-width: 58ch }
+.s-p { max-width: 62ch }
+.s-eyebrow { color: var(--brand); letter-spacing: .1em; font-weight: 800; font-size: 13px }
+a { color: var(--brand-ink) }
+.prose a, .toc a, .crumbs a { color: var(--navy) }
+:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px }
+
+/* Buttons: teal is the CTA; navy is the strong secondary; outlined white is tertiary. */
+.btn, .s-btn, #siteCta { background: var(--brand); color: var(--on-brand); border-radius: var(--r-btn); font-weight: 700; box-shadow: 0 6px 16px rgba(11, 122, 110, .22) }
+.btn, .s-btn, #siteCta, .ghost, .mini { text-decoration: none; text-align: center }
+.btn:not(:disabled):hover, .s-btn:hover { filter: none; background: var(--brand-hover) }
+/* The site header CTA is marigold, as in the original design */
+#siteCta { background: var(--accent); color: var(--on-accent); box-shadow: none }
+#siteCta:hover { background: var(--accent); filter: brightness(1.06) }
+.s-btn.ghostbtn, .ghostbtn-dark { background: var(--card) !important; color: var(--ink) !important; border: 1px solid var(--brand) !important; box-shadow: none }
+.ghost { border: 1px solid var(--line); border-radius: var(--r-btn); background: var(--card); color: var(--navy-ink) }
+.ghost:hover { border-color: var(--brand) }
+.ghost.done { border-color: var(--good); color: var(--good); background: var(--good-tint) }
+.mini { border-radius: 10px; border-color: var(--line); color: var(--navy-ink) }
+.mini:hover { border-color: var(--brand) }
+.mini.danger { color: var(--bad); border-color: var(--bad) }
+.lang { border-color: var(--line) }
+.lang button[aria-pressed="true"] { background: var(--navy); color: var(--on-navy) }
+.chip-q { border-color: var(--brand); color: var(--brand-ink) }
+
+/* Choices & inputs */
+.tap, .choice { border-radius: 14px; border-color: var(--line) }
+.tap:hover, .choice:hover { border-color: var(--brand) }
+.tap.on, .choice.on { border-color: var(--brand); background: var(--cream); box-shadow: inset 0 0 0 1px var(--brand) }
+.choice.on::before { border-color: var(--brand); background: var(--brand) }
+.field { border: 1px solid var(--line); border-radius: 12px }
+.field:focus { border-color: var(--brand); box-shadow: 0 0 0 4px rgba(11, 122, 110, .15); outline: none }
+input[type="checkbox"], input[type="radio"] { accent-color: var(--brand) }
+
+/* Surfaces */
+.card, .panel, .rcard, .kpi, .auth-card, .faq details, .alt-list li, .state-grid a { border-radius: var(--r-card); border-color: var(--line) }
+.card, .panel, .auth-card { box-shadow: var(--shadow-sm) }
+.rcard, .guide-grid .card, .opt, .phase { box-shadow: var(--shadow) }
+.plan, .quickstart { border-radius: 24px; box-shadow: var(--shadow-lg); border: 1px solid var(--line) }
+
+/* Dark blocks (as the original design had them): deep spruce hero band, deposit panel and
+   finale, with light spruce-tinted text and marigold as the call to action on dark. */
+.heroband { background: var(--deep); color: var(--on-deep) }
+.heroband::after { display: block }
+.heroband .s-eyebrow { color: var(--accent) }
+.heroband .s-h1, .heroband .s-h2, .heroband h1, .heroband h2, .heroband h3 { color: var(--on-deep) }
+.heroband .s-sub, .hero-meta { color: var(--on-deep-soft) }
+.heroband .s-btn { background: var(--accent); color: var(--on-accent) }
+.heroband .s-btn.ghostbtn { background: transparent !important; color: var(--on-deep) !important; border: 1px solid var(--deep-line) !important }
+.heroband .trust li { color: var(--on-deep) }
+.heroband .trust .v-g { fill: var(--accent) }
+/* White cards sitting on the spruce band keep dark text (they'd otherwise inherit the light hero colour) */
+.heroband .guide-intro, .heroband .quickstart, .heroband .plan { color: var(--ink) }
+.heroband .guide-intro .gi-name { color: var(--ink) }
+.heroband .guide-intro .gi-kicker { color: var(--brand-ink) }
+.big, .plan-dep { background: var(--deep); color: var(--on-deep); border: 0 }
+.big .k, .plan-dep .k { color: var(--accent) }
+.big .v { color: var(--on-deep); letter-spacing: -0.02em }
+.small-on-dark { color: var(--on-deep-soft) }
+.s-end, .c-end { background: var(--deep); color: var(--on-deep); border: 0 }
+.s-end .s-h2, .s-end h2, .c-end .s-h2, .c-end h2 { color: var(--on-deep) }
+.s-end p, .c-end p { color: var(--on-deep-soft) }
+.s-end .s-btn, .c-end .s-btn { background: var(--accent); color: var(--on-accent) }
+.s-end .end-reassure li { color: var(--on-deep) }
+.s-end .end-reassure .ic .v-g { fill: var(--accent) }
+.fab { background: var(--deep); color: var(--on-deep); border: 1px solid var(--deep-line) }
+
+/* Status + notes */
+.alert.info, .note-info { background: var(--cream); border-color: var(--deep-line); color: var(--navy-ink) }
+.ok-card { background: var(--good-tint); border-color: var(--good) }
+.install { background: var(--cream); border-color: var(--brand) }
+.c-info { background: var(--brand-tint); color: var(--brand-ink) }
+.pill { background: var(--cream); color: var(--brand-ink) }
+
+/* Header, footer */
+.sitehead { background: color-mix(in srgb, var(--paper) 92%, transparent); border-bottom: 1px solid var(--line) }
+.navlink, #siteNav a { color: var(--ink) }
+#siteNav a.active, #siteNav a[aria-current="page"] { color: var(--brand) }
+.s-foot { background: var(--cream); border-top: 1px solid var(--line) }
+.s-foot a { color: var(--navy-ink) }
+
+/* Progress */
+.prog i, .bar i, .progress i { background: var(--brand) }
+
+/* Staff console keeps the same palette */
+.adm-link.on { background: var(--navy); color: var(--on-navy) }
+.adm-banner { background: var(--cream); color: var(--brand-ink); border-bottom: 1px solid var(--deep-line) }
+.ratebar i { background: var(--brand); opacity: .4 }
+.tabs button[aria-selected="true"] { background: var(--navy); color: var(--on-navy) }
+.persona.on { border-color: var(--brand); background: var(--cream) }
+
+/* Brand mark: teal tile */
+.logo rect { fill: var(--brand) }
+.logo path:first-of-type { stroke: var(--on-brand) }
+.logo path:last-of-type { stroke: var(--navy) }
+

@@ -1,0 +1,196 @@
+/* Debtify v2: accounts, simplified application, dashboard. Builds on styles.css tokens. */
+body { padding-bottom: 0 }
+a { color: var(--brand) }
+.skip { position: absolute; left: -999px; top: 8px; z-index: 100; background: var(--card); padding: 8px 12px; border-radius: 8px }
+.skip:focus { left: 16px }
+.center { text-align: center } .pad { padding: 48px 0 }
+.stack { display: flex; flex-direction: column; gap: 14px }
+.row-wrap { display: flex; flex-wrap: wrap; gap: 8px; align-items: center }
+.row-between { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap }
+.grow { flex: 1; min-width: 0 }
+.narrow { max-width: 320px }
+.linkish { border: 0; background: none; padding: 0; color: var(--brand); font-weight: 700; font-size: inherit; text-decoration: underline; text-underline-offset: 2px }
+.small-link { font-size: 13.5px; font-weight: 600; align-self: flex-start }
+.as-link { display: inline-flex; align-items: center; justify-content: center; text-decoration: none; text-align: center }
+.btn.as-link { color: var(--on-brand) } .ghost.as-link { color: var(--ink) }
+.mini.as-link { color: var(--ink) }
+.mini { cursor: pointer }
+.mini.danger, .danger { color: var(--bad); border-color: var(--bad) }
+.dashed { border-style: dashed }
+.spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: spin .7s linear infinite; vertical-align: -3px }
+@keyframes spin { to { transform: rotate(360deg) } }
+
+/* ---------- header / nav ---------- */
+.sitehead .in { gap: 14px }
+.brandmark { text-decoration: none; color: var(--ink); font-weight: 800 }
+.logo-wrap { display: inline-flex } .logo-wrap svg { width: 30px; height: 30px }
+#siteNav a { text-decoration: none; padding: 8px 10px; border-radius: 8px; font-weight: 600; color: var(--soft) }
+#siteNav a:hover, #siteNav a.active { color: var(--ink); background: var(--card) }
+.navlink { font-weight: 700; text-decoration: none; color: var(--ink); padding: 8px 10px }
+#siteCta { text-decoration: none; display: inline-block }
+.acct { position: relative }
+.acct-btn { display: flex; align-items: center; gap: 8px; border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: 4px 12px 4px 4px; font-weight: 700 }
+.initial { width: 28px; height: 28px; border-radius: 50%; background: var(--brand); color: var(--on-brand); display: grid; place-items: center; font-size: 13px }
+.menu { position: absolute; right: 0; top: calc(100% + 6px); background: var(--card); border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 12px 30px rgba(0,0,0,.12); padding: 6px; min-width: 190px; display: flex; flex-direction: column; z-index: 50 }
+.menu a, .menu button { text-align: left; padding: 10px 12px; border-radius: 8px; text-decoration: none; color: var(--ink); border: 0; background: none; font-weight: 600 }
+.menu a:hover, .menu button:hover { background: var(--paper) }
+@media (max-width: 640px) { .hide-sm { display: none } }
+.banner { margin-inline: -16px; padding: 10px 16px; background: var(--accent-tint); color: var(--ink); font-size: 14px; text-align: center }
+
+/* ---------- footer ---------- */
+.foot-top { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap }
+.foot-links { display: flex; flex-wrap: wrap; gap: 6px 18px }
+.foot-links a { color: var(--soft); text-decoration: none; font-weight: 600 }
+
+/* ---------- homepage quick start ---------- */
+.quickstart { background: var(--card); color: var(--ink); border-radius: 22px; padding: 22px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 30px 60px rgba(4,20,18,.35); max-width: 440px; justify-self: end; width: 100% }
+.qs-h { font-family: var(--display); font-size: 26px; font-weight: 800; margin: 0 }
+.qs-example { border-top: 1px solid var(--line); padding-top: 12px; display: flex; flex-direction: column; gap: 6px }
+.qs-example .plan-tag { align-self: flex-start }
+.heroband .trust .ic { display: inline-flex } .heroband .trust .ic svg { width: 20px; height: 20px }
+.checklist { margin: 8px 0 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; color: var(--soft) }
+@media (max-width: 900px) { .quickstart { justify-self: stretch; max-width: none } }
+
+/* tap buttons (debt ranges) */
+.tapgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px }
+.tap { border: 1.5px solid var(--line); background: var(--card); border-radius: 12px; padding: 14px 10px; font-weight: 700; font-size: 15px; color: var(--ink); transition: border-color .15s, background .15s }
+.tap:hover { border-color: var(--brand) }
+.tap.on { border-color: var(--brand); background: var(--brand-tint); box-shadow: inset 0 0 0 1px var(--brand) }
+
+/* ---------- fields ---------- */
+.f { display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600; color: var(--soft) }
+.f-label { font-size: 14px; font-weight: 700; color: var(--ink) }
+.f-label.legendish { font-size: 15px }
+.f-wrap { position: relative; display: block }
+.f-wrap.has-prefix .field { padding-left: 28px }
+.f-prefix { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--muted); font-weight: 700 }
+.field.invalid, .check.invalid input { border-color: var(--bad); box-shadow: 0 0 0 3px var(--bad-tint) }
+.field:disabled { opacity: .7 }
+.field.slim { padding: 7px 10px; font-size: 14px; width: auto }
+.f-err { color: var(--bad); font-size: 13px; font-weight: 600 }
+.f-hint { color: var(--muted); font-size: 12.5px }
+.pw { position: relative; display: flex; flex-direction: column; gap: 6px }
+.pw-toggle { position: absolute; right: 8px; top: 31px; border: 0; background: var(--paper); border-radius: 8px; padding: 6px 10px; font-size: 12.5px; font-weight: 700; color: var(--brand) }
+.meter { display: flex; gap: 4px; align-items: center; font-size: 12px; color: var(--muted) }
+.meter i { height: 4px; flex: 1; border-radius: 2px; background: var(--line) }
+.meter.m1 i:nth-child(1) { background: var(--bad) }
+.meter.m2 i:nth-child(-n+2) { background: var(--warn) }
+.meter.m3 i { background: var(--good) }
+.meter span { margin-left: 6px; min-width: 60px }
+.check { display: flex; gap: 10px; align-items: flex-start; font-size: 14.5px; cursor: pointer }
+.check input { width: 20px; height: 20px; margin-top: 1px; flex: none; accent-color: var(--brand) }
+.alert.err { background: var(--bad-tint); color: var(--bad); font-weight: 600 }
+.alert.ok { background: var(--good-tint); color: var(--good); font-weight: 600 }
+.alert.info { background: var(--brand-tint); color: var(--ink) }
+
+/* ---------- application ---------- */
+.apply { min-height: 100vh }
+.aptop .in { justify-content: space-between }
+.apwrap { max-width: 640px; margin: 0 auto; padding: 18px 0 40px }
+.flow-main .app { padding: 6px 0 24px; gap: 18px }
+.flow-main .app h1 { font-size: clamp(26px, 4vw, 34px) }
+.saved-note { text-align: center; font-size: 12.5px; color: var(--muted) }
+.stages { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px }
+.stages ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px }
+.stages li { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); font-weight: 600; min-width: 0 }
+.stages .nm { overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+.stages .dot { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: 11.5px; font-weight: 800; background: var(--card); border: 1px solid var(--line); flex: none }
+.stages .done { color: var(--soft) } .stages .done .dot { background: var(--brand); color: var(--on-brand); border-color: var(--brand) }
+.stages .now { color: var(--ink) } .stages .now .dot { border: 2px solid var(--brand); color: var(--brand) }
+.stages .bar { height: 6px }
+.minleft { margin: 0; font-size: 12.5px; color: var(--muted) }
+.stages.compact { margin: 0; flex: 1; min-width: 0 }
+.stages.compact .nm { display: none }
+@media (max-width: 520px) { .stages .nm { display: none } .stages li.now .nm { display: inline } }
+
+.tip { display: flex; gap: 10px; align-items: flex-start; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 10px 12px }
+.tip-av { display: inline-flex; flex: none } .tip-av svg { width: 38px; height: 38px }
+.tip-body { display: flex; flex-direction: column; gap: 6px; min-width: 0; font-size: 14.5px }
+.tip-body p { margin: 0 }
+.tip-actions { display: flex; gap: 14px; align-items: flex-start; flex-wrap: wrap; font-size: 13px }
+.tip-actions summary { cursor: pointer; color: var(--soft); font-weight: 600 }
+.tip-actions details p { margin-top: 4px; color: var(--soft) }
+.tip .linkish { font-size: 13px; text-decoration: none }
+
+.actions { display: flex; flex-direction: column; gap: 10px; margin-top: 4px }
+.actions-row { display: flex; gap: 10px }
+.actions-row .btn { flex: 1 }
+.back-btn { width: auto; flex: none; padding: 12px 16px }
+.actions .ghost { width: 100% }
+.btn .spinner { margin-right: 6px }
+@media (max-width: 640px) {
+  .flow-main .actions { position: sticky; bottom: 0; background: linear-gradient(transparent, var(--paper) 18%); padding: 16px 0 calc(10px + env(safe-area-inset-bottom, 0px)); z-index: 4 }
+}
+.ghost.done { border-color: var(--good); color: var(--good); background: var(--good-tint) }
+.secure { font-size: 13px; color: var(--good); background: var(--good-tint); border-radius: 10px; padding: 8px 10px; margin: 0 }
+.perms { gap: 10px }
+.perm { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 6px }
+.perm.invalid { border-color: var(--bad); box-shadow: 0 0 0 3px var(--bad-tint) }
+.perm details summary, .perms-opt > summary { font-size: 13px; color: var(--brand); font-weight: 700; cursor: pointer }
+.perms-opt { display: flex; flex-direction: column; gap: 10px }
+.perms-opt[open] > summary { margin-bottom: 8px }
+.debtcard.on { border-color: var(--brand) }
+.debtcard .debt { gap: 12px; cursor: pointer }
+.total span:last-child { font-size: 20px }
+.estimate .v { font-size: 38px }
+.small-on-dark { font-size: 13.5px; color: var(--on-deep-soft); margin: 0 }
+.sec-h { font-size: 18px; margin-top: 6px }
+.point h2 { font-size: 16px }
+.done-badge { width: 64px; height: 64px; border-radius: 50%; background: var(--good); color: #fff; display: grid; place-items: center; font-size: 32px; font-weight: 800 }
+.steps-list { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px }
+.call { min-height: 90px }
+
+/* chat placement on full pages */
+.flow-main .fab, .dash-chat .fab { position: fixed; right: 20px; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); margin: 0; z-index: 40 }
+.flow-main .chat, .dash-chat .chat { position: fixed; right: 20px; bottom: 20px; width: min(400px, calc(100vw - 32px)); max-height: min(620px, 78vh); border: 1px solid var(--line); border-radius: 18px; z-index: 41; box-shadow: 0 20px 50px rgba(4,20,18,.25) }
+@media (max-width: 640px) {
+  .flow-main .fab { bottom: calc(104px + env(safe-area-inset-bottom, 0px)); right: 12px; padding: 5px }
+  .flow-main .fab-label { display: none }
+  .flow-main .chat, .dash-chat .chat { left: 0; right: 0; bottom: 0; width: 100%; border-radius: 18px 18px 0 0 }
+}
+.chat .avatar { width: 30px; height: 30px }
+.fab .avatar { width: 30px; height: 30px }
+
+/* ---------- auth ---------- */
+.auth { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 24px 0 48px; gap: 16px }
+.auth-top { width: 100%; max-width: 440px }
+.auth-card { width: 100%; max-width: 440px; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 26px 22px; display: flex; flex-direction: column; gap: 16px; box-shadow: 0 10px 30px rgba(4,20,18,.06) }
+.auth-card h1 { font-size: 26px }
+.auth-foot { border-top: 1px solid var(--line); padding-top: 14px; text-align: center; font-size: 14px }
+
+/* ---------- pages / dashboard ---------- */
+.page { max-width: 1120px; margin: 24px auto 48px; display: flex; flex-direction: column; gap: 18px }
+.narrow-page { max-width: 640px }
+.page-head h1 { font-size: 30px }
+.hero-panel { gap: 14px; padding: 24px }
+.hero-panel h2 { font-size: 22px }
+.dash-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 18px; align-items: start }
+@media (max-width: 860px) { .dash-grid { grid-template-columns: minmax(0, 1fr) } }
+.program .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)) }
+.kpi .v { font-size: 22px }
+.big-bar { height: 10px }
+.doc-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 14.5px }
+.doc-row:last-child { border-bottom: 0 }
+.danger-zone { border-color: var(--bad-tint) }
+.doc h2 { font-size: 18px; margin-top: 8px }
+.doc ul { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; color: var(--soft) }
+.doc p { color: var(--soft); line-height: 1.6 }
+.legal { max-width: 760px }
+.doc-table { max-width: 560px }
+.doc-table th { width: 45%; color: var(--soft); font-weight: 600; font-size: 14px }
+@media print { .sitehead, .s-foot, .no-print, .banner, .dash-chat { display: none !important } body { background: #fff } }
+
+/* ---------- staff ---------- */
+#ops .top .brand { gap: 10px }
+.phone-head { display: flex; gap: 10px; align-items: center; margin-bottom: 10px }
+.cols.wide-left { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) }
+@media (max-width: 1000px) { .cols.wide-left { grid-template-columns: minmax(0, 1fr) } }
+tr.clickable { cursor: pointer } tr.clickable:hover td { background: var(--paper) } tr.sel td { background: var(--brand-tint) }
+td .chip { margin-left: 6px }
+.phone .app { padding-bottom: 100px }
+.phone .actions { position: static }
+/* keep Back compact so the main button always fits on small screens */
+.actions .actions-row .back-btn { width: auto; flex: none; padding: 12px 14px }
+.actions-row .btn { min-width: 0 }
+html, body { overflow-x: clip } /* clip (not hidden) so no horizontal scroll, but position: sticky still works */
+@media (max-width: 640px) { .dash-chat .fab { padding: 5px; right: 12px } .dash-chat .fab-label { display: none } }

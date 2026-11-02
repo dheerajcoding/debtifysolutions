@@ -1,0 +1,85 @@
+/* Showcase layer (loaded last): bold, modern "bookend" moments — an aurora-gradient hero and a
+   gradient finale — while the middle of the page stays calm and trustworthy. Overrides theme.css. */
+
+/* ---------- aurora hero ---------- */
+.heroband {
+  background:
+    radial-gradient(58% 90% at 10% 14%, rgba(99, 102, 241, .55), transparent 62%),
+    radial-gradient(52% 85% at 92% 8%, rgba(139, 92, 246, .48), transparent 60%),
+    radial-gradient(66% 95% at 82% 100%, rgba(6, 182, 212, .42), transparent 62%),
+    radial-gradient(60% 85% at 18% 104%, rgba(16, 185, 129, .32), transparent 60%),
+    #0A0F24;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+/* soft dotted texture that fades toward the edges — the Linear/Vercel grid-glow look */
+.heroband::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .6; display: block;
+  background-image: radial-gradient(rgba(255, 255, 255, .13) 1px, transparent 1.4px);
+  background-size: 24px 24px;
+  -webkit-mask-image: radial-gradient(72% 70% at 50% 24%, #000, transparent 76%);
+  mask-image: radial-gradient(72% 70% at 50% 24%, #000, transparent 76%);
+}
+/* one floating glow orb for depth */
+.heroband::before {
+  content: ""; position: absolute; width: 440px; height: 440px; right: -80px; top: -120px; z-index: 0;
+  background: radial-gradient(circle, rgba(167, 139, 250, .45), transparent 65%);
+  filter: blur(20px); pointer-events: none;
+}
+
+.heroband .s-eyebrow {
+  background: linear-gradient(90deg, #a5b4fc, #67e8f9);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.heroband .s-h1 {
+  background: linear-gradient(118deg, #ffffff 0%, #dbe4ff 52%, #a5f3fc 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.heroband .s-sub { color: rgba(255, 255, 255, .80) }
+.heroband .trust li { color: rgba(255, 255, 255, .94) }
+.heroband .trust .ic .v-g { fill: #5eead4 }
+.heroband .trust .ic path { stroke: #0A0F24 }
+
+/* Jay intro becomes a frosted-glass chip on the aurora */
+.heroband .guide-intro {
+  background: rgba(255, 255, 255, .09);
+  border-color: rgba(255, 255, 255, .18);
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  box-shadow: 0 12px 40px rgba(5, 8, 22, .35);
+}
+.heroband .guide-intro .gi-kicker { color: #a5b4fc }
+.heroband .guide-intro .gi-name { color: #fff }
+.heroband .guide-intro .gi-blurb { color: rgba(255, 255, 255, .78) }
+
+/* The conversion card stays crisp white (clarity + trust) but pops off the aurora with a glow */
+.heroband .quickstart {
+  position: relative; z-index: 1;
+  box-shadow: 0 30px 80px rgba(79, 70, 229, .38), 0 12px 30px rgba(5, 8, 22, .45);
+}
+.heroband .hero { position: relative; z-index: 1 }
+
+/* ---------- gradient finale ---------- */
+.s-end {
+  background:
+    radial-gradient(60% 120% at 15% 10%, rgba(139, 92, 246, .55), transparent 60%),
+    radial-gradient(60% 120% at 90% 90%, rgba(6, 182, 212, .50), transparent 60%),
+    linear-gradient(120deg, #1E1B4B, #0A0F24);
+  color: #fff;
+  position: relative; overflow: hidden;
+}
+.s-end .s-h2 { color: #fff }
+.s-end p { color: rgba(255, 255, 255, .82) }
+.s-end .end-reassure li { color: rgba(255, 255, 255, .92) }
+.s-end .end-reassure .ic .v-g { fill: #5eead4 }
+.s-end .end-reassure .ic path { stroke: #1E1B4B }
+.s-end .s-btn {
+  background: #fff; color: #1E1B4B;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .3);
+}
+.s-end .s-btn:hover { background: #EEF2FE }
+
+/* ---------- reduced-motion: keep gradients, they're static, nothing to disable ---------- */
+@media (max-width: 640px) {
+  .heroband::before { width: 300px; height: 300px; right: -120px }
+}
