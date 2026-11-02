@@ -275,8 +275,8 @@ router.post(
     const msg = ctx.lead.lang === "es" ? `Tu código de Debtify es ${code}. Vence en ${OTP.ttlMinutes} minutos.` : `Your Debtify code is ${code}. It expires in ${OTP.ttlMinutes} minutes.`;
     await sendSms(phone, msg, { kind: "otp" });
     ctx.log("VENDOR", `OTP sent to ${mask(phone)} (resend ${o.resends + 1}/${OTP.maxResends})`);
-    // Development only: show the code so you can test without a phone.
-    if (!env.isProd && !process.env.TWILIO_ACCOUNT_SID) ctx.extra.devCode = code;
+    // Show the code on screen when no SMS provider is configured.
+    if (!process.env.TWILIO_ACCOUNT_SID) ctx.extra.devCode = code;
   })
 );
 
