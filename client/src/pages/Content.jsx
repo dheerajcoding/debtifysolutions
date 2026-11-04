@@ -13,12 +13,24 @@ import { tocOf, readingMinutesOf, formatReviewDate } from "@shared/content/types
 import { allStateProfiles, stateProfile, GARNISHMENT_LABEL, STATE_LAW_CAVEAT } from "@shared/content/states.js";
 import { HOW_PHASES, HOW_FAQS, ALT_FAQS, STATES_FAQS, buildStateFaqs, feeCapLabel, PAGE_META } from "@shared/content/pages.js";
 
-function useMeta(title, description) {
+function useMeta(title, description, path) {
   useEffect(() => {
     document.title = `${title} · ${BRAND.name}`;
-    const m = document.querySelector('meta[name="description"]');
-    if (m && description) m.setAttribute("content", description);
-  }, [title, description]);
+    const desc = document.querySelector('meta[name="description"]');
+    if (desc && description) desc.setAttribute("content", description);
+    // OG title/description per page
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle) ogTitle.setAttribute("content", `${title} · ${BRAND.name}`);
+    const ogDesc = document.querySelector('meta[property="og:description"]');
+    if (ogDesc && description) ogDesc.setAttribute("content", description);
+    // Canonical + og:url per page
+    const canonical = `https://${BRAND.domain}${path || ""}`;
+    let link = document.querySelector('link[rel="canonical"]');
+    if (!link) { link = document.createElement("link"); link.rel = "canonical"; document.head.appendChild(link); }
+    link.href = canonical;
+    const ogUrl = document.querySelector('meta[property="og:url"]');
+    if (ogUrl) ogUrl.setAttribute("content", canonical);
+  }, [title, description, path]);
 }
 
 const EnglishOnly = () => {
@@ -77,7 +89,14 @@ function Prose({ blocks }) {
 // ------------------------------------------------------------------ how it works
 export function HowItWorks() {
   const m = PAGE_META.how;
-  useMeta(m.title, m.description);
+  useMeta(m.title, m.description, "/how-it-works");
+  useEffect(() => {
+    const el = document.createElement("script");
+    el.type = "application/ld+json";
+    el.text = JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: HOW_FAQS.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) });
+    document.head.appendChild(el);
+    return () => el.remove();
+  }, []);
   return (
     <SiteLayout>
       <article className="page doc content">
@@ -118,7 +137,7 @@ export function HowItWorks() {
 // ------------------------------------------------------------------ alternatives
 export function Alternatives() {
   const m = PAGE_META.alternatives;
-  useMeta(m.title, m.description);
+  useMeta(m.title, m.description, "/alternatives");
   // Lead with the three things people actually compare on; the rest stays one tap away.
   const rows = [["What it is", "what"], ["What it costs", "cost"], ["Credit", "credit"]];
   const moreRows = [["Timeline", "timeline"], ["Tends to suit", "suits"], ["The downside", "downside"], ["Where to go", "where"]];
@@ -153,7 +172,7 @@ export function Alternatives() {
 // ------------------------------------------------------------------ guides
 export function GuidesIndex() {
   const m = PAGE_META.guides;
-  useMeta(m.title, m.description);
+  useMeta(m.title, m.description, "/guides");
   return (
     <SiteLayout>
       <article className="page doc content">
@@ -197,7 +216,7 @@ function Byline({ g }) {
 export function GuidePage() {
   const { slug } = useParams();
   const g = guideBySlug(slug);
-  useMeta(g ? g.metaTitle : "Not found", g?.metaDescription);
+  useMeta(g ? g.metaTitle : "Not found", g?.metaDescription, g ? `/guides/${g.slug}` : null);
   useEffect(() => {
     if (!g) return;
     // Article + FAQ structured data for search engines.
@@ -250,7 +269,7 @@ export function GuidePage() {
 // ------------------------------------------------------------------ states
 export function StatesIndex() {
   const m = PAGE_META.states;
-  useMeta(m.title, m.description);
+  useMeta(m.title, m.description, "/states");
   const all = allStateProfiles();
   const open = all.filter((s) => s.open), closed = all.filter((s) => !s.open);
   const Grid = ({ list }) => (
@@ -279,7 +298,7 @@ export function StatesIndex() {
 export function StatePage() {
   const { code } = useParams();
   const p = stateProfile(String(code || "").toUpperCase());
-  useMeta(p ? `Debt settlement in ${p.name}` : "Not found", p ? `Whether a licensed partner serves ${p.name}, the fee cap, the limitation period on credit card debt and what a judgment can reach in ${p.name}.` : "");
+  useMeta(p ? `Debt settlement in ${p.name}` : "Not found", p ? `Whether a licensed partner serves ${p.name}, the fee cap, the limitation period on credit card debt and what a judgment can reach in ${p.name}.` : "", p ? `/states/${p.code.toLowerCase()}` : null);
   if (!p) return <NotFound />;
   const { name, facts, open, providers } = p;
   const garn = facts.wageGarnishment === "prohibited"
@@ -337,7 +356,7 @@ export function StatePage() {
 // ------------------------------------------------------------------ public disclosures
 export function LegalDisclosures() {
   const m = PAGE_META.disclosures;
-  useMeta(m.title, m.description);
+  useMeta(m.title, m.description, "/legal/disclosures");
   const { lang } = useApp();
   return (
     <SiteLayout>

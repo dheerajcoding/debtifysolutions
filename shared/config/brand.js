@@ -3,8 +3,8 @@ const BRAND = {
   name: "Debtify",
   /** Legal entity that operates the platform. NEVER the counterparty on a consumer agreement. */
   legalName: "Debtify, Inc.",
-  domain: "debtify.world",
-  supportEmail: "help@debtify.world",
+  domain: "godebtify.com",
+  supportEmail: "help@godebtify.com",
   /** Shown on Contact/Privacy/Terms when set. Left empty until a real line is live —
    *  never ship an invented phone number to consumers. */
   supportPhone: "",

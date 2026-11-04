@@ -35,6 +35,12 @@ function ScrollToHash() {
     else window.scrollTo(0, 0);
     if (pathname === "/") document.title = "Debtify · Settle debt on your own terms";
     const t = setTimeout(startReveal, 60);
+    // Keep canonical in sync with the current route
+    let link = document.querySelector('link[rel="canonical"]');
+    if (!link) { link = document.createElement("link"); link.rel = "canonical"; document.head.appendChild(link); }
+    link.href = `https://godebtify.com${pathname === "/" ? "" : pathname}`;
+    const ogUrl = document.querySelector('meta[property="og:url"]');
+    if (ogUrl) ogUrl.setAttribute("content", `https://godebtify.com${pathname === "/" ? "" : pathname}`);
     return () => clearTimeout(t);
   }, [pathname, hash]);
   return null;
