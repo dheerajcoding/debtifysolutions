@@ -54,7 +54,7 @@ webhooks.post(
 
 // SEO: sitemap.xml and robots.txt
 export const seo = Router();
-const PAGES = ["/", "/how-it-works", "/alternatives", "/guides", "/states", "/legal/disclosures", "/privacy", "/terms", "/contact", "/apply"];
+const PAGES = ["/", "/legal/disclosures", "/privacy", "/terms", "/contact", "/apply"];
 seo.get("/sitemap.xml", (req, res) => {
   const base = env.appUrl.replace(/\/$/, "");
   const urls = [

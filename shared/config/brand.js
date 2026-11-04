@@ -9,6 +9,10 @@ const BRAND = {
    *  never ship an invented phone number to consumers. */
   supportPhone: "",
   address: "1200 Main St, Suite 400, Houston, TX 77002",
+  /** Shown in the footer when set, e.g. ["NMLS #000000"]. Leave empty until you have real ones. */
+  licenses: [],
+  /** Used in the Terms of Use. Have counsel confirm. */
+  governingLaw: "the State of Texas",
   /** One line. Describes the platform, never promises an outcome. */
   tagline: "See your real options in four minutes. No sales call.",
   /**

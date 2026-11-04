@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { startReveal } from "./lib/reveal.js";
 import { useApp } from "./context/AppContext.jsx";
 import { Spinner } from "./components/ui.jsx";
+import Consent from "./components/Consent.jsx";
 import Home from "./pages/Home.jsx";
 import Apply from "./pages/Apply.jsx";
 import { DevOutbox, Forgot, Login, Reset } from "./pages/Auth.jsx";
@@ -10,7 +11,7 @@ import Dashboard, { Agreement } from "./pages/Dashboard.jsx";
 import Settings from "./pages/Settings.jsx";
 import Staff from "./pages/Staff.jsx";
 import { Contact, NotFound, Privacy, Terms } from "./pages/Legal.jsx";
-import { Alternatives, GuidePage, GuidesIndex, HowItWorks, LegalDisclosures, StatePage, StatesIndex } from "./pages/Content.jsx";
+import { GuidePage, LegalDisclosures, StatePage } from "./pages/Content.jsx";
 
 // Only the staff console needs a login. Customers never sign in: their application
 // is tied to the browser they started it on.
@@ -50,6 +51,7 @@ export default function App() {
   return (
     <>
       <ScrollToHash />
+      <Consent />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/apply" element={<Apply />} />
@@ -63,11 +65,11 @@ export default function App() {
         <Route path="/settings" element={<Settings />} />
         <Route path="/staff" element={<RequireStaff><Staff /></RequireStaff>} />
         <Route path="/portal" element={<Navigate to="/dashboard" replace />} />
-        <Route path="/how-it-works" element={<HowItWorks />} />
-        <Route path="/alternatives" element={<Alternatives />} />
-        <Route path="/guides" element={<GuidesIndex />} />
+        <Route path="/how-it-works" element={<Navigate to="/#how" replace />} />
+        <Route path="/alternatives" element={<Navigate to="/" replace />} />
+        <Route path="/guides" element={<Navigate to="/" replace />} />
         <Route path="/guides/:slug" element={<GuidePage />} />
-        <Route path="/states" element={<StatesIndex />} />
+        <Route path="/states" element={<Navigate to="/" replace />} />
         <Route path="/states/:code" element={<StatePage />} />
         <Route path="/legal/disclosures" element={<LegalDisclosures />} />
         <Route path="/privacy" element={<Privacy />} />

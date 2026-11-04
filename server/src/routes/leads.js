@@ -276,7 +276,7 @@ router.post(
     await sendSms(phone, msg, { kind: "otp" });
     ctx.log("VENDOR", `OTP sent to ${mask(phone)} (resend ${o.resends + 1}/${OTP.maxResends})`);
     // Show the code on screen when no SMS provider is configured.
-    if (!process.env.TWILIO_ACCOUNT_SID) ctx.extra.devCode = code;
+    if (!process.env.TWILIO_ACCOUNT_SID && (!env.isProd || process.env.SHOW_OTP_ON_SCREEN === "true")) ctx.extra.devCode = code;
   })
 );
 

@@ -26,9 +26,8 @@ function Doc({ title, children }) {
 export function Privacy() {
   return (
     <Doc title="Privacy Policy">
-      <p className="alert info">Template for review by counsel. Replace bracketed items with your company details before launch.</p>
       <h2>Who we are</h2>
-      <p>Debtify ("we", "us") is a technology platform operated by [Company legal name], [address]. We help you check eligibility for, and enroll in, debt settlement programs provided by licensed partner companies.</p>
+      <p>{BRAND.name} ("we", "us") is a technology platform operated by {BRAND.legalName}, {BRAND.address}. We help you check eligibility for, and enroll in, debt settlement programs provided by licensed partner companies.</p>
       <h2>What we collect</h2>
       <ul>
         <li><b>Account details:</b> name, email, mobile number and a securely hashed password.</li>
@@ -54,8 +53,10 @@ export function Privacy() {
         <li>Delete your personal details from My data, or ask us to. Some records may be kept where the law requires.</li>
         <li>Depending on your state (for example, California), you may have additional rights. Contact us at {MAIL}.</li>
       </ul>
+      <h2>Cookies and analytics</h2>
+      <p>The site works without cookies for advertising or measurement. If we use analytics or advertising pixels, they load only after you choose "Accept" in the cookie notice, and you can change your choice at any time using "Cookie settings" in the footer. We do not sell your personal information.</p>
       <h2>Retention</h2>
-      <p>We keep application records for [X years] as required for regulatory compliance, then delete or de-identify them.</p>
+      <p>We keep application records for as long as needed to provide the service and to meet legal and regulatory record-keeping requirements, then delete or de-identify them.</p>
       <h2>Contact</h2>
       <p>{MAIL}{BRAND.supportPhone ? ` · ${BRAND.supportPhone}` : ""} · {BRAND.address}</p>
     </Doc>
@@ -65,7 +66,6 @@ export function Privacy() {
 export function Terms() {
   return (
     <Doc title="Terms of Use">
-      <p className="alert info">Template for review by counsel. Replace bracketed items before launch.</p>
       <h2>1. What Debtify is</h2>
       <p>Debtify is a technology platform. We are not a lender, law firm, credit repair organization or debt settlement company, and we do not negotiate with creditors. Programs, agreements and negotiations are provided by licensed partner companies named before you sign.</p>
       <h2>2. Eligibility</h2>
@@ -85,7 +85,7 @@ export function Terms() {
       <h2>9. Acceptable use</h2>
       <p>Don't misuse the service, attempt to access other people's data, or interfere with its security.</p>
       <h2>10. Limitation of liability and disputes</h2>
-      <p>[To be completed by counsel, including governing law and dispute resolution.]</p>
+      <p>To the fullest extent permitted by law, {BRAND.name} is not liable for indirect or consequential losses arising from your use of the service, and nothing here limits rights you have under applicable consumer-protection law. These terms are governed by the laws of {BRAND.governingLaw}, without regard to conflict-of-law rules.</p>
       <h2>11. Contact</h2>
       <p>{MAIL}{BRAND.supportPhone ? ` · ${BRAND.supportPhone}` : ""}</p>
     </Doc>

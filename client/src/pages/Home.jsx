@@ -1,30 +1,33 @@
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useApp } from "../context/AppContext.jsx";
 import { AP, RISKS, SITE } from "../lib/copy.js";
-import { AVATAR, EXITDOOR, HOW_ICONS, LOCK, SCALE, SHIELD, avatarVariant, viz } from "../lib/viz.js";
-
-const SEC_ICON = { lock: LOCK, shield: SHIELD, scale: SCALE, exit: EXITDOOR };
+import { AVATAR, HOW_ICONS, LOCK, SCALE, SHIELD, EXITDOOR, avatarVariant, viz } from "../lib/viz.js";
 import { usd } from "../lib/format.js";
 import { Html } from "../components/ui.jsx";
 import { SiteLayout } from "../components/Layout.jsx";
-import { CONSEQUENCES, COST_FACTS } from "@shared/content/consequences.js";
-import { OPTIONS, AUTOMATIC_STAY_NOTE } from "@shared/content/alternatives.js";
-import { guidesByReviewDate } from "@shared/content/guides/index.js";
-import { HOME_FAQS } from "@shared/content/pages.js";
+import Testimonials from "../components/Testimonials.jsx";
 import { BRAND } from "@shared/config/brand.js";
 
-const NEED = {
-  en: { h: "What you'll need", items: ["About 5 minutes", "Your monthly income and expenses", "Your Social Security number (for a soft check that won't hurt your score)", "Your bank login, if you decide to enroll"] },
-  es: { h: "Lo que necesitas", items: ["Unos 5 minutos", "Tus ingresos y gastos mensuales", "Tu número de Seguro Social (para una consulta suave que no afecta tu puntaje)", "Los datos de tu banco, si decides inscribirte"] },
-};
+const SEC_ICON = { lock: LOCK, shield: SHIELD, scale: SCALE, exit: EXITDOOR };
+const ico = (d) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
+const TRUST_ICONS = [
+  ico('<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9.5 2.5h5"/>'),
+  ico('<path d="M12 3l7 3v5c0 5-3.2 8.2-7 10-3.8-1.8-7-5-7-10V6z"/><path d="M9 12l2 2 4-4"/>'),
+  ico('<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/>'),
+  ico('<circle cx="12" cy="9" r="6"/><path d="M8.5 14L7 21l5-3 5 3-1.5-7"/>'),
+];
+const FAQ_PICK =[1, 2, 3, 4, 6, 7];
+const TICK = '<svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9" class="v-g"/><path d="M6 10l3 3 5-6" stroke="var(--on-accent)" stroke-width="2" fill="none"/></svg>';
 
 export default function Home() {
   const { lang, meta, lead, setUi, a, x: fx } = useApp();
   const nav = useNavigate();
-  const x = SITE[lang], ap = AP[lang], need = NEED[lang];
+  const x = SITE[lang], ap = AP[lang];
   const guide = x.guide;
   const hp = meta?.sample;
   const resume = lead && lead.step > 1 && lead.step < 10;
+  const faqs = FAQ_PICK.map((i) => x.faq[i]);
   // The sample plan reports ranges (honest estimates); render them as a range and
   // size the "est. total paid" bar off the upper end.
   const rng = (v) => (Array.isArray(v) ? v : [v, v]);
@@ -37,6 +40,14 @@ export default function Home() {
     nav("/apply");
   };
 
+  useEffect(() => {
+    const el = document.createElement("script");
+    el.type = "application/ld+json";
+    el.text = JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map(([q, ans]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: ans } })) });
+    document.head.appendChild(el);
+    return () => el.remove();
+  }, [lang]);
+
   return (
     <SiteLayout>
       <div className="heroband">
@@ -44,15 +55,15 @@ export default function Home() {
           <div className="hero-copy">
             <p className="s-eyebrow">{x.eyebrow}</p>
             <h1 className="s-h1">{x.h1}</h1>
-            <p className="s-sub">{x.sub}</p>
+            <p className="s-sub">{x.heroSub}</p>
             <div className="s-ctas">
               <button className="s-btn" onClick={() => start()}>{resume ? a.continueApp : ap.start}</button>
-              <Link className="s-btn ghostbtn" to="/how-it-works">{x.cta2}</Link>
+              <Link className="s-btn ghostbtn" to="/#how">{x.cta2}</Link>
             </div>
             <p className="hero-meta">{resume ? a.stepOf(lead.step, fx.stepNames[lead.step]) : ap.meta}</p>
             <ul className="trust">
               {x.chips.map((c) => (
-                <li key={c}><Html as="span" className="ic" html={'<svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9" class="v-g"/><path d="M6 10l3 3 5-6" stroke="var(--on-accent)" stroke-width="2" fill="none"/></svg>'} />{c}</li>
+                <li key={c}><Html as="span" className="ic" html={TICK} />{c}</li>
               ))}
             </ul>
           </div>
@@ -87,89 +98,51 @@ export default function Home() {
         </section>
       </div>
 
-      <section className="trustbar reveal-stagger">
-        {x.trustbar.map(([icon, label, sub]) => (
-          <div className="trust-tile" key={label}>
-            <span className="tt-ic" aria-hidden="true">{icon}</span>
-            <p className="tt-h">{label}</p>
-            <p className="tt-p">{sub}</p>
-          </div>
-        ))}
-      </section>
-
-      <section className="people-row reveal">
-        <div className="ppl-avatars">
-          {[0, 1, 2, 3].map((i) => <Html key={i} html={avatarVariant(i)} />)}
-        </div>
-        <p className="ppl-cap">{x.peopleCap}</p>
-      </section>
-
-      <section className="s-sec help-sec tint reveal" id="help">
-        <div className="help-head">
-          <p className="s-eyebrow">{x.helpE}</p>
-          <h2 className="s-h2">{x.helpH}</h2>
-          <p className="s-p">{x.helpP}</p>
-          <div className="guide-intro inline">
-            <Html html={AVATAR} />
-            <div>
-              <p className="gi-kicker">{guide.kicker}</p>
-              <p className="gi-blurb">{guide.blurb}</p>
-            </div>
-          </div>
-        </div>
-        <div className="help-wrap">
-          <Html className="help-art" html={viz("journey", lang)} />
-          <ol className="help-steps reveal-stagger">
-            {x.helpSteps.map(([h, p], i) => (
-              <li key={h}><span className="hs-n">{i + 1}</span><div><h3>{h}</h3><p>{p}</p></div></li>
+      <div className="trustrail-wrap">
+        <section className="trustrail reveal" aria-label={x.howE}>
+          <div className="tr-track">
+            {[0, 1].map((k) => (
+              <div className="tr-set" key={k} aria-hidden={k === 1}>
+                {x.trustbar.map(([, label, sub], i) => (
+                  <div className="tr-item" key={label} style={{ "--i": i }}>
+                    <Html as="span" className="tr-ic" html={TRUST_ICONS[i]} />
+                    <div>
+                      <p className="tr-h">{label}</p>
+                      <p className="tr-p">{sub}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
             ))}
-          </ol>
-        </div>
-      </section>
-
-      <section className="s-sec reveal" id="consequences">
-        <p className="s-eyebrow">{lang === "es" ? "Lo primero que debes saber" : "The downsides, first"}</p>
-        <h2 className="s-h2">{lang === "es" ? "Cinco cosas que te pasarán en un programa de liquidación" : "Five things that will happen to you in a settlement program"}</h2>
-        <p className="s-p">{lang === "es" ? "No son letra pequeña: son cómo funciona. Cada una es también una pantalla que no puedes saltar en la solicitud." : "These are not risks or disclaimers. They are the mechanism. Every one is also a screen you can't click past inside the application, with the same wording as "}{lang !== "es" && <Link to="/legal/disclosures">our disclosures page</Link>}.</p>
-        <ol className="cons-grid reveal-stagger">
-          {CONSEQUENCES.map((c, i) => (
-            <li key={c.key + i} className="rcard cons">
-              <span className="chip c-bad">{i + 1} of {CONSEQUENCES.length}</span>
-              <h3>{c.headline}</h3>
-              <p>{c.detail}</p>
-              <Link to={`/guides/${c.guide}`} className="small-link">Read the detail →</Link>
-            </li>
-          ))}
-        </ol>
-        <div className="note note-warn"><b>And one thing that will not happen</b><p>{AUTOMATIC_STAY_NOTE}</p></div>
-      </section>
+          </div>
+        </section>
+      </div>
 
       <section className="s-sec reveal" id="how">
         <p className="s-eyebrow">{x.howE}</p>
-        <h2 className="s-h2">{x.howH}</h2>
-        <ol className="steps4">
-          {x.how.map(([h, p], i) => (
-            <li key={h}><Html className="ic" html={HOW_ICONS[i]} /><span className="n">{i + 1}</span><h3>{h}</h3><p>{p}</p></li>
+        <h2 className="s-h2 how-h"><span className="nw"><span className="go">{x.howGo}</span><span className="arr" aria-hidden="true">→</span></span> <span>{x.howRest}</span></h2>
+        <ol className="journey reveal">
+          {x.how.map(([h], i) => (
+            <li className="jn-step" key={h} style={{ "--i": i }}>
+              <span className="jn-node">{i + 1}</span>
+              <div className="jn-card">
+                <Html as="span" className="jn-ic" html={HOW_ICONS[i]} />
+                <h3>{h}</h3>
+                <p>{x.howShort[i]}</p>
+              </div>
+            </li>
           ))}
         </ol>
-      </section>
-
-      <section className="s-sec stack-figure tint reveal">
-        <div>
-          <p className="s-eyebrow">{x.qualE}</p>
-          <h2 className="s-h2">{x.qualH}</h2>
-          <p className="s-p">{x.qualP}</p>
-        </div>
-        <div className="figure stack">
-          <Html html={viz("debtTypes", lang)} />
-          <div>
-            <h3>{need.h}</h3>
-            <ul className="checklist">{need.items.map((i) => <li key={i}>{i}</li>)}</ul>
+        <div className="jn-guide">
+          <span className="jn-avatar"><Html as="span" html={AVATAR} /></span>
+          <div className="jn-bubble">
+            <p className="gi-kicker">{guide.kicker} <span className="typing" aria-hidden="true"><i /><i /><i /></span></p>
+            <p className="gi-blurb">{guide.blurb}</p>
           </div>
         </div>
       </section>
 
-      <section className="s-sec security-sec reveal" id="security">
+      <section className="s-sec tint security-sec reveal" id="security">
         <p className="s-eyebrow">{x.secE}</p>
         <h2 className="s-h2">{x.secH}</h2>
         <div className="sec-grid reveal-stagger">
@@ -181,27 +154,17 @@ export default function Home() {
             </div>
           ))}
         </div>
+        <div className="people-row">
+          <div className="ppl-avatars">
+            {[0, 1, 2, 3].map((i) => <Html key={i} html={avatarVariant(i)} />)}
+          </div>
+          <p className="ppl-cap">{x.peopleCap}</p>
+        </div>
       </section>
 
-      <section className="s-sec split2 reveal" id="costs">
-        <div>
-          <p className="s-eyebrow">{x.costE}</p>
-          <h2 className="s-h2">{x.costH}</h2>
-          {x.costP.map((p) => <p className="s-p" key={p}>{p}</p>)}
-        </div>
-        <Html className="figure" html={viz("feeTimeline", lang) + viz("moneyFlow", lang)} />
-      </section>
-
-      <section className="s-sec reveal" id="compare">
-        <p className="s-eyebrow">{x.cmpE}</p>
-        <h2 className="s-h2">{x.cmpH}</h2>
-        <div className="tbl s-table">
-          <table>
-            <thead><tr>{x.cmpCols.map((c, i) => <th key={i} className={i === 1 ? "hl" : undefined}>{c}</th>)}</tr></thead>
-            <tbody>{x.cmpRows.map((r) => <tr key={r[0]}>{r.map((c, i) => (i === 0 ? <th scope="row" key={i}>{c}</th> : <td key={i} className={i === 1 ? "hl" : undefined}>{c}</td>))}</tr>)}</tbody>
-          </table>
-        </div>
-        <p className="small">{x.cmpNote}</p>
+      <section className="s-sec reveal" id="stories">
+        <h2 className="s-h2">{x.storiesH}</h2>
+        <Testimonials items={x.stories} />
       </section>
 
       <section className="s-sec tint reveal" id="risks">
@@ -210,47 +173,13 @@ export default function Home() {
         <div className="risk4">
           {RISKS.map((r) => <div className="rcard" key={r.id}><Html html={viz(r.viz, lang)} /><h3>{r.title[lang]}</h3><p>{r.body[lang]}</p></div>)}
         </div>
-      </section>
-
-      <section className="s-sec reveal" id="states">
-        <p className="s-eyebrow">{x.statesE}</p>
-        <h2 className="s-h2">{x.statesH}</h2>
-        <ul className="states">{(meta?.served || []).map((s) => <li key={s}>{s}</li>)}</ul>
-        <p className="small">{x.statesP}</p>
+        <Link className="small-link" to="/legal/disclosures">{x.knowLink}</Link>
       </section>
 
       <section className="s-sec reveal" id="faq">
         <p className="s-eyebrow">{x.faqE}</p>
         <h2 className="s-h2">{x.faqH}</h2>
-        <div className="faq">{x.faq.map(([qq, ans]) => <details key={qq}><summary>{qq}</summary><p>{ans}</p></details>)}</div>
-      </section>
-
-      <section className="s-sec reveal">
-        <p className="s-eyebrow">{lang === "es" ? "Costos" : "What it costs, stated as a cost"}</p>
-        <ul className="cost-facts">{COST_FACTS.map((f, i) => <li key={i}>{f}</li>)}</ul>
-        <Link className="small-link" to="/states">Fee caps by state →</Link>
-      </section>
-
-      <section className="s-sec tint reveal">
-        <p className="s-eyebrow">{lang === "es" ? "Tus opciones" : "Your options"}</p>
-        <h2 className="s-h2">{lang === "es" ? "Las cinco opciones, de la que menos cuesta a la que más" : "The five options, in the order that costs you least"}</h2>
-        <ol className="opt-list reveal-stagger">{OPTIONS.map((o, i) => <li key={o.id}><span className="chip c-info">{i + 1}</span> <b>{o.name}.</b> {o.what}</li>)}</ol>
-        <Link className="s-btn ghostbtn as-link" to="/alternatives">{lang === "es" ? "Ver la comparación completa" : "See the full comparison"}</Link>
-      </section>
-
-      <section className="s-sec reveal">
-        <p className="s-eyebrow">{lang === "es" ? "Guías" : "Read before you decide"}</p>
-        <div className="guide-grid reveal-stagger">
-          {guidesByReviewDate().slice(0, 4).map((g) => (
-            <Link key={g.slug} to={`/guides/${g.slug}`} className="card guide-card"><h3>{g.title}</h3><p className="small">{g.summary}</p></Link>
-          ))}
-        </div>
-        <Link className="small-link" to="/guides">All guides →</Link>
-      </section>
-
-      <section className="s-sec reveal">
-        <h2 className="s-h2">{lang === "es" ? "Preguntas sobre Debtify" : "About Debtify"}</h2>
-        <div className="faq">{HOME_FAQS.map((f) => <details key={f.q}><summary>{f.q}</summary><p>{f.a}</p></details>)}</div>
+        <div className="faq">{faqs.map(([qq, ans]) => <details key={qq}><summary>{qq}</summary><p>{ans}</p></details>)}</div>
         <p className="posture">{BRAND.posture}</p>
       </section>
 
@@ -258,7 +187,7 @@ export default function Home() {
         <h2 className="s-h2">{x.endH}</h2>
         <p>{x.endP}</p>
         <ul className="end-reassure">
-          {x.endReassure.map((r) => <li key={r}><Html as="span" className="ic" html={'<svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9" class="v-g"/><path d="M6 10l3 3 5-6" stroke="var(--on-accent)" stroke-width="2" fill="none"/></svg>'} />{r}</li>)}
+          {x.endReassure.map((r) => <li key={r}><Html as="span" className="ic" html={TICK} />{r}</li>)}
         </ul>
         <Link className="s-btn" to="/apply">{x.cta}</Link>
       </section>

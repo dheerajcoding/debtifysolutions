@@ -1,10 +1,11 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useApp } from "../context/AppContext.jsx";
 import { SITE } from "../lib/copy.js";
 import { MIN_LEFT, STAGE_OF } from "../lib/flowCopy.js";
 import { LOGO } from "../lib/viz.js";
 import { BRAND } from "@shared/config/brand.js";
 import { Html, LangSwitch } from "./ui.jsx";
+import { openCookieSettings } from "./Consent.jsx";
 
 export const Logo = () => (
   <Link to="/" className="brandmark" aria-label="Debtify home">
@@ -26,11 +27,9 @@ export function Header() {
       <div className="in">
         <Logo />
         <nav id="siteNav" aria-label="Main">
-          <NavLink to="/how-it-works">{a.nav.how}</NavLink>
-          <NavLink to="/alternatives">{lang === "es" ? "Opciones" : "Your options"}</NavLink>
-          <NavLink to="/guides">{lang === "es" ? "Guías" : "Guides"}</NavLink>
-          <NavLink to="/states">{lang === "es" ? "Estados" : "States"}</NavLink>
-          <NavLink to="/contact">{a.nav.contact}</NavLink>
+          <Link to="/#how">{a.nav.how}</Link>
+          <Link to="/#security">{lang === "es" ? "Seguridad" : "Why trust us"}</Link>
+          <Link to="/#faq">{lang === "es" ? "Preguntas" : "FAQ"}</Link>
         </nav>
         <div className="right">
           <LangSwitch />
@@ -57,19 +56,19 @@ export function Footer() {
           <Logo />
           <nav className="foot-links" aria-label="Footer">
             <Link to="/apply">{a.nav.start}</Link>
-            <Link to="/how-it-works">{a.nav.how}</Link>
-            <Link to="/alternatives">{lang === "es" ? "Opciones" : "Your options"}</Link>
-            <Link to="/guides">{lang === "es" ? "Guías" : "Guides"}</Link>
-            <Link to="/states">{lang === "es" ? "Estados" : "States"}</Link>
             <Link to="/legal/disclosures">{lang === "es" ? "Divulgaciones" : "Disclosures"}</Link>
             <Link to="/contact">{a.nav.contact}</Link>
             <Link to="/privacy">{a.privacyL}</Link>
             <Link to="/terms">{a.termsL}</Link>
-            <Link to="/dashboard">{a.nav.dashboard}</Link>
+            {(meta?.analytics?.ga || meta?.analytics?.pixel) && <button type="button" className="linkbtn" onClick={openCookieSettings}>{lang === "es" ? "Cookies" : "Cookie settings"}</button>}
           </nav>
         </div>
         <p>{x.legal}</p>
-        <p className="small">{BRAND.legalName} · {BRAND.address} · <a href={`mailto:${BRAND.supportEmail}`}>{BRAND.supportEmail}</a></p>
+        <p className="small">
+          {BRAND.legalName} · {BRAND.address} · <a href={`mailto:${BRAND.supportEmail}`}>{BRAND.supportEmail}</a>
+          {BRAND.supportPhone && <> · <a href={`tel:${BRAND.supportPhone.replace(/[^+\d]/g, "")}`}>{BRAND.supportPhone}</a></>}
+          {BRAND.licenses?.length > 0 && <> · {BRAND.licenses.join(" · ")}</>}
+        </p>
         {meta?.demoMode && <p className="demo-note">{x.stageNote}</p>}
         <p className="small">© {new Date().getFullYear()} Debtify</p>
       </div>

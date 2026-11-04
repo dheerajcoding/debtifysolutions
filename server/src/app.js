@@ -38,17 +38,31 @@ export function createApp() {
   if (env.trustProxy) app.set("trust proxy", /^\d+$/.test(env.trustProxy) ? Number(env.trustProxy) : env.trustProxy);
   app.disable("x-powered-by");
 
+  // Analytics hosts are allowed only when the matching ID is configured.
+  const ga = process.env.GA_MEASUREMENT_ID || "", pixel = process.env.META_PIXEL_ID || "";
+  const csp = { script: ["'self'"], img: ["'self'", "data:"], connect: ["'self'"] };
+  if (ga) {
+    csp.script.push("https://www.googletagmanager.com");
+    csp.img.push("https://*.google-analytics.com", "https://*.googletagmanager.com");
+    csp.connect.push("https://*.google-analytics.com", "https://*.analytics.google.com", "https://*.googletagmanager.com");
+  }
+  if (pixel) {
+    csp.script.push("https://connect.facebook.net");
+    csp.img.push("https://www.facebook.com");
+    csp.connect.push("https://www.facebook.com", "https://connect.facebook.net");
+  }
+
   app.use(
     helmet({
       contentSecurityPolicy: {
         useDefaults: true,
         directives: {
           "default-src": ["'self'"],
-          "script-src": ["'self'"],
+          "script-src": csp.script,
           "style-src": ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
           "font-src": ["'self'", "https://fonts.gstatic.com", "data:"],
-          "img-src": ["'self'", "data:"],
-          "connect-src": ["'self'"],
+          "img-src": csp.img,
+          "connect-src": csp.connect,
           "frame-ancestors": ["'none'"],
           "upgrade-insecure-requests": env.isProd ? [] : null,
         },
@@ -78,6 +92,7 @@ export function createApp() {
       sample: samplePlan(),
       store: db.kind,
       demoMode: env.demoMode,
+      analytics: { ga, pixel },
       devMail: !env.smtp.host && !env.isProd,
       claude: !!env.anthropicKey,
     })
