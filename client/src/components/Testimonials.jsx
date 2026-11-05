@@ -2,46 +2,52 @@ import { useEffect, useState } from "react";
 import { avatarVariant } from "../lib/viz.js";
 import { Html } from "./ui.jsx";
 
-// items: [line, who, photoUrl?]. 3D coverflow that slides left to right.
+// items: [line, who, photoUrl?]. Review-style cards with a small round photo; they slide sideways, click a side card to bring it forward.
 export default function Testimonials({ items }) {
-  const [tick, setTick] = useState(0);
+  const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const n = items.length;
   const half = Math.floor(n / 2);
-  const active = (((-tick) % n) + n) % n;
 
   useEffect(() => {
     if (paused || n < 2 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const t = setInterval(() => setTick((v) => v + 1), 5000);
+    const t = setInterval(() => setActive((v) => (v + 1) % n), 5000);
     return () => clearInterval(t);
   }, [paused, n]);
 
-  const pick = (i) => setTick((v) => v + ((((-v) % n + n) % n - i + n) % n));
+  const go = (i) => setActive(((i % n) + n) % n);
 
   return (
-    <div className="cflow" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocus={() => setPaused(true)} onBlur={() => setPaused(false)}>
-      <div className="cflow-stage" aria-live="polite">
+    <div className="rv" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocus={() => setPaused(true)} onBlur={() => setPaused(false)}>
+      <div className="rv-stage" aria-live="polite">
         {items.map(([line, who, photo], i) => {
           const d = ((i - active + n + half) % n) - half;
           return (
             <figure
               key={who}
-              className={"cflow-card" + (d === 0 ? " on" : Math.abs(d) > 1 ? " far" : "")}
+              className={"rv-card" + (d === 0 ? " on" : Math.abs(d) > 1 ? " far" : "")}
               style={{ "--d": d }}
               aria-hidden={d !== 0}
-              onClick={() => d !== 0 && pick(i)}
+              onClick={() => d !== 0 && go(i)}
             >
-              <div className="cflow-photo">{photo ? <img src={photo} alt={who} width="640" height="480" decoding="async" /> : <Html html={avatarVariant(i)} />}</div>
-              <figcaption>{who}</figcaption>
-              <blockquote>{line}</blockquote>
+              <span className="rv-q" aria-hidden="true">“</span>
+              <span className="rv-photo">{photo ? <img src={photo} alt="" width="64" height="64" decoding="async" loading="lazy" /> : <Html html={avatarVariant(i)} />}</span>
+              <div className="rv-body">
+                <figcaption>{who}</figcaption>
+                <blockquote>{line}</blockquote>
+              </div>
             </figure>
           );
         })}
       </div>
-      <div className="cflow-dots" role="tablist">
-        {items.map(([, who], i) => (
-          <button key={who} type="button" role="tab" aria-selected={i === active} aria-label={who} className={i === active ? "on" : ""} onClick={() => pick(i)} />
-        ))}
+      <div className="rv-ctl">
+        <button type="button" className="rv-arrow" aria-label="Previous" onClick={() => go(active - 1)}>‹</button>
+        <div className="rv-dots" role="tablist">
+          {items.map(([, who], i) => (
+            <button key={who} type="button" role="tab" aria-selected={i === active} aria-label={who} className={i === active ? "on" : ""} onClick={() => go(i)}><i key={active} /></button>
+          ))}
+        </div>
+        <button type="button" className="rv-arrow" aria-label="Next" onClick={() => go(active + 1)}>›</button>
       </div>
     </div>
   );

@@ -47,7 +47,7 @@ export function FAQ({ items, title = "Questions" }) {
   );
 }
 
-function CTA({ title = "See your real options", sub = "About five minutes. No sales call. Nothing pre-checked." }) {
+function CTA({ title = "See your real options", sub = "About five minutes. No sales call required. Nothing pre-checked." }) {
   return (
     <section className="s-end c-end">
       <h2 className="s-h2">{title}</h2>

@@ -7,6 +7,7 @@ import { usd } from "../lib/format.js";
 import { Html } from "../components/ui.jsx";
 import { SiteLayout } from "../components/Layout.jsx";
 import Testimonials from "../components/Testimonials.jsx";
+import StoryJourney from "../components/StoryJourney.jsx";
 import { BRAND } from "@shared/config/brand.js";
 
 const SEC_ICON = { lock: LOCK, shield: SHIELD, scale: SCALE, exit: EXITDOOR };
@@ -69,7 +70,7 @@ export default function Home() {
             </div>
           </div>
           <div className="hv">
-            <div className="hv-art"><img src="/testimonials/marina.jpg" alt="" width="640" height="427" fetchPriority="high" decoding="async" /></div>
+            <div className="hv-art"><img src="/testimonials/romario.jpg" alt="" width="640" height="640" fetchPriority="high" decoding="async" /></div>
             <span className="hv-float c"><i>☎</i>{x.f3}</span>
             <span className="hv-float b"><i>✓</i>{x.f1}</span>
           <div className={"plan" + (hp ? "" : " plan-wait")} aria-busy={!hp}>
@@ -173,6 +174,8 @@ export default function Home() {
         </div>
       </section>
 
+      <StoryJourney />
+
       <section className="s-sec tint security-sec reveal" id="security">
         <p className="s-eyebrow">{x.secE}</p>
         <h2 className="s-h2">{x.secH}</h2>
@@ -187,9 +190,11 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="s-sec reveal" id="stories">
+      <section className="s-sec reveal center-sec" id="stories">
+        <p className="s-eyebrow">{x.storiesE}</p>
         <h2 className="s-h2">{x.storiesH}</h2>
         <Testimonials items={x.stories} />
+        <Link className="s-btn stories-cta" to="/apply">{x.cta}</Link>
       </section>
 
       <section className="s-sec reveal center-sec" id="costs">
@@ -219,12 +224,8 @@ export default function Home() {
         <p className="s-eyebrow">{x.riskE}</p>
         <h2 className="s-h2">{x.riskH}</h2>
         <div className="risk-marquee">
-          <div className="risk-track">
-            {[0, 1].map((k) => (
-              <div className="risk-set" key={k} aria-hidden={k === 1}>
-                {RISKS.map((r) => <div className="rcard risk-card" key={r.id}><Html html={viz(r.viz, lang)} /><h3>{r.title[lang]}</h3><p>{r.body[lang]}</p></div>)}
-              </div>
-            ))}
+          <div className="risk-set">
+            {RISKS.map((r) => <div className="rcard risk-card" key={r.id}><Html html={viz(r.viz, lang)} /><h3>{r.title[lang]}</h3><p>{r.body[lang]}</p></div>)}
           </div>
         </div>
         <Link className="small-link" to="/legal/disclosures">{x.knowLink}</Link>
@@ -239,7 +240,7 @@ export default function Home() {
 
       <section className="s-end">
         <img className="fside l" src="/testimonials/hellen.jpg" alt="" width="150" height="150" loading="lazy" decoding="async" />
-        <img className="fside r" src="/testimonials/romario.jpg" alt="" width="150" height="150" loading="lazy" decoding="async" />
+        <img className="fside r" src="/testimonials/marina.jpg" alt="" width="150" height="150" loading="lazy" decoding="async" />
         <h2 className="s-h2">{x.endH}</h2>
         <p>{x.endP}</p>
         <ul className="end-reassure">

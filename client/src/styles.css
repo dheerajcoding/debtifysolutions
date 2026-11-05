@@ -205,7 +205,7 @@ td.r, th.r { text-align: right }
 
 /* ---------- public website ---------- */
 .sitehead { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30; background: color-mix(in srgb, var(--paper) 92%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); margin-inline: -16px; padding: 10px 16px }
-.sitehead .in { max-width: 1180px; margin: 0 auto; display: flex; align-items: center; gap: 18px }
+.sitehead .in { max-width: 1360px; margin: 0 auto; display: flex; align-items: center; gap: 18px }
 .brandmark { display: flex; align-items: center; gap: 8px; font-family: var(--display); font-size: 20px }
 .logo { width: 30px; height: 30px }
 #siteNav { display: flex; gap: 2px; margin-left: 8px; flex: 1 }
@@ -215,7 +215,7 @@ td.r, th.r { text-align: right }
 #siteCta { border: 0; background: var(--accent); color: var(--on-accent); font-weight: 800; border-radius: 10px; padding: 9px 16px }
 @media (max-width: 900px) { #siteNav { display: none } }
 @media (max-width: 480px) { #stagePill, #livepillSite { display: none } .sitehead .in { gap: 8px } .sitehead .right { gap: 6px } #siteCta { padding: 8px 11px; font-size: 13px; white-space: nowrap } .brandmark { font-size: 18px } }
-.hero { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 430px); gap: 56px; align-items: start; padding-block: 48px 40px }
+.hero { max-width: 1360px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 430px); gap: 56px; align-items: start; padding-block: 48px 40px }
 @media (max-width: 900px) { .hero { grid-template-columns: minmax(0, 1fr); gap: 28px; padding-block: 28px } }
 .hero-copy { display: flex; flex-direction: column; gap: 20px; padding-top: 24px; min-width: 0 }
 .s-eyebrow { font-size: 13px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--brand) }
@@ -231,7 +231,7 @@ td.r, th.r { text-align: right }
 @media (max-width: 480px) { .trust { grid-template-columns: minmax(0, 1fr) } }
 #phoneSlot { display: flex; flex-direction: column; gap: 10px; scroll-margin-top: 80px; min-width: 0 }
 #phoneNote { font-size: 12.5px; color: var(--muted); text-align: center }
-.s-sec { max-width: 1180px; margin: 0 auto; padding-block: 64px; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 14px; scroll-margin-top: 70px }
+.s-sec { max-width: 1360px; margin: 0 auto; padding-block: 64px; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 14px; scroll-margin-top: 70px }
 .s-h2 { font-family: var(--display); font-weight: 800; font-size: clamp(28px, 3.6vw, 42px); line-height: 1.08; letter-spacing: -.015em; margin: 0; max-width: 24ch; text-wrap: balance }
 .s-p { font-size: 17px; color: var(--soft); max-width: 62ch; line-height: 1.6 }
 .steps4 { list-style: none; margin: 18px 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px }
@@ -272,7 +272,7 @@ td.r, th.r { text-align: right }
 .s-end .s-btn { background: var(--accent); color: var(--on-accent) }
 .s-end p { color: var(--on-deep-soft) }
 .s-foot { margin-inline: -16px; margin-top: 48px; border-top: 1px solid var(--line); padding: 32px 16px }
-.s-footin { max-width: 1180px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; font-size: 13px; color: var(--muted) }
+.s-footin { max-width: 1360px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; font-size: 13px; color: var(--muted) }
 .s-footin p { max-width: 110ch }
 .linkbtn { border: 0; background: none; padding: 0; color: var(--brand); font-weight: 700; align-self: flex-start }
 #ops .top .back { border: 1px solid var(--line); background: var(--card); border-radius: 8px; padding: 6px 10px; font-weight: 600 }
@@ -312,7 +312,7 @@ td.r, th.r { text-align: right }
 @media (max-width: 900px) { .plan { justify-self: stretch; max-width: none } .heroband .hero { padding-block: 32px 40px } }
 .s-sec:nth-of-type(odd) { }
 .s-sec.tint { background: var(--card); margin-inline: -16px; padding-inline: 16px; max-width: none; border-top: 0 }
-.s-sec.tint > * { width: 100%; max-width: 1180px; margin-inline: auto }
+.s-sec.tint > * { width: 100%; max-width: 1360px; margin-inline: auto }
 .steps4 li { transition: border-color .15s, transform .15s } .steps4 li:hover { border-color: var(--brand); transform: translateY(-2px) }
 .steps4 .n { color: var(--brand-tint) }
 

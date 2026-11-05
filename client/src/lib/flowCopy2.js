@@ -10,7 +10,7 @@ export const X2 = {
     e2range: (lo, hi) => `${lo} – ${hi}`,
     e2depRange: (lo, hi, a, b) => `Estimated deposit ${lo}–${hi} a month for about ${a}–${b} months`,
     e2fee: (lo, hi) => (lo === hi ? `Provider fee: ${lo}% of enrolled debt, only after a debt is settled` : `Provider fee: ${lo}–${hi}% of enrolled debt, only after a debt is settled`),
-    e2trust: ["No sales call", "Soft check only, no score impact", "No fee in the check"],
+    e2trust: ["No sales call required", "Soft check only, no score impact", "No fee in the check"],
     // OTP
     otpH: "Verify your mobile number",
     otpSub: (m) => `We'll text a 6-digit code to ${m}.`,
@@ -119,7 +119,7 @@ export const X2 = {
     e2range: (lo, hi) => `${lo} – ${hi}`,
     e2depRange: (lo, hi, a, b) => `Depósito estimado de ${lo} a ${hi} al mes durante unos ${a} a ${b} meses`,
     e2fee: (lo, hi) => (lo === hi ? `Tarifa del proveedor: ${lo}% de la deuda inscrita, solo después de liquidar` : `Tarifa del proveedor: ${lo}–${hi}% de la deuda inscrita, solo después de liquidar`),
-    e2trust: ["Sin llamadas de ventas", "Consulta suave, sin afectar tu puntaje", "Sin tarifa en la revisión"],
+    e2trust: ["Sin necesidad de llamada de ventas", "Consulta suave, sin afectar tu puntaje", "Sin tarifa en la revisión"],
     otpH: "Verifica tu número celular",
     otpSub: (m) => `Te enviaremos un código de 6 dígitos al ${m}.`,
     otpSend: "Envíame un código",

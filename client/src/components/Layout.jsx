@@ -32,6 +32,7 @@ export function Header() {
           <Link to="/#faq">{lang === "es" ? "Preguntas" : "FAQ"}</Link>
         </nav>
         <div className="right">
+          {BRAND.supportPhone && <a className="navlink hide-sm hdr-phone" href={`tel:${BRAND.supportPhone.replace(/[^+\d]/g, "")}`}>☎ {BRAND.supportPhone}</a>}
           <LangSwitch />
           {user && ["staff", "admin"].includes(user.role) && <Link className="navlink hide-sm" to="/staff">{a.nav.staff}</Link>}
           {/* Show "My application" only when there is an active or enrolled lead */}
@@ -49,26 +50,47 @@ export function Header() {
 export function Footer() {
   const { lang, a, meta } = useApp();
   const x = SITE[lang];
+  const es = lang === "es";
+  const tel = BRAND.supportPhone && BRAND.supportPhone.replace(/[^+\d]/g, "");
   return (
     <footer className="s-foot">
       <div className="s-footin">
-        <p className="foot-legal">{x.legal}</p>
-        <p className="foot-posture">{x.posture || BRAND.posture}</p>
-        <div className="foot-pills">
-          <span>{BRAND.legalName} · {BRAND.address}</span>
-          <a href={`mailto:${BRAND.supportEmail}`}>{BRAND.supportEmail}</a>
-          {BRAND.supportPhone && <a href={`tel:${BRAND.supportPhone.replace(/[^+\d]/g, "")}`}>{BRAND.supportPhone}</a>}
-          {BRAND.licenses?.map((l) => <span key={l}>{l}</span>)}
+        <div className="foot-grid">
+          <div className="foot-brand">
+            <Logo />
+            <p className="foot-tag">{x.footTag}</p>
+            <Link className="foot-cta" to="/apply">{x.cta}</Link>
+          </div>
+          <nav className="foot-col" aria-label={x.footExplore}>
+            <h4>{x.footExplore}</h4>
+            <Link to="/#how">{a.nav.how}</Link>
+            <Link to="/#security">{es ? "Seguridad" : "Why trust us"}</Link>
+            <Link to="/#faq">{es ? "Preguntas" : "FAQ"}</Link>
+            <Link to="/apply">{a.nav.start}</Link>
+          </nav>
+          <nav className="foot-col" aria-label={x.footLegalH}>
+            <h4>{x.footLegalH}</h4>
+            <Link to="/privacy">{a.privacyL}</Link>
+            <Link to="/terms">{a.termsL}</Link>
+            <Link to="/legal/disclosures">{es ? "Divulgaciones" : "Disclosures"}</Link>
+            {(meta?.analytics?.ga || meta?.analytics?.pixel) && <button type="button" className="linkbtn" onClick={openCookieSettings}>{es ? "Cookies" : "Cookie settings"}</button>}
+          </nav>
+          <div className="foot-col foot-contact">
+            <h4>{x.footContact}</h4>
+            {tel && <a className="foot-phone" href={`tel:${tel}`}>{BRAND.supportPhone}</a>}
+            <a href={`mailto:${BRAND.supportEmail}`}>{BRAND.supportEmail}</a>
+            <p className="foot-addr"><b>{BRAND.legalName}</b><br />{BRAND.address}</p>
+            {BRAND.licenses?.map((l) => <p key={l} className="foot-addr">{l}</p>)}
+            <Link to="/contact" className="foot-more">{a.nav.contact} →</Link>
+          </div>
+        </div>
+        <div className="foot-legalbox">
+          <p className="foot-legal">{x.legal}</p>
+          <p className="foot-posture">{x.posture || BRAND.posture}</p>
+          <p className="foot-comp">{x.comp} {x.imgNote}</p>
         </div>
         {meta?.demoMode && <p className="demo-note">{x.stageNote}</p>}
-        <nav className="foot-bottom" aria-label="Footer">
-          <span>© {new Date().getFullYear()} Debtify</span>
-          <Link to="/privacy">{a.privacyL}</Link>
-          <Link to="/terms">{a.termsL}</Link>
-          <Link to="/legal/disclosures">{lang === "es" ? "Divulgaciones" : "Disclosures"}</Link>
-          <Link to="/contact">{a.nav.contact}</Link>
-          {(meta?.analytics?.ga || meta?.analytics?.pixel) && <button type="button" className="linkbtn" onClick={openCookieSettings}>{lang === "es" ? "Cookies" : "Cookie settings"}</button>}
-        </nav>
+        <div className="foot-base"><span>© {new Date().getFullYear()} Debtify</span></div>
       </div>
     </footer>
   );
