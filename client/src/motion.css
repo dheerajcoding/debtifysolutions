@@ -173,3 +173,11 @@ input[type="checkbox"]:checked, input[type="radio"]:checked { animation: popIn .
     .quickstart { animation: parallaxY linear both; animation-timeline: view(); animation-range: cover 0% cover 100% }
   }
 }
+
+/* Smooth loading: homepage content is visible immediately. No fade-in gating and no scroll-scrubbed opacity. */
+main .reveal, main .reveal.in, main .reveal-stagger > *, main .reveal-stagger.in > *,
+main .s-sec.reveal:not(.help-sec), main .trustbar.reveal-stagger, main .people-row.reveal,
+main .cons-grid.reveal-stagger > *, main .sec-grid.reveal-stagger > *, main .guide-grid.reveal-stagger > * { opacity: 1; animation: none }
+main .reveal { transform: none }
+main .hero, main .heroband .hero, main .plan, main .big { animation: none }
+main .card, main .panel, main .rcard, main .kpi, main .opt, main .phase { animation: none }

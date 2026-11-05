@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useApp } from "../context/AppContext.jsx";
 import { AP, RISKS, SITE } from "../lib/copy.js";
-import { AVATAR, HOW_ICONS, LOCK, SCALE, SHIELD, EXITDOOR, avatarVariant, viz } from "../lib/viz.js";
+import { AVATAR, HOW_ICONS, LOCK, SCALE, SHIELD, EXITDOOR, viz } from "../lib/viz.js";
 import { usd } from "../lib/format.js";
 import { Html } from "../components/ui.jsx";
 import { SiteLayout } from "../components/Layout.jsx";
@@ -10,14 +10,11 @@ import Testimonials from "../components/Testimonials.jsx";
 import { BRAND } from "@shared/config/brand.js";
 
 const SEC_ICON = { lock: LOCK, shield: SHIELD, scale: SCALE, exit: EXITDOOR };
-const ico = (d) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
-const TRUST_ICONS = [
-  ico('<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9.5 2.5h5"/>'),
-  ico('<path d="M12 3l7 3v5c0 5-3.2 8.2-7 10-3.8-1.8-7-5-7-10V6z"/><path d="M9 12l2 2 4-4"/>'),
-  ico('<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/>'),
-  ico('<circle cx="12" cy="9" r="6"/><path d="M8.5 14L7 21l5-3 5 3-1.5-7"/>'),
-];
 const FAQ_PICK =[1, 2, 3, 4, 6, 7];
+const PHOTOS = ["cris", "martin", "marina", "hellen", "romario", "marrie"];
+// Amounts mirror the server's sample tradelines that make up the $23,570 example plan.
+const BILLS = [6240, 4815, 3190, 2420, 4720, 2185];
+const BILL_COLORS = ["#5C7377", "#B3261E", "#F2A93B", "#0B7A6E", "#3CC2AE", "#8F5F00"];
 const TICK = '<svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9" class="v-g"/><path d="M6 10l3 3 5-6" stroke="var(--on-accent)" stroke-width="2" fill="none"/></svg>';
 
 export default function Home() {
@@ -66,8 +63,17 @@ export default function Home() {
                 <li key={c}><Html as="span" className="ic" html={TICK} />{c}</li>
               ))}
             </ul>
+            <div className="people-strip">
+              <div className="ppl-stack">{PHOTOS.map((p) => <img key={p} src={`/testimonials/${p}.jpg`} alt="" width="40" height="40" decoding="async" />)}</div>
+              <p>{x.peopleCap}</p>
+            </div>
           </div>
-          <div className="plan">
+          <div className="hv">
+            <div className="hv-art"><img src="/testimonials/marina.jpg" alt="" width="640" height="427" fetchPriority="high" decoding="async" /></div>
+            <span className="hv-float c"><i>☎</i>{x.f3}</span>
+            <span className="hv-float b"><i>✓</i>{x.f1}</span>
+          <div className={"plan" + (hp ? "" : " plan-wait")} aria-busy={!hp}>
+            {!hp && <><span className="sk w40" /><span className="sk w100" /><span className="sk w100" /><span className="sk box" /></>}
             {hp && (
               <>
                 <div className="plan-top"><span className="plan-tag">{ap.planTag}</span><span>{ap.planWhere}</span></div>
@@ -95,6 +101,7 @@ export default function Home() {
               </>
             )}
           </div>
+          </div>
         </section>
       </div>
 
@@ -103,9 +110,9 @@ export default function Home() {
           <div className="tr-track">
             {[0, 1].map((k) => (
               <div className="tr-set" key={k} aria-hidden={k === 1}>
-                {x.trustbar.map(([, label, sub], i) => (
+                {x.trustbar.map(([icon, label, sub], i) => (
                   <div className="tr-item" key={label} style={{ "--i": i }}>
-                    <Html as="span" className="tr-ic" html={TRUST_ICONS[i]} />
+                    <span className="tr-ic" aria-hidden="true">{icon}</span>
                     <div>
                       <p className="tr-h">{label}</p>
                       <p className="tr-p">{sub}</p>
@@ -117,6 +124,30 @@ export default function Home() {
           </div>
         </section>
       </div>
+
+      <section className="s-sec reveal center-sec" id="glance">
+        <p className="s-eyebrow">{x.glE}</p>
+        <h2 className="s-h2">{x.glH}</h2>
+        <div className="glance">
+          <div className="bills">
+            <p className="cap">{x.glCap(hp?.includedTlIds?.length ?? BILLS.length, usd(hp?.enrolledDebt ?? BILLS.reduce((s, n) => s + n, 0)))}</p>
+            {x.bills.map((b, i) => (
+              <div key={i} className="bill" style={{ "--c": BILL_COLORS[i], "--rot": `${[-1, 1, -0.6, 1, -1, 0.6][i]}deg` }}>
+                <span>{b}</span><b>{usd(BILLS[i])}</b>
+              </div>
+            ))}
+          </div>
+          <div className="flow"><div className="arr" /><div className="badge">{x.glFlow}</div></div>
+          <div className="acct">
+            <div className="acct-top"><span className="lk" aria-hidden="true">🔒</span><div>{x.glAcct}</div></div>
+            <div className="num">{hp ? usd(hp.monthlyDeposit) : "—"} <small>{x.glPer}</small></div>
+            <p className="mo">{x.glMonths(termText || "36–42")}</p>
+            <div className="prog"><i /></div>
+            <p>{x.glProg}</p>
+          </div>
+        </div>
+        <p className="gnote">{x.glSkip}</p>
+      </section>
 
       <section className="s-sec reveal" id="how">
         <p className="s-eyebrow">{x.howE}</p>
@@ -146,19 +177,13 @@ export default function Home() {
         <p className="s-eyebrow">{x.secE}</p>
         <h2 className="s-h2">{x.secH}</h2>
         <div className="sec-grid reveal-stagger">
-          {x.security.map(([ic, h, p]) => (
-            <div className="sec-card" key={h}>
+          {x.security.map(([ic, h, p], i) => (
+            <div className="sec-card" key={h} style={{ "--i": i }}>
               <Html className="sec-ic" html={SEC_ICON[ic]} />
               <h3>{h}</h3>
               <p>{p}</p>
             </div>
           ))}
-        </div>
-        <div className="people-row">
-          <div className="ppl-avatars">
-            {[0, 1, 2, 3].map((i) => <Html key={i} html={avatarVariant(i)} />)}
-          </div>
-          <p className="ppl-cap">{x.peopleCap}</p>
         </div>
       </section>
 
@@ -167,11 +192,40 @@ export default function Home() {
         <Testimonials items={x.stories} />
       </section>
 
+      <section className="s-sec reveal center-sec" id="costs">
+        <p className="s-eyebrow">{x.costE}</p>
+        <h2 className="s-h2">{x.costH}</h2>
+        <div className="cost-two">
+          <div className="cost-benefit">
+            <div className="cost-big">{x.cBig}</div>
+            <p className="cost-sub">{x.cBigSub}</p>
+            <ul className="cost-list">
+              {x.cList.map((t) => <li key={t}>{t}</li>)}
+            </ul>
+            <p className="cost-note">{x.cNote}</p>
+          </div>
+          <div className="cost-qual">
+            <h3>{x.qTitle}</h3>
+            <p className="lbl">{x.qCan}</p>
+            <div className="qy">{x.qY.map((t) => <span key={t} className="tg y">{t}</span>)}</div>
+            <p className="lbl">{x.qCant}</p>
+            <div className="qy">{x.qN.map((t) => <span key={t} className="tg n">{t}</span>)}</div>
+            <p className="qnote">{x.qNote}</p>
+          </div>
+        </div>
+      </section>
+
       <section className="s-sec tint reveal" id="risks">
         <p className="s-eyebrow">{x.riskE}</p>
         <h2 className="s-h2">{x.riskH}</h2>
-        <div className="risk4">
-          {RISKS.map((r) => <div className="rcard" key={r.id}><Html html={viz(r.viz, lang)} /><h3>{r.title[lang]}</h3><p>{r.body[lang]}</p></div>)}
+        <div className="risk-marquee">
+          <div className="risk-track">
+            {[0, 1].map((k) => (
+              <div className="risk-set" key={k} aria-hidden={k === 1}>
+                {RISKS.map((r) => <div className="rcard risk-card" key={r.id}><Html html={viz(r.viz, lang)} /><h3>{r.title[lang]}</h3><p>{r.body[lang]}</p></div>)}
+              </div>
+            ))}
+          </div>
         </div>
         <Link className="small-link" to="/legal/disclosures">{x.knowLink}</Link>
       </section>
@@ -180,10 +234,12 @@ export default function Home() {
         <p className="s-eyebrow">{x.faqE}</p>
         <h2 className="s-h2">{x.faqH}</h2>
         <div className="faq">{faqs.map(([qq, ans]) => <details key={qq}><summary>{qq}</summary><p>{ans}</p></details>)}</div>
-        <p className="posture">{BRAND.posture}</p>
+        <p className="posture">{x.posture || BRAND.posture}</p>
       </section>
 
       <section className="s-end">
+        <img className="fside l" src="/testimonials/hellen.jpg" alt="" width="150" height="150" loading="lazy" decoding="async" />
+        <img className="fside r" src="/testimonials/romario.jpg" alt="" width="150" height="150" loading="lazy" decoding="async" />
         <h2 className="s-h2">{x.endH}</h2>
         <p>{x.endP}</p>
         <ul className="end-reassure">

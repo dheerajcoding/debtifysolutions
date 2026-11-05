@@ -8,6 +8,7 @@ const api = process.env.VITE_API_TARGET || "http://localhost:5000";
 export default defineConfig({
   plugins: [react()],
   resolve: { alias: { "@shared": path.resolve(__dirname, "../shared") } },
+  build: { rollupOptions: { output: { manualChunks: { react: ["react", "react-dom", "react-router-dom"] } } } },
   server: {
     port: 5173,
     fs: { allow: [".."] },

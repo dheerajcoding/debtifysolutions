@@ -52,25 +52,23 @@ export function Footer() {
   return (
     <footer className="s-foot">
       <div className="s-footin">
-        <div className="foot-top">
-          <Logo />
-          <nav className="foot-links" aria-label="Footer">
-            <Link to="/apply">{a.nav.start}</Link>
-            <Link to="/legal/disclosures">{lang === "es" ? "Divulgaciones" : "Disclosures"}</Link>
-            <Link to="/contact">{a.nav.contact}</Link>
-            <Link to="/privacy">{a.privacyL}</Link>
-            <Link to="/terms">{a.termsL}</Link>
-            {(meta?.analytics?.ga || meta?.analytics?.pixel) && <button type="button" className="linkbtn" onClick={openCookieSettings}>{lang === "es" ? "Cookies" : "Cookie settings"}</button>}
-          </nav>
+        <p className="foot-legal">{x.legal}</p>
+        <p className="foot-posture">{x.posture || BRAND.posture}</p>
+        <div className="foot-pills">
+          <span>{BRAND.legalName} · {BRAND.address}</span>
+          <a href={`mailto:${BRAND.supportEmail}`}>{BRAND.supportEmail}</a>
+          {BRAND.supportPhone && <a href={`tel:${BRAND.supportPhone.replace(/[^+\d]/g, "")}`}>{BRAND.supportPhone}</a>}
+          {BRAND.licenses?.map((l) => <span key={l}>{l}</span>)}
         </div>
-        <p>{x.legal}</p>
-        <p className="small">
-          {BRAND.legalName} · {BRAND.address} · <a href={`mailto:${BRAND.supportEmail}`}>{BRAND.supportEmail}</a>
-          {BRAND.supportPhone && <> · <a href={`tel:${BRAND.supportPhone.replace(/[^+\d]/g, "")}`}>{BRAND.supportPhone}</a></>}
-          {BRAND.licenses?.length > 0 && <> · {BRAND.licenses.join(" · ")}</>}
-        </p>
         {meta?.demoMode && <p className="demo-note">{x.stageNote}</p>}
-        <p className="small">© {new Date().getFullYear()} Debtify</p>
+        <nav className="foot-bottom" aria-label="Footer">
+          <span>© {new Date().getFullYear()} Debtify</span>
+          <Link to="/privacy">{a.privacyL}</Link>
+          <Link to="/terms">{a.termsL}</Link>
+          <Link to="/legal/disclosures">{lang === "es" ? "Divulgaciones" : "Disclosures"}</Link>
+          <Link to="/contact">{a.nav.contact}</Link>
+          {(meta?.analytics?.ga || meta?.analytics?.pixel) && <button type="button" className="linkbtn" onClick={openCookieSettings}>{lang === "es" ? "Cookies" : "Cookie settings"}</button>}
+        </nav>
       </div>
     </footer>
   );

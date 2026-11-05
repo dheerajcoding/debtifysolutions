@@ -64,10 +64,14 @@ export function freshUi(persona, demo) {
   };
 }
 
+// Last good /api/meta is kept so returning visitors see the homepage plan card instantly.
+const META_KEY = "debtify_meta_v1";
+const readMeta = () => { try { const m = JSON.parse(localStorage.getItem(META_KEY)); return m && !m.offline ? m : null; } catch { return null; } };
+
 export function AppProvider({ children }) {
   const [lang, setLangState] = useState(initialLang);
   const [user, setUser] = useState(undefined); // undefined = loading, null = signed out
-  const [meta, setMeta] = useState(null);
+  const [meta, setMeta] = useState(readMeta);
   const [persona, setPersona] = useState(PERSONAS[0]);
   const [demo, setDemo] = useState(false);
   const [lead, setLead] = useState(null);
@@ -106,7 +110,7 @@ export function AppProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    api.meta().then(setMeta).catch(() => setMeta({ offline: true }));
+    api.meta().then((m) => { setMeta(m); try { localStorage.setItem(META_KEY, JSON.stringify(m)); } catch {} }).catch(() => setMeta((cur) => cur || { offline: true }));
     api.me().then((r) => setUser(r.user)).catch(() => setUser(null));
     loadLead();
   }, [loadLead]);

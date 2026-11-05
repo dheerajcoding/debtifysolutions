@@ -1,17 +1,29 @@
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import { startReveal } from "./lib/reveal.js";
 import { useApp } from "./context/AppContext.jsx";
 import { Spinner } from "./components/ui.jsx";
 import Consent from "./components/Consent.jsx";
 import Home from "./pages/Home.jsx";
-import Apply from "./pages/Apply.jsx";
-import { DevOutbox, Forgot, Login, Reset } from "./pages/Auth.jsx";
-import Dashboard, { Agreement } from "./pages/Dashboard.jsx";
-import Settings from "./pages/Settings.jsx";
-import Staff from "./pages/Staff.jsx";
-import { Contact, NotFound, Privacy, Terms } from "./pages/Legal.jsx";
-import { GuidePage, LegalDisclosures, StatePage } from "./pages/Content.jsx";
+
+// Only the homepage ships in the first download; every other page loads when it is opened.
+const part = (load, key) => lazy(() => load().then((m) => ({ default: key ? m[key] : m.default })));
+const Apply = part(() => import("./pages/Apply.jsx"));
+const DevOutbox = part(() => import("./pages/Auth.jsx"), "DevOutbox");
+const Forgot = part(() => import("./pages/Auth.jsx"), "Forgot");
+const Login = part(() => import("./pages/Auth.jsx"), "Login");
+const Reset = part(() => import("./pages/Auth.jsx"), "Reset");
+const Dashboard = part(() => import("./pages/Dashboard.jsx"));
+const Agreement = part(() => import("./pages/Dashboard.jsx"), "Agreement");
+const Settings = part(() => import("./pages/Settings.jsx"));
+const Staff = part(() => import("./pages/Staff.jsx"));
+const Contact = part(() => import("./pages/Legal.jsx"), "Contact");
+const NotFound = part(() => import("./pages/Legal.jsx"), "NotFound");
+const Privacy = part(() => import("./pages/Legal.jsx"), "Privacy");
+const Terms = part(() => import("./pages/Legal.jsx"), "Terms");
+const GuidePage = part(() => import("./pages/Content.jsx"), "GuidePage");
+const LegalDisclosures = part(() => import("./pages/Content.jsx"), "LegalDisclosures");
+const StatePage = part(() => import("./pages/Content.jsx"), "StatePage");
 
 // Only the staff console needs a login. Customers never sign in: their application
 // is tied to the browser they started it on.
@@ -52,6 +64,7 @@ export default function App() {
     <>
       <ScrollToHash />
       <Consent />
+      <Suspense fallback={null}>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/apply" element={<Apply />} />
@@ -78,6 +91,7 @@ export default function App() {
         <Route path="/dev/outbox" element={<DevOutbox />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      </Suspense>
     </>
   );
 }

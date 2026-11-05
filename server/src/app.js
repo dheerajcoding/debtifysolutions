@@ -110,6 +110,7 @@ export function createApp() {
   if (fs.existsSync(dist)) {
     app.use(express.static(dist, { index: false, maxAge: "1h", setHeaders: (res, p) => {
       if (/assets[\\/]/.test(p)) res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+      else if (/testimonials[\\/]|og-image\.png$/.test(p)) res.setHeader("Cache-Control", "public, max-age=86400, stale-while-revalidate=604800");
       else if (/(sw\.js|manifest\.json)$/.test(p)) { res.setHeader("Cache-Control", "no-cache"); res.setHeader("Service-Worker-Allowed", "/"); }
     } }));
     app.get(/^(?!\/api).*/, (req, res, next) => { res.setHeader("Cache-Control", "no-store"); next(); });

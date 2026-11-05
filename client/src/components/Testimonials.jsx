@@ -31,7 +31,7 @@ export default function Testimonials({ items }) {
               aria-hidden={d !== 0}
               onClick={() => d !== 0 && pick(i)}
             >
-              <div className="cflow-photo">{photo ? <img src={photo} alt={who} /> : <Html html={avatarVariant(i)} />}</div>
+              <div className="cflow-photo">{photo ? <img src={photo} alt={who} width="640" height="480" decoding="async" /> : <Html html={avatarVariant(i)} />}</div>
               <figcaption>{who}</figcaption>
               <blockquote>{line}</blockquote>
             </figure>
