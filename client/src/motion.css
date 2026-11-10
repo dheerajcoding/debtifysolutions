@@ -65,7 +65,7 @@ a, button, .btn, .ghost, .mini, .tap, .choice, .chip, .chip-q, .field, .adm-link
 .persona:hover { transform: translateY(-2px) !important; border-color: var(--brand) }
 
 /* Links */
-a:not(.btn):not(.s-btn):not(#siteCta):not(.navlink):not(.mini):not(.ghost) { position: relative }
+a:not(.btn):not(.s-btn):not(#siteCta):not(.navlink):not(.mini):not(.ghost):not(.skip) { position: relative }
 .linkish, .as-link { transition: opacity .15s var(--ease) }
 .linkish:hover, .as-link:hover { opacity: .75 }
 
