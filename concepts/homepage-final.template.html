@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Debtify Homepage Draft</title>
+<meta name="description" content="Settle credit card debt on your own terms. Find out in about 5 minutes with a soft credit check, a plain-English guide and no sales call.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: dark navy hero with an instant plan preview, light content bands, one orange action colour. */
+:root{
+  color-scheme:light;
+  --navy:#0B1E3F; --navy2:#12306B; --ink:#0E1A2B; --soft:#52627A; --paper:#F5F8FC; --card:#fff; --line:#E1E8F2;
+  --emerald:#10B981; --emerald-ink:#047857; --emerald-tint:#E7F8F1; --sun:#FF8A3D; --sun-ink:#1A0E03; --gold:#F2A93B;
+  --brand:#047857; --accent:#F2A93B; --good:#10B981;
+  --r:18px; --shadow:0 10px 30px rgba(11,30,63,.10); --font:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;font-family:var(--font);color:var(--ink);background:var(--paper);line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit} img,svg{max-width:100%} .wrap{max-width:1160px;margin:0 auto;padding:0 20px}
+h1,h2,h3{margin:0;letter-spacing:-.02em;line-height:1.12;text-wrap:balance} p{margin:0}
+.sr{position:absolute;left:-9999px}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+/* svg art classes from the live site */
+.v-b{fill:var(--emerald-ink)}.v-bt{fill:var(--emerald-tint)}.v-a{fill:var(--gold)}.v-at{fill:#FDF0D9}.v-i{fill:var(--ink)}.v-c{fill:#fff}.v-l{fill:#D5DEEB}.v-g{fill:var(--emerald)}.v-r{fill:#E11D48}.v-skin{fill:#C68B59}.v-hair{fill:#1C1512}
+.bar{background:var(--navy);color:#cfe0ff;font-size:13px;text-align:center;padding:8px 14px;border-bottom:1px solid rgba(255,255,255,.08)}
+.bar b{color:#fff}
+header.top{position:sticky;top:0;z-index:50;background:rgba(11,30,63,.93);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.08)}
+header .in{display:flex;align-items:center;gap:18px;height:64px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff;font-weight:800;font-size:20px}
+.brand svg{width:32px;height:32px}
+nav.links{display:flex;gap:4px;margin-left:8px;flex:1}
+nav.links a{color:#cfe0ff;text-decoration:none;font-weight:600;font-size:14.5px;padding:8px 12px;border-radius:10px}
+nav.links a:hover{background:rgba(255,255,255,.08);color:#fff}
+.call{color:#cfe0ff;text-decoration:none;font-weight:700;font-size:13.5px;padding:6px 10px;border:1px dashed rgba(255,255,255,.35);border-radius:10px;white-space:nowrap}
+.lang{display:flex;background:rgba(255,255,255,.1);border-radius:99px;padding:3px}
+.lang button{border:0;background:none;color:#cfe0ff;font:inherit;font-weight:800;font-size:12.5px;padding:5px 11px;border-radius:99px;cursor:pointer}
+.lang button[aria-pressed=true]{background:#fff;color:var(--navy)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;cursor:pointer;font:inherit;font-weight:800;text-decoration:none;border-radius:14px;padding:14px 22px;background:var(--sun);color:var(--sun-ink);box-shadow:0 8px 22px rgba(255,138,61,.35);transition:transform .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(255,138,61,.45)}
+.btn.sm{padding:9px 16px;font-size:14px;border-radius:12px}
+/* hero */
+.hero{position:relative;color:#fff;background:radial-gradient(900px 500px at 85% -10%,rgba(16,185,129,.28),transparent 60%),radial-gradient(700px 500px at -10% 110%,rgba(79,110,255,.30),transparent 60%),linear-gradient(160deg,var(--navy) 0%,var(--navy2) 100%);overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:56px 56px;-webkit-mask-image:radial-gradient(ellipse at 70% 30%,#000,transparent 70%);mask-image:radial-gradient(ellipse at 70% 30%,#000,transparent 70%)}
+.hero .grid{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:44px;align-items:center;padding:44px 0 72px}
+.pill{display:inline-flex;align-items:center;gap:8px;background:rgba(16,185,129,.16);color:#7ee7c0;border:1px solid rgba(16,185,129,.4);font-weight:700;font-size:13px;padding:6px 12px;border-radius:99px}
+.pill i{width:8px;height:8px;border-radius:50%;background:var(--emerald);animation:pulse 2s infinite}
+h1.hl{font-size:clamp(34px,5vw,58px);font-weight:800;margin:18px 0 16px}
+h1 .grad{background:linear-gradient(90deg,#7ee7c0,#9db8ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p.sub{font-size:18px;color:#c7d6f2;max-width:52ch}
+.chk{list-style:none;padding:0;margin:18px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:8px 18px;max-width:560px;font-size:14px;font-weight:600;color:#dbe7ff}
+.chk li{display:flex;gap:8px;align-items:flex-start}.chk li::before{content:"✓";flex:none;width:20px;height:20px;border-radius:50%;background:var(--emerald);color:#fff;font-size:12px;font-weight:800;display:grid;place-items:center;margin-top:1px}
+.qs{margin-top:24px;background:#fff;color:var(--ink);border-radius:22px;padding:20px;box-shadow:0 24px 60px rgba(0,0,0,.35);max-width:560px}
+.qs .q{font-weight:800;font-size:16px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.qs .q small{font-weight:600;color:var(--soft);font-size:12.5px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1.5px solid var(--line);background:#fff;color:var(--ink);font:inherit;font-weight:700;font-size:14px;padding:10px 14px;border-radius:12px;cursor:pointer;transition:all .18s}
+.chip:hover{border-color:var(--emerald)} .chip[aria-pressed=true]{background:var(--navy);color:#fff;border-color:var(--navy);box-shadow:0 6px 16px rgba(11,30,63,.25)}
+.row2{display:grid;grid-template-columns:1fr auto;gap:10px;margin-top:14px}
+select.st{font:inherit;font-weight:600;border:1.5px solid var(--line);border-radius:12px;padding:13px 12px;background:#fff;color:var(--ink);width:100%}
+.qs .btn{padding:14px 20px;white-space:nowrap}
+.micro{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:12px;font-size:12.5px;color:var(--soft);font-weight:600}
+.micro span::before{content:"✓ ";color:var(--emerald-ink);font-weight:800}
+.note{margin-top:10px;font-size:13px;padding:9px 12px;border-radius:10px;display:none}
+.note.warn{display:block;background:#FFF4E5;color:#8a4b00;border:1px solid #ffd9a8}
+.proof{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.slot{border:1.5px dashed rgba(255,255,255,.38);border-radius:12px;padding:8px 12px;font-size:12.5px;color:#cfe0ff;display:flex;align-items:center;gap:8px}
+.slot b{color:#fff}.slot .stars{color:var(--gold);letter-spacing:1px}
+/* plan card */
+.plan{position:relative;background:#fff;color:var(--ink);border-radius:24px;padding:22px;box-shadow:0 30px 70px rgba(0,0,0,.4);transform:perspective(1200px) rotateY(-6deg) rotateX(2deg);transition:transform .5s}
+.plan:hover{transform:perspective(1200px) rotateY(0) rotateX(0)}
+.plan .top{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:13px;color:var(--soft);font-weight:600}
+.tag{background:#FFF1DC;color:#9a5a00;font-weight:800;font-size:11px;letter-spacing:.06em;padding:5px 9px;border-radius:99px;text-transform:uppercase;white-space:nowrap}
+.bars{margin:18px 0}
+.bar2{display:grid;grid-template-columns:96px 1fr;gap:10px;align-items:center;margin-bottom:10px;font-size:13px;font-weight:700;color:var(--soft)}
+.track{height:34px;background:#EEF2F8;border-radius:10px;overflow:hidden}
+.fill{height:100%;display:flex;align-items:center;justify-content:flex-end;padding:0 10px;font-weight:800;font-size:13px;color:#fff;border-radius:10px;transition:width .9s cubic-bezier(.2,.8,.2,1);white-space:nowrap}
+.fill.owe{background:#64748B}.fill.pay{background:linear-gradient(90deg,var(--emerald),#0ea5a0)}
+.dep{background:var(--navy);color:#fff;border-radius:16px;padding:16px 18px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.dep small{display:block;color:#a9bfe6;font-size:12.5px;margin-top:2px}
+.dep .k{font-size:11px;letter-spacing:.08em;font-weight:800;color:#7ee7c0;text-transform:uppercase}
+.dep .v{font-size:38px;font-weight:800;letter-spacing:-.03em}
+.steps{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:8px;font-size:14px;font-weight:600}
+.steps li{display:flex;gap:10px;align-items:center}
+.steps .d{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:12px;background:#EEF2F8;color:var(--soft);font-weight:800;flex:none}
+.steps .ok .d{background:var(--emerald);color:#fff}
+.fine{font-size:11.5px;color:var(--soft);margin-top:12px}
+.float{position:absolute;background:#fff;color:var(--ink);border-radius:14px;padding:10px 14px;font-size:13px;font-weight:700;box-shadow:var(--shadow);display:flex;align-items:center;gap:8px;animation:bob 5s ease-in-out infinite}
+.float.a{left:24px;bottom:-20px}.float.b{right:-14px;top:-18px;animation-delay:-2.2s}
+.float i{width:26px;height:26px;border-radius:50%;background:var(--emerald-tint);color:var(--emerald-ink);display:grid;place-items:center;font-style:normal}
+/* marquee */
+.rail{background:#fff;border-bottom:1px solid var(--line);overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.rail .tr{display:flex;width:max-content;animation:slide 44s linear infinite}
+.rail:hover .tr{animation-play-state:paused}
+.rail .set{display:flex}
+.rail .it{display:flex;align-items:center;gap:12px;padding:18px 34px;white-space:nowrap}
+.rail .ic{width:42px;height:42px;border-radius:50%;background:var(--emerald-tint);color:var(--emerald-ink);display:grid;place-items:center;font-size:19px}
+.rail b{display:block;font-size:14.5px}.rail span.t{font-size:12.5px;color:var(--soft)}
+/* sections */
+section.s{padding:84px 0}
+.eyebrow{font-weight:800;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--emerald-ink);margin-bottom:12px}
+h2.h{font-size:clamp(28px,3.6vw,42px);font-weight:800}
+.lead{color:var(--soft);font-size:17px;margin-top:12px;max-width:60ch}
+.center{text-align:center}.center h2.h,.center .lead{margin-left:auto;margin-right:auto}
+.white{background:#fff}
+/* journey */
+.journey{list-style:none;padding:0;margin:48px 0 0;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;position:relative;text-align:left}
+.journey::before,.journey::after{content:"";position:absolute;top:22px;left:12.5%;right:12.5%;height:4px;border-radius:4px}
+.journey::before{background:var(--line)}
+.journey::after{background:linear-gradient(90deg,var(--emerald),#4f6eff,var(--emerald));background-size:200% 100%;transform-origin:left}
+.journey.in::after{animation:draw 1.8s cubic-bezier(.4,.1,.2,1),flow 3.2s linear 1.8s infinite}
+.jn{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center}
+.node{position:relative;z-index:1;width:48px;height:48px;border-radius:50%;background:var(--navy);color:#fff;font-weight:800;display:grid;place-items:center;border:4px solid var(--paper);box-shadow:0 0 0 2px var(--navy),0 8px 18px rgba(11,30,63,.25)}
+.journey.in .node{animation:pop .5s cubic-bezier(.3,1.6,.5,1) backwards;animation-delay:calc(var(--i)*.45s)}
+.jcard{margin-top:18px;background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:22px 18px;width:100%;flex:1;box-shadow:var(--shadow);transition:transform .25s;display:flex;flex-direction:column;align-items:center;gap:6px}
+.jcard:hover{transform:translateY(-5px)}
+.jcard .ico{width:62px;height:62px;border-radius:18px;background:var(--emerald-tint);display:grid;place-items:center}.jcard .ico svg{width:38px;height:38px}
+.jcard h3{font-size:18px;margin-top:6px}.jcard p{color:var(--soft);font-size:15px}
+.guide{display:flex;gap:14px;align-items:flex-start;max-width:700px;margin:36px auto 0;text-align:left}
+.av{position:relative;flex:none;width:58px;height:58px}.av svg{width:100%;height:100%;border-radius:50%;border:3px solid #fff;box-shadow:var(--shadow)}
+.av::after{content:"";position:absolute;right:0;bottom:2px;width:14px;height:14px;border-radius:50%;background:#22c55e;border:2px solid #fff;animation:pulse 2s infinite}
+.bubble{background:#fff;border:1px solid var(--line);border-radius:4px 18px 18px 18px;padding:12px 16px;box-shadow:var(--shadow);font-size:14.5px;color:var(--soft)}
+.bubble b{color:var(--emerald-ink);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:2px}
+/* security */
+.sec{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:38px;text-align:left}
+.sc{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:22px;box-shadow:var(--shadow)}
+.sc .ico{width:56px;height:56px;border-radius:16px;background:var(--emerald-tint);display:grid;place-items:center;margin-bottom:14px}.sc .ico svg{width:34px;height:34px}
+.sc h3{font-size:17px;margin-bottom:6px}.sc p{font-size:14.5px;color:var(--soft)}
+/* coverflow */
+.cf{margin-top:36px}
+.cf-stage{position:relative;height:430px;perspective:1100px;perspective-origin:50% 40%;overflow:hidden}
+.cf-card{--w:min(380px,76%);position:absolute;top:10px;left:50%;width:var(--w);margin:0 0 0 calc(var(--w)/-2);padding:14px;display:flex;flex-direction:column;gap:8px;text-align:left;background:#fff;border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);transform:translateX(calc(var(--d)*92%)) translateZ(calc(var(--d)*var(--d)*-170px)) rotateY(calc(var(--d)*-38deg));opacity:calc(1 - var(--d)*var(--d)*.45);z-index:calc(10 - var(--d)*var(--d));transition:transform .9s cubic-bezier(.4,.1,.2,1),opacity .9s;cursor:pointer;margin:0 0 0 calc(var(--w)/-2)}
+.cf-card.on{cursor:default;box-shadow:0 22px 48px rgba(11,30,63,.22)}.cf-card.far{pointer-events:none}
+.cf-photo{aspect-ratio:4/3;border-radius:12px;overflow:hidden;background:var(--emerald-tint)}
+.cf-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 18%;display:block}
+.cf-card figcaption{font-size:13px;font-weight:700;color:var(--emerald-ink);order:1}
+.cf-card blockquote{order:2;margin:0;font-weight:700;font-size:18px;line-height:1.3}
+.dots{display:flex;justify-content:center;gap:8px;margin-top:10px}
+.dots button{width:10px;height:10px;padding:0;border-radius:50%;border:0;background:#cbd5e5;cursor:pointer;transition:all .3s}.dots button.on{background:var(--emerald-ink);transform:scale(1.3)}
+/* costs + qualify */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:38px;text-align:left}
+.panel{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:28px;box-shadow:var(--shadow)}
+.panel.dark{background:linear-gradient(160deg,var(--navy),var(--navy2));color:#fff;border:0}
+.panel h3{font-size:22px;margin-bottom:10px}
+.big{font-size:46px;font-weight:800;letter-spacing:-.03em;color:#7ee7c0;line-height:1}
+.panel.dark p{color:#c7d6f2;margin-top:10px;font-size:15px}
+.qy{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 18px}
+.tg{font-weight:700;font-size:13.5px;padding:7px 12px;border-radius:99px}
+.tg.y{background:var(--emerald-tint);color:var(--emerald-ink)}.tg.y::before{content:"✓ "}
+.tg.n{background:#FDECEF;color:#B4163A}.tg.n::before{content:"✕ "}
+.panel .lbl{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--soft)}
+/* downsides */
+.dn{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:38px;text-align:left}
+.dc{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:20px;display:flex;flex-direction:column;gap:8px}
+.dc .art{height:64px;display:flex;align-items:center}.dc .art svg{height:64px;width:auto}
+.dc h3{font-size:17px}.dc p{font-size:14.5px;color:var(--soft)}
+/* faq */
+.faq{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px 24px;margin-top:34px;text-align:left}
+@media (max-width:800px){.faq{grid-template-columns:minmax(0,1fr)}}
+.faq details{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;align-self:start;transition:box-shadow .2s}
+.faq details[open]{box-shadow:var(--shadow)}
+.faq summary{font-weight:700;cursor:pointer;transition:color .15s}.faq summary:hover{color:var(--brand)}
+.faq details p{margin-top:8px;color:var(--soft);padding:0}
+.posture{margin-top:22px;color:var(--soft);font-size:14px;text-align:center}
+/* final + footer */
+.final{background:linear-gradient(160deg,var(--navy),var(--navy2));color:#fff;text-align:center;padding:84px 0}
+.final h2{font-size:clamp(28px,4vw,46px);font-weight:800;max-width:20ch;margin:0 auto 12px}
+.final p.sub{color:#c7d6f2}
+.final .qs{margin:26px auto 0;text-align:left}
+.reassure{list-style:none;padding:0;margin:22px 0 0;display:flex;flex-wrap:wrap;justify-content:center;gap:10px 26px;font-weight:600;font-size:14.5px;color:#dbe7ff}
+.reassure li::before{content:"✓ ";color:#7ee7c0;font-weight:800}
+footer{background:#07142C;color:#9fb3d6;padding:44px 0 100px;font-size:13.5px}
+footer .legal{max-width:900px;line-height:1.6}
+footer .posture{margin-top:14px;color:#cfe0ff;font-weight:600}
+footer .lic{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}
+footer .slot{border-color:rgba(255,255,255,.25)}
+footer a{color:#cfe0ff}
+.sticky{position:fixed;left:0;right:0;bottom:0;z-index:60;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:10px 16px;display:none;text-align:center}
+.sticky .btn{width:100%}.sticky small{display:block;color:var(--soft);font-size:11.5px;margin-top:4px;font-weight:600}
+.toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(20px);background:var(--navy);color:#fff;padding:12px 18px;border-radius:12px;font-weight:700;font-size:14px;opacity:0;pointer-events:none;transition:all .35s;z-index:90;max-width:92vw;text-align:center}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+.notes-btn{position:fixed;left:16px;bottom:16px;z-index:80;background:#fff;color:var(--navy);border:1.5px solid var(--navy);border-radius:99px;font:inherit;font-weight:800;font-size:13px;padding:10px 16px;cursor:pointer;box-shadow:var(--shadow)}
+.notes{position:fixed;left:16px;bottom:64px;z-index:80;width:min(400px,calc(100vw - 32px));max-height:70vh;overflow:auto;background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 24px 60px rgba(0,0,0,.3);display:none;font-size:13.5px}
+.notes.on{display:block}.notes h4{margin:0 0 8px;font-size:15px}.notes li{margin-bottom:8px;color:var(--soft)}.notes b{color:var(--ink)}
+/* hero visual: picture with the plan card overlapping it */
+.hv{position:relative;display:grid;min-height:680px}
+.hv .steps{display:none}
+.hv .dep .v{font-size:30px;white-space:nowrap}
+.hv-art{grid-area:1/1;justify-self:end;width:84%;height:680px;border-radius:28px;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.4);background:#DDF5EC}
+.hv-art svg,.hv-art img{width:100%;height:100%;display:block;object-fit:cover;object-position:50% 20%}
+.hv .plan{grid-area:1/1;align-self:end;justify-self:start;width:76%;margin-bottom:-6px;transform:none}
+.hv .float.c{right:10px;top:26px;animation-delay:-1s}
+.hv .float.b{right:-8px;top:96px}
+.hv-art{background:linear-gradient(160deg,#DDF5EC,#D9E4FF)}
+.hv-art img{mix-blend-mode:multiply;object-position:50% 0}
+.hv .feeline{font-size:12.5px;font-weight:700;color:var(--emerald-ink);margin-top:12px}
+.people{display:flex;align-items:center;gap:14px;margin-top:20px;max-width:560px}
+.people .stack{display:flex;flex:none}
+.people .stack img{width:40px;height:40px;border-radius:50%;object-fit:cover;object-position:50% 18%;border:2px solid var(--navy);margin-left:-11px;background:#fff}
+.people .stack img:first-child{margin-left:0}
+.people p{font-size:13.5px;color:#c7d6f2;font-weight:600;line-height:1.4}
+.final{position:relative;overflow:hidden}
+.fside{display:none;position:absolute;top:50%;width:150px;height:150px;border-radius:50%;object-fit:cover;object-position:50% 18%;border:4px solid rgba(255,255,255,.9);box-shadow:0 0 0 10px rgba(255,255,255,.08),0 20px 40px rgba(0,0,0,.35);background:#fff;margin-top:-75px}
+.fside.l{left:6%}.fside.r{right:6%}
+@media (min-width:1180px){.fside{display:block}}
+/* program at a glance */
+.glance{display:grid;grid-template-columns:1fr auto 1fr;gap:26px;align-items:center;margin-top:40px;text-align:left}
+.bills{display:grid;gap:10px}
+.bill{display:flex;justify-content:space-between;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-left:6px solid var(--c);border-radius:14px;padding:13px 16px;box-shadow:var(--shadow);font-weight:700;transform:rotate(var(--rot))}
+.bill span{color:var(--soft);font-weight:600;font-size:14px}.bill b{font-size:17px}
+.bills .cap{font-size:13px;font-weight:700;color:var(--soft);margin-bottom:2px}
+.flow{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;max-width:170px;font-size:13px;font-weight:700;color:var(--emerald-ink)}
+.flow .arr{width:120px;height:14px;background:repeating-linear-gradient(90deg,var(--emerald) 0 10px,transparent 10px 18px);position:relative;animation:dash 1s linear infinite}
+.flow .arr::after{content:"";position:absolute;right:-6px;top:-7px;border-left:14px solid var(--emerald);border-top:14px solid transparent;border-bottom:14px solid transparent;transform:scaleY(.5) scaleY(2)}
+.flow .badge{background:var(--emerald-tint);border:1px solid #b7ead7;border-radius:12px;padding:8px 10px}
+.acct{background:linear-gradient(160deg,var(--navy),var(--navy2));color:#fff;border-radius:22px;padding:22px;box-shadow:0 24px 50px rgba(11,30,63,.35)}
+.acct .top{display:flex;align-items:center;gap:10px;font-weight:700;font-size:14px;color:#cfe0ff}
+.acct .lk{width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.12);display:grid;place-items:center;font-size:17px}
+.acct .num{font-size:44px;font-weight:800;letter-spacing:-.03em;margin-top:12px;line-height:1}.acct .num small{font-size:15px;font-weight:600;color:#a9bfe6;letter-spacing:0}
+.acct .prog{height:10px;background:rgba(255,255,255,.15);border-radius:10px;margin:16px 0 8px;overflow:hidden}.acct .prog i{display:block;height:100%;width:50%;background:linear-gradient(90deg,var(--emerald),#7ee7c0);border-radius:10px}
+.acct p{font-size:13px;color:#a9bfe6}
+.gnote{text-align:center;color:var(--soft);font-size:13px;margin-top:18px}
+/* step scenes */
+.sart{display:block;width:100%;max-width:150px}.sart svg{width:100%;height:auto;display:block}
+@keyframes dash{to{background-position:18px 0}}
+/* four-stage story: pinned on desktop, stacked on mobile and for reduced motion */
+.btn.ghost{background:transparent;color:#fff;box-shadow:none;border:1.5px solid rgba(255,255,255,.4)}
+.btn.ghost:hover{background:rgba(255,255,255,.08);box-shadow:none}
+.story{background:linear-gradient(160deg,var(--navy),var(--navy2));color:#fff;position:relative}
+.story-track{position:relative;height:330vh}
+.story-pin{position:sticky;top:64px;height:calc(100vh - 64px);min-height:560px;overflow:hidden}
+.stage{position:absolute;inset:0;display:grid;grid-template-columns:64fr 36fr;background:var(--navy2);visibility:hidden;pointer-events:none;z-index:1;clip-path:inset(0 0 0 100%)}
+.stage.prev{visibility:visible;z-index:2;clip-path:inset(0)}
+.stage.on{visibility:visible;pointer-events:auto;z-index:3;clip-path:inset(0);transition:clip-path 1.1s cubic-bezier(.77,0,.18,1)}
+.st-media{position:relative;margin:0;overflow:hidden;background:var(--navy)}
+.st-media img{position:absolute;inset:-4%;width:108%;height:108%;object-fit:cover;transform:scale(1.12);transition:transform 6s ease-out;will-change:transform}
+.stage.on .st-media img,.stage.prev .st-media img{transform:scale(1.02)}
+.st-media::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 52%,var(--navy2) 100%),linear-gradient(0deg,rgba(0,0,0,.42),transparent 38%)}
+.st-cap{position:absolute;left:20px;top:14px;z-index:2;font-size:11.5px;color:rgba(255,255,255,.7);letter-spacing:.02em}
+.st-copy{display:flex;flex-direction:column;justify-content:center;padding:34px clamp(20px,3.6vw,68px) 34px clamp(14px,2.2vw,40px)}
+.st-copy>*{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+.stage.on .st-copy>*{opacity:1;transform:none}
+.stage.on .st-copy>:nth-child(1){transition-delay:.55s}.stage.on .st-copy>:nth-child(2){transition-delay:.67s}.stage.on .st-copy>:nth-child(3){transition-delay:.79s}.stage.on .st-copy>:nth-child(4){transition-delay:.91s}.stage.on .st-copy>:nth-child(5){transition-delay:1.03s}
+.stage.prev .st-copy>*{opacity:1;transform:none;transition:none}
+.st-kicker{color:var(--gold);font-weight:800;letter-spacing:.14em;font-size:13px;text-transform:uppercase}
+.st-copy h3{font-size:clamp(28px,3vw,48px);font-weight:800;margin:14px 0 16px;line-height:1.08}
+.st-p{font-size:18px;line-height:1.6;color:rgba(255,255,255,.8);max-width:44ch}
+.st-debt{align-self:flex-start;margin-top:20px;display:flex;flex-direction:column;gap:2px;padding:12px 18px;border:1px solid rgba(255,255,255,.18);border-radius:16px;background:rgba(255,255,255,.06);backdrop-filter:blur(6px)}
+.st-debt small{font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+.st-debt b{font-size:34px;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+.st-debt span{font-size:13px;color:rgba(255,255,255,.7)}
+.st-ctas{display:flex;flex-direction:column;align-items:flex-start;gap:10px;margin-top:28px}
+.st-micro{font-size:12.5px;color:rgba(255,255,255,.65)}
+.story-cta{background:var(--navy);text-align:center;padding:76px 0 84px;border-top:1px solid rgba(255,255,255,.1)}
+.story-cta h2{font-size:clamp(28px,4vw,46px);font-weight:800;max-width:22ch;margin:0 auto 12px}
+.story-cta p{color:rgba(255,255,255,.78);font-size:18px}
+.story-btns{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:26px}
+@keyframes stin{from{opacity:.35;transform:scale(1.04)}}
+@media (max-width:900px),(prefers-reduced-motion:reduce){
+  .story-track{height:auto}
+  .story-pin{position:static;height:auto;min-height:0;overflow:visible}
+  .stage{position:relative;inset:auto;grid-template-columns:1fr;opacity:1;pointer-events:auto;visibility:visible;clip-path:none;background:transparent;transition:none}
+  .st-copy>*{opacity:1;transform:none;transition:none}
+  .st-media{aspect-ratio:16/10}
+  .st-media img{inset:0;width:100%;height:100%;transform:none}
+  .st-media::after{background:linear-gradient(0deg,var(--navy2) 0%,transparent 46%)}
+  .st-copy{padding:22px 20px 46px}
+  .st-p{font-size:16.5px}
+  .st-ctas{display:none}
+  .stage.in .st-media img{animation:stin .9s ease both}
+}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(16,185,129,.55)}70%,100%{box-shadow:0 0 0 9px rgba(16,185,129,0)}}
+@keyframes bob{50%{transform:translateY(-8px)}}
+@keyframes slide{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+@keyframes draw{from{transform:scaleX(0)}} @keyframes drawy{from{transform:scaleY(0)}} @keyframes flow{to{background-position:-200% 0}}
+@keyframes pop{from{transform:scale(.3);opacity:0}}
+@media (max-width:980px){.hero .grid{grid-template-columns:1fr;padding:44px 0 56px}.plan{transform:none}.float.a{left:6px}.float.b{right:6px}
+ .hv{display:flex;flex-direction:column;min-height:0}.hv-art{width:100%;height:300px}.hv .plan{width:92%;align-self:center;margin:-56px 0 0;position:relative;z-index:2}.hv .float.b{top:70px;right:6px}.hv .float.c{top:16px;right:6px}
+ .glance{grid-template-columns:1fr}.flow{max-width:none;flex-direction:row;justify-content:center}.flow .arr{width:60px;transform:rotate(90deg);margin:20px}
+ .journey{grid-template-columns:1fr;gap:14px}.journey::before,.journey::after{top:24px;bottom:24px;left:23px;right:auto;width:4px;height:auto}.journey::after{transform-origin:top}.journey.in::after{animation:drawy 1.8s}
+ .jn{flex-direction:row;align-items:flex-start;gap:14px;text-align:left}.jcard{margin-top:0;align-items:flex-start}
+ .sec,.dn{grid-template-columns:repeat(2,1fr)}.two{grid-template-columns:1fr}nav.links{display:none}.call{display:none}}
+@media (max-width:560px){.sec,.dn,.chk{grid-template-columns:1fr}.row2{grid-template-columns:1fr}.sticky{display:block}section.s{padding:60px 0}.float{display:none}.notes-btn{bottom:92px}.notes{bottom:140px}.cf-stage{height:400px}.cf-card{transform:translateX(calc(var(--d)*64%)) translateZ(calc(var(--d)*var(--d)*-170px)) rotateY(calc(var(--d)*-38deg))}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rail .tr{flex-wrap:wrap;width:auto}.rail .set:nth-child(2){display:none}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div class="sticky" id="sticky"></div>
+<div class="toast" id="toast" role="status"></div>
+<button class="notes-btn" id="nb" type="button">Design notes</button>
+<aside class="notes" id="notes" aria-label="Design notes">
+  <h4>Notes for reviewers</h4>
+  <ol style="padding-left:18px;margin:0">
+    <li><b>Content is from the live Debtify site</b> (copy, FAQ, downsides, security points, example plan, legal text), in English and Spanish. Use the EN / ES switch.</li>
+    <li><b>Try the hero.</b> Pick a debt band and a state. The estimate uses the same bands, states and formula as the live flow (generated from the server code), always as ranges, never a single promise.</li>
+    <li><b>Dashed boxes are placeholders</b> for your real ratings, phone number, licences and company details. No numbers were invented.</li>
+    <li><b>Testimonial photos</b> are the stock photos already on the site. Swap in real, consented customers before launch.</li>
+    <li><b>Four-stage story:</b> scroll through the dark section after “How it works”. The photo stays fixed while the stage changes. On phones it becomes four stacked blocks. It uses plain browser scrolling, no animation library.</li>
+    <li><b>Images:</b> the hero scene, the four step pictures and the “at a glance” diagram are original illustrations. Each can be swapped for a real photo (see <code>PHOTO</code> in the script).</li>
+    <li><b>“See my options”</b> only shows a message here. On the real site it opens the 5-minute check with your answers filled in.</li>
+  </ol>
+</aside>
+
+<script>
+(function(){
+var IMG={cris:"__IMG_cris__",martin:"__IMG_martin__",marina:"__IMG_marina__",hellen:"__IMG_hellen__",romario:"__IMG_romario__",marrie:"__IMG_marrie__"};
+var AVATAR='<svg viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="28" class="v-bt"/><path d="M12 56c1-11 8-16 16-16s15 5 16 16z" class="v-a"/><circle cx="28" cy="25" r="11" class="v-skin"/><path d="M16 26c0-10 6-14 12-14s13 4 12 15c-2-5-6-8-12-8s-10 3-12 7z" class="v-hair"/><circle cx="24" cy="26" r="1.4" class="v-i"/><circle cx="32" cy="26" r="1.4" class="v-i"/><path d="M24.5 30.5c2 2 5 2 7 0" fill="none" stroke="#7a4a2a" stroke-width="1.4" stroke-linecap="round"/></svg>';
+var HOW_ICONS=[
+'<svg viewBox="0 0 48 48" aria-hidden="true"><rect x="10" y="6" width="28" height="36" rx="4" class="v-bt"/><circle cx="30" cy="30" r="8" fill="none" stroke="var(--brand)" stroke-width="3"/><path d="M36 36l6 6" stroke="var(--brand)" stroke-width="3" stroke-linecap="round"/><rect x="15" y="13" width="14" height="3" class="v-b"/><rect x="15" y="19" width="10" height="3" class="v-b"/></svg>',
+'<svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="14" cy="24" r="8" class="v-bt"/><circle cx="34" cy="24" r="8" class="v-at"/><path d="M20 24h8" stroke="var(--ink)" stroke-width="3" stroke-linecap="round"/><path d="M10 24l3 3 5-6" stroke="var(--brand)" stroke-width="2.5" fill="none"/></svg>',
+'<svg viewBox="0 0 48 48" aria-hidden="true"><rect x="6" y="16" width="36" height="24" rx="5" class="v-b"/><rect x="6" y="22" width="36" height="4" class="v-i" opacity=".35"/><circle cx="34" cy="33" r="3" fill="#fff"/><path d="M16 12l8-6 8 6" stroke="var(--accent)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>',
+'<svg viewBox="0 0 48 48" aria-hidden="true"><rect x="8" y="8" width="32" height="32" rx="8" class="v-at"/><path d="M16 24l6 6 11-12" stroke="var(--good)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>'];
+var SEC_ICONS={
+lock:'<svg viewBox="0 0 48 48" aria-hidden="true"><rect x="10" y="21" width="28" height="20" rx="5" class="v-bt" stroke="var(--brand)" stroke-width="2"/><path d="M16 21v-5a8 8 0 0 1 16 0v5" fill="none" stroke="var(--brand)" stroke-width="3" stroke-linecap="round"/><circle cx="24" cy="30" r="3.2" class="v-b"/><rect x="22.6" y="31" width="2.8" height="6" rx="1.4" class="v-b"/></svg>',
+shield:'<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4l16 6v11c0 11-7 18-16 23-9-5-16-12-16-23V10z" class="v-bt" stroke="var(--brand)" stroke-width="2"/><path d="M16 24l6 6 11-13" stroke="var(--brand)" stroke-width="3.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+scale:'<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 7v30" stroke="var(--brand)" stroke-width="3" stroke-linecap="round"/><circle cx="24" cy="9" r="3.2" class="v-b"/><path d="M10 15h28" stroke="var(--brand)" stroke-width="3" stroke-linecap="round"/><path d="M10 15l-5 11a5 5 0 0 0 10 0z" class="v-bt" stroke="var(--brand)" stroke-width="2.4" stroke-linejoin="round"/><path d="M38 15l-5 11a5 5 0 0 0 10 0z" class="v-bt" stroke="var(--brand)" stroke-width="2.4" stroke-linejoin="round"/><path d="M15 39h18" stroke="var(--brand)" stroke-width="3" stroke-linecap="round"/></svg>',
+exit:'<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M12 9h14a3 3 0 0 1 3 3v24a3 3 0 0 1-3 3H12z" class="v-bt" stroke="var(--brand)" stroke-width="2.4" stroke-linejoin="round"/><circle cx="23" cy="24" r="2.6" class="v-b"/><path d="M33 24h10" stroke="var(--brand)" stroke-width="3" stroke-linecap="round"/><path d="M38 19l5 5-5 5" fill="none" stroke="var(--brand)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>'};
+var RISK_ART=[
+'<svg viewBox="0 0 120 64" aria-hidden="true"><line x1="4" y1="58" x2="116" y2="58" stroke="#CBD5E1" stroke-width="2"/><path d="M6 10C42 10 62 50 114 52" fill="none" stroke="#F0745B" stroke-width="4" stroke-linecap="round"/><circle cx="6" cy="10" r="5" fill="var(--ink)"/></svg>',
+'<svg viewBox="0 0 120 64" aria-hidden="true"><rect x="8" y="6" width="30" height="52" rx="7" fill="#64748B"/><rect x="12" y="12" width="22" height="36" rx="3" fill="#E1E8F2"/><path d="M50 22c6 4 6 16 0 20M60 16c10 7 10 25 0 32M70 10c14 10 14 34 0 44" fill="none" stroke="#F2A93B" stroke-width="3.5" stroke-linecap="round"/><rect x="88" y="14" width="28" height="36" rx="4" fill="#fff" stroke="#64748B" stroke-width="2.5"/><rect x="93" y="22" width="18" height="3" fill="#CBD5E1"/><rect x="93" y="30" width="18" height="3" fill="#CBD5E1"/></svg>',
+'<svg viewBox="0 0 120 64" aria-hidden="true"><rect x="12" y="6" width="96" height="52" rx="6" fill="#fff" stroke="#64748B" stroke-width="2.5"/><text x="60" y="30" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif" font-weight="800" font-size="17" fill="#0E1A2B">1099-C</text><rect x="26" y="38" width="68" height="4" fill="#CBD5E1"/><rect x="26" y="46" width="48" height="4" fill="#CBD5E1"/></svg>',
+'<svg viewBox="0 0 120 64" aria-hidden="true"><g transform="translate(26,4) scale(1.15)"><path d="M12 9h14a3 3 0 0 1 3 3v24a3 3 0 0 1-3 3H12z" class="v-bt" stroke="var(--brand)" stroke-width="2.4" stroke-linejoin="round"/><circle cx="23" cy="24" r="2.6" class="v-b"/><path d="M33 24h10" stroke="var(--brand)" stroke-width="3" stroke-linecap="round"/><path d="M38 19l5 5-5 5" fill="none" stroke="var(--brand)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></g></svg>'];
+
+var STATES=[["AL","Alabama"],["AZ","Arizona"],["CO","Colorado"],["FL","Florida"],["GA","Georgia"],["IN","Indiana"],["IA","Iowa"],["KS","Kansas"],["KY","Kentucky"],["MI","Michigan"],["MN","Minnesota"],["MO","Missouri"],["NV","Nevada"],["NM","New Mexico"],["NC","North Carolina"],["OH","Ohio"],["OK","Oklahoma"],["PA","Pennsylvania"],["SC","South Carolina"],["TN","Tennessee"],["TX","Texas"],["UT","Utah"],["VA","Virginia"],["WI","Wisconsin"]];
+/* Generated at build time from the live server code (shared/config + quickEstimate): same bands, same states, same numbers as the real flow. */
+var BANDS=__BANDS__;
+var EST=__ESTIMATES__;
+var PHOTOS=["cris","martin","marina","hellen","romario","marrie"];
+/* Story photos, in stage order: burden, support, progress, future. Replace the paths with your final optimized files in the real project. */
+var STORY=["__STORY_1__","__STORY_2__","__STORY_3__","__STORY_4__"];
+var STORY_POS=["70% 40%","40% 45%","68% 40%","50% 38%"];
+var FAQ_PICK=[1,2,3,4,6,7]; /* the same six questions, in the same order, as the live homepage */
+
+/* PHOTO OVERRIDES: put a photo URL or data URI here to replace an illustration with a real image.
+   Leave "" to keep the illustration. Example: hero:"images/hero.jpg" */
+var PHOTO={hero:IMG.marina,steps:["","","",""]};
+
+var HERO_ART=`<svg viewBox="0 0 440 540" preserveAspectRatio="xMidYMin slice" role="img" aria-label="A person checking their options on a phone">
+<defs><linearGradient id="hg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#DDF5EC"/><stop offset="1" stop-color="#D9E4FF"/></linearGradient></defs>
+<rect width="440" height="540" fill="url(#hg)"/>
+<circle cx="360" cy="70" r="58" fill="#fff" opacity=".55"/><circle cx="360" cy="70" r="30" fill="#F7C874"/>
+<rect x="268" y="120" width="140" height="120" rx="12" fill="#fff" opacity=".6"/><path d="M338 120v120M268 180h140" stroke="#C9D7EE" stroke-width="4"/>
+<rect x="20" y="196" width="46" height="46" rx="8" fill="#B7E3D2"/><path d="M43 196c-18-6-24-30-10-46 8 12 18 16 10 46zM43 196c16-8 28-26 22-44-12 10-20 20-22 44zM43 196c-2-20-2-34 6-52 6 16 4 36-6 52z" fill="#3FB58B"/>
+<path d="M62 360C62 262 116 218 190 218S318 262 318 360V540H62Z" fill="#0F6E5C"/>
+<path d="M150 224c14 22 26 32 40 32s26-10 40-32c-10-6-24-10-40-10s-30 4-40 10z" fill="#E7F8F1"/>
+<rect x="175" y="188" width="30" height="40" rx="12" fill="#B87848"/>
+<ellipse cx="190" cy="150" rx="47" ry="54" fill="#C68B59"/>
+<circle cx="144" cy="156" r="9" fill="#B87848"/><circle cx="236" cy="156" r="9" fill="#B87848"/>
+<path d="M141 146C134 92 168 76 192 76c36 0 58 26 48 72-8-28-26-40-50-40s-40 12-49 38z" fill="#2A1B14"/>
+<circle cx="171" cy="154" r="4.4" fill="#1C1512"/><circle cx="209" cy="154" r="4.4" fill="#1C1512"/>
+<path d="M162 140q9-6 18-2M200 138q9-4 18 2" fill="none" stroke="#2A1B14" stroke-width="3.4" stroke-linecap="round"/>
+<path d="M170 176q20 22 40 0z" fill="#fff" stroke="#7a3f25" stroke-width="3" stroke-linejoin="round"/>
+<g transform="rotate(-10 296 262)"><rect x="262" y="206" width="66" height="112" rx="12" fill="#0E1A2B"/><rect x="267" y="214" width="56" height="94" rx="6" fill="#fff"/><circle cx="295" cy="246" r="15" fill="#10B981"/><path d="M288 246l5 5 9-11" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/><rect x="276" y="272" width="38" height="5" rx="2.5" fill="#CBD5E1"/><rect x="280" y="283" width="30" height="5" rx="2.5" fill="#CBD5E1"/></g>
+<path d="M252 330c-34-2-52-26-46-52l24 6c-2 14 10 24 28 26z" fill="#0F6E5C"/>
+<ellipse cx="288" cy="312" rx="13" ry="10" fill="#C68B59" transform="rotate(-10 288 312)"/>
+<circle cx="52" cy="316" r="13" fill="#F2A93B"/><circle cx="82" cy="338" r="9" fill="#F2A93B" opacity=".8"/>
+</svg>`;
+
+var STEP_ART=[
+`<svg viewBox="0 0 120 84" aria-hidden="true"><rect x="36" y="4" width="46" height="76" rx="10" fill="#0E1A2B"/><rect x="40" y="12" width="38" height="60" rx="5" fill="#fff"/><rect x="45" y="20" width="20" height="4" rx="2" fill="#CBD5E1"/><rect x="45" y="29" width="28" height="4" rx="2" fill="#CBD5E1"/><rect x="45" y="38" width="16" height="4" rx="2" fill="#CBD5E1"/><circle cx="86" cy="52" r="15" fill="#E7F8F1" stroke="#047857" stroke-width="4"/><path d="M97 63l12 12" stroke="#047857" stroke-width="5" stroke-linecap="round"/><path d="M79 52l5 5 9-10" fill="none" stroke="#10B981" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+`<svg viewBox="0 0 120 84" aria-hidden="true"><path d="M26 26L60 8l34 18z" fill="#0B1E3F"/><rect x="32" y="26" width="56" height="50" rx="3" fill="#12306B"/><rect x="40" y="34" width="10" height="10" rx="2" fill="#7EE7C0"/><rect x="55" y="34" width="10" height="10" rx="2" fill="#fff"/><rect x="70" y="34" width="10" height="10" rx="2" fill="#7EE7C0"/><rect x="40" y="50" width="10" height="10" rx="2" fill="#fff"/><rect x="70" y="50" width="10" height="10" rx="2" fill="#fff"/><rect x="53" y="52" width="14" height="24" rx="2" fill="#F2A93B"/><circle cx="94" cy="30" r="15" fill="#10B981" stroke="#fff" stroke-width="4"/><path d="M87 30l5 5 9-10" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+`<svg viewBox="0 0 120 84" aria-hidden="true"><rect x="12" y="32" width="80" height="46" rx="9" fill="#047857"/><rect x="12" y="43" width="80" height="9" fill="#0B1E3F" opacity=".35"/><rect x="20" y="61" width="28" height="6" rx="3" fill="#7EE7C0"/><circle cx="82" cy="64" r="6" fill="#fff" opacity=".9"/><circle cx="100" cy="22" r="13" fill="#F2A93B"/><text x="100" y="28" text-anchor="middle" font-family="sans-serif" font-weight="800" font-size="16" fill="#7A4A00">$</text><path d="M100 40v10M95 46l5 6 5-6" fill="none" stroke="#F2A93B" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+`<svg viewBox="0 0 120 84" aria-hidden="true"><rect x="28" y="6" width="54" height="70" rx="7" fill="#fff" stroke="#CBD5E1" stroke-width="3"/><rect x="36" y="18" width="30" height="4" rx="2" fill="#CBD5E1"/><rect x="36" y="28" width="38" height="4" rx="2" fill="#CBD5E1"/><rect x="36" y="38" width="24" height="4" rx="2" fill="#CBD5E1"/><circle cx="80" cy="56" r="19" fill="#10B981" stroke="#fff" stroke-width="4"/><path d="M71 56l7 7 12-14" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="14" cy="22" r="4" fill="#F2A93B"/><circle cx="106" cy="14" r="3.5" fill="#4f6eff"/><circle cx="100" cy="76" r="3" fill="#F2A93B"/></svg>`];
+
+function heroArt(){return PHOTO.hero?'<img src="'+PHOTO.hero+'" alt="">':HERO_ART}
+function stepArt(i){return (PHOTO.steps&&PHOTO.steps[i])?'<img src="'+PHOTO.steps[i]+'" alt="" style="width:100%;border-radius:12px">':STEP_ART[i]}
+
+var L={
+en:{
+ bar:"<b>Free 5-minute check</b> · soft credit check, no impact on your score · no sales call",
+ nav:["How it works","Why trust us","FAQ"], phone:"1-800-XXX-XXXX", cta:"Check my options",
+ eyebrow:"Debt relief, without the sales call", h1a:"Settle credit card debt", h1b:"on your own terms",
+ sub:"Find out in about 5 minutes. Soft credit check, plain-English guide, no sales call.",
+ chips:["Checking won't affect your credit score","No fees until a debt is settled","Licensed partner companies","English y Español"],
+ qsQ:"1. How much unsecured debt do you have?", qsSmall:"Cards, personal loans, medical",
+ ranges:["Under $7,500","$7,500 – $15,000","$15,000 – $25,000","$25,000 – $50,000","Over $50,000"], statePH:"2. Select your state", otherState:"Another state", see:"See my options →",
+ micro:["About 5 minutes","Soft check, score unaffected","No obligation"],
+ warnSmall:"Most programs need $7,500 or more in eligible debt. Take the check anyway and we will point you to the best alternatives, such as a nonprofit counselor.",
+ warnState:"Programs are not available in your state yet. The check can still point you to a nonprofit credit counselor.",
+ ratings:["Trustpilot · [N] reviews","Google · [N] reviews","BBB rating [A+]"],
+ planTag:"Example plan", planWhere:function(s){return s+" · unsecured debts"}, yourState:"Your state", owe:"You owe today", pay:"Est. total paid", dep:"Monthly deposit",
+ depSub:function(m){return "for about "+m+" months, into an account in your name"},
+ planSteps:["Soft credit check","Matched with a licensed company","Deposits build, debts settle one by one"],
+ planNote:"Estimates from a sample profile, including fees. Not a guarantee. Your own numbers are shown before you sign.",
+ f1:"Soft check only", f2:"Takes ~5 minutes", f3:"No sales call",
+ story:{sr:"Your journey in four stages",cap:"Illustrative AI-generated images. Results vary.",debtLabel:"Illustrative example",debtAmt:"$40,000",debtSub:"in unsecured debt",journeyLabel:"Your journey, one step at a time",
+  stages:[
+   {k:"Stage 01 — The burden",short:"The burden",h:"Debt can make every day feel heavier.",p:"With $40,000 in unsecured debt, financial worries can affect every part of everyday life.",alt:"A worried man reviewing bills at a kitchen table late in the evening"},
+   {k:"Stage 02 — Finding support",short:"Finding support",h:"You don't have to navigate it alone.",p:"Explore your options and get connected with professional assistance to understand your next steps.",alt:"A man at his laptop on a video call with an adviser, notes and papers on the table"},
+   {k:"Stage 03 — Moving forward",short:"Moving forward",h:"Every step forward builds confidence.",p:"Understand available solutions, explore potential settlement options and work toward a more manageable financial future.",alt:"A relaxed man taking notes at his laptop while reviewing his finances"},
+   {k:"Stage 04 — A brighter future",short:"A brighter future",h:"Imagine a future with greater financial confidence.",p:"Take steps toward a fresh financial chapter and focus on the things that matter most.",alt:"A smiling man sitting on the lawn with his wife and two children"}],
+  cta:{h:"Your next chapter starts with a conversation.",p:"Discover whether you may qualify for debt-relief options.",primary:"See If You May Qualify",secondary:"Explore How It Works"}},
+ estTag:"Quick estimate", about:"About", eOwe:"You owe", eRes:"Could resolve", eDep:"Estimated monthly deposit",
+ eDepSub:function(a,b){return "for about "+a+"–"+b+" months"},
+ eFee:function(a,b){return a===b?"Provider fee: "+a+"% of enrolled debt, only after a debt is settled":"Provider fee: "+a+"–"+b+"% of enrolled debt, only after a debt is settled"},
+ eNote:"This is an estimate, not an offer. Your exact plan comes after a soft credit check, which won't affect your score.",
+ peopleCap:"You're not doing this alone. Every day, people in your state start exactly where you are now.",
+ glE:"The program at a glance", glH:"From many accounts to one monthly deposit",
+ glCap:"6 unsecured debts · $23,570", bills:["Credit card","Credit card","Credit card","Store card","Personal loan","Medical bill"], billAmt:["$6,240","$4,815","$3,190","$2,420","$4,720","$2,185"],
+ glFlow:"A licensed partner negotiates each debt", glAcct:"Your dedicated account", glAcctSub:"In your name · withdraw any time", glPer:"per month", glMonths:"for about 36–42 months", glProg:"Deposits build, debts settle one by one",
+ glSkip:"Not included in a program: auto loans, federal student loans and other secured debts.",
+ glNote:"Illustration based on the example plan from a sample Texas profile. A fee is charged only after a debt is settled. Not a guarantee.",
+ trust:[["⏱","~5 minutes","No long forms — just a few short questions"],["🔒","Soft check only","Looking at your options never affects your credit score"],["🧭","Help at every step","Jay walks you through each screen before you answer"],["📜","Licensed partners","Your program is run by a licensed debt settlement company"],["💵","No fees until settled","A fee is charged only after a debt is settled"],["🌎","English y Español","Every screen, disclosure and the welcome call"]],
+ howE:"How it works", howH:"Four steps forward → ", howH2:"you stay in control",
+ how:[["Check in 5 minutes","A few questions. We find your debts for you."],["Get matched","Matched with a licensed settlement company."],["Save in your own account","One monthly deposit into an account in your name."],["Debts get settled","Fees only after a debt is settled."]],
+ guide:["Your guide · Jay","Jay explains every question before you answer it, in plain English or Spanish — and you can always ask “why do you need this?”"],
+ secE:"Built to be trusted", secH:"Your information is safe, and the rules are on your side",
+ sec:[["lock","Bank-level encryption","Everything you enter is encrypted in transit and at rest."],["shield","A soft check, not a hard one","Checking your options never affects your credit score."],["scale","Licensed, regulated partners","Programs are run by licensed debt settlement companies, named before you sign."],["exit","No obligation, cancel anytime","No fee until a debt is settled, and you can leave with no penalty from Debtify."]],
+ stE:"What it's like", stH:"How Debtify helps you decide",
+ stories:[["Checked options in about 5 minutes with a soft check.","Cris, first-time visitor"],["Got clear answers in plain words, with no sales call.","Martin, comparing options"],["Saw the deposit, fee and timeline before signing.","Marina, wants the numbers first"],["Compared settlement with other options before deciding.","Hellen, weighing options"],["Learned the downsides, not just the benefits, up front.","Romario, wants the full picture"],["Finished the check on a phone in one sitting.","Marrie, checking on mobile"]],
+ costE:"Costs and eligibility", costH:"No fee until a debt is actually settled",
+ costBig:"$0", costBigSub:"charged when you sign up or while you save",
+ costP:["Settlement program fees are a percentage of the debt you enroll. Across the industry they commonly run 15% to 25%.","The fee is charged only after a debt is settled and you've made at least one payment on that settlement. Nothing is charged when you sign up or while you save.","Your exact fee, monthly deposit and estimated program length are shown on screen before you sign."],
+ qualH:"Which debts qualify", qualCan:"Can usually enroll", qualCant:"Can't enroll",
+ qualY:["Credit cards","Unsecured personal loans","Medical bills","Collection accounts"], qualN:["Mortgages","Car loans","Federal student loans","Taxes","Child support"],
+ qualP:"Most programs need at least $7,500 to $15,000 of eligible debt.",
+ riskE:"The honest part", riskH:"Know the downsides before you start",
+ risks:[["Your credit score will drop","The program usually requires you to stop paying your creditors while you save. This will hurt your credit score."],["Creditors may keep collecting, and may sue","Creditors may keep calling, charge late fees and interest, and may take legal action. Balances may grow before they are settled."],["Forgiven debt may be taxed","Debt that is forgiven may count as income for taxes. Ask a tax professional about your situation."],["You can cancel any time","You can leave the program at any time without a penalty from Debtify."]],
+ faqE:"Questions", faqH:"Frequently asked questions",
+ faq:[["Is debt settlement a loan?","No. You save each month in a dedicated account in your own name, and a licensed debt settlement company negotiates with your creditors to settle each debt for less than the full balance."],["Will checking my options hurt my credit score?","No. Debtify uses a soft credit inquiry, which does not affect your score. During a settlement program your score usually drops, because you stop paying creditors while you save."],["When do I pay fees?","Only after a debt is settled and you've made at least one payment on that settlement. The fee is a percentage of the debt you enroll and is shown before you sign."],["How long does a program take?","Most programs take 24 to 48 months. Your estimate is shown before you sign. The first settlement usually takes a few months while your account builds up."],["Can creditors still call or sue me?","Yes. Creditors may keep collecting and may take legal action while your debts are being negotiated. If you're sued, tell your program company right away."],["Which debts can I include?","Credit cards, unsecured personal loans, medical bills and collections. Mortgages, car loans, other secured loans, federal student loans, taxes and child support can't be included."],["Is Debtify a debt settlement company?","No. Debtify is a technology platform. Your program, agreement and negotiations are provided by a licensed partner company, named on screen before you sign."],["Can I cancel?","Yes, at any time. The money in your dedicated account is yours, less any account fees."],["Is forgiven debt taxed?","It can be. Forgiven debt may count as income. Ask a tax professional about your situation."],["Do you help in Spanish?","Yes. Every screen, disclosure and the welcome call are available in Spanish."]],
+ endH:"Ready to see your options?", endP:"About 5 minutes. No sales call. You decide.", reassure:["Jay explains each step before you answer","Nothing is charged until you decide to enroll","Leave any time — no penalty from Debtify"],
+ legal:"Debtify is a technology platform that helps you check eligibility for, and enroll in, debt settlement programs provided by licensed partner companies. Debtify is not a lender, law firm or credit repair organization and does not negotiate with creditors. Debt settlement is not available in all states. Results vary and are not guaranteed. Program fees are a percentage of enrolled debt and are charged only after a debt is settled. Settlement may hurt your credit, creditors may still sue, and forgiven debt may be taxable. Read all program materials before you enroll.",
+ posture:"Debtify is a technology platform, not a debt settlement provider. Programs are provided by licensed partner providers who contract with you directly.",
+ lic:["Debtify, Inc. · 1200 Main St, Suite 400, Houston, TX 77002","[Licence / NMLS #]","help@godebtify.com · [phone]"], links:["Privacy","Terms","Disclosures","Contact"], stick:"~5 min · soft check · no obligation",
+ toast:function(v,s){return "Concept only: on the real site this opens the 5-minute check with "+v+" and "+s+" already filled in."}
+},
+es:{
+ bar:"<b>Revisión gratis de 5 minutos</b> · consulta suave, sin afectar tu puntaje · sin llamadas de ventas",
+ nav:["Cómo funciona","Por qué confiar","Preguntas"], phone:"1-800-XXX-XXXX", cta:"Ver mis opciones",
+ eyebrow:"Alivio de deudas, sin llamadas de ventas", h1a:"Liquida tu deuda de tarjetas", h1b:"a tu manera",
+ sub:"Descúbrelo en unos 5 minutos. Consulta suave, guía en español sencillo, sin llamadas de ventas.",
+ chips:["Revisar no afecta tu puntaje","Sin tarifas hasta liquidar una deuda","Empresas asociadas con licencia","English y Español"],
+ qsQ:"1. ¿Cuánta deuda sin garantía tienes?", qsSmall:"Tarjetas, préstamos personales, médicas",
+ ranges:["Menos de $7,500","$7,500 – $15,000","$15,000 – $25,000","$25,000 – $50,000","Más de $50,000"], statePH:"2. Elige tu estado", otherState:"Otro estado", see:"Ver mis opciones →",
+ micro:["Unos 5 minutos","Consulta suave, sin afectar tu puntaje","Sin obligación"],
+ warnSmall:"La mayoría de los programas piden $7,500 o más en deuda elegible. Haz la revisión de todos modos y te orientaremos a las mejores alternativas, como un consejero sin fines de lucro.",
+ warnState:"Los programas aún no están disponibles en tu estado. La revisión puede orientarte a un consejero de crédito sin fines de lucro.",
+ ratings:["Trustpilot · [N] reseñas","Google · [N] reseñas","Calificación BBB [A+]"],
+ planTag:"Plan de ejemplo", planWhere:function(s){return s+" · deudas sin garantía"}, yourState:"Tu estado", owe:"Debes hoy", pay:"Total estimado", dep:"Depósito mensual",
+ depSub:function(m){return "durante unos "+m+" meses, a una cuenta a tu nombre"},
+ planSteps:["Consulta de crédito suave","Te conectamos con una empresa con licencia","Tus depósitos crecen y las deudas se liquidan una por una"],
+ planNote:"Estimaciones de un perfil de ejemplo, con tarifas incluidas. No es una garantía. Tus cifras aparecen antes de firmar.",
+ f1:"Solo consulta suave", f2:"Toma ~5 minutos", f3:"Sin llamadas de ventas",
+ story:{sr:"Tu recorrido en cuatro etapas",cap:"Imágenes ilustrativas generadas con IA. Los resultados varían.",debtLabel:"Ejemplo ilustrativo",debtAmt:"$40,000",debtSub:"en deuda sin garantía",journeyLabel:"Tu recorrido, un paso a la vez",
+  stages:[
+   {k:"Etapa 01 — La carga",short:"La carga",h:"La deuda puede hacer que cada día se sienta más pesado.",p:"Con $40,000 en deuda sin garantía, las preocupaciones financieras pueden afectar cada parte de la vida diaria.",alt:"Un hombre preocupado revisando facturas en la mesa de la cocina por la noche"},
+   {k:"Etapa 02 — Encuentra apoyo",short:"Encuentra apoyo",h:"No tienes que enfrentarlo solo.",p:"Explora tus opciones y conéctate con asistencia profesional para entender tus próximos pasos.",alt:"Un hombre en su computadora en una videollamada con un asesor, con notas y papeles sobre la mesa"},
+   {k:"Etapa 03 — Avanzar",short:"Avanzar",h:"Cada paso adelante genera confianza.",p:"Conoce las soluciones disponibles, explora posibles opciones de liquidación y trabaja hacia un futuro financiero más manejable.",alt:"Un hombre relajado tomando notas en su computadora mientras revisa sus finanzas"},
+   {k:"Etapa 04 — Un futuro más brillante",short:"Un futuro más brillante",h:"Imagina un futuro con mayor confianza financiera.",p:"Da pasos hacia un nuevo capítulo financiero y concéntrate en lo que más importa.",alt:"Un hombre sonriente sentado en el césped con su esposa y sus dos hijos"}],
+  cta:{h:"Tu próximo capítulo empieza con una conversación.",p:"Descubre si podrías calificar para opciones de alivio de deudas.",primary:"Ver si podría calificar",secondary:"Conoce cómo funciona"}},
+ estTag:"Estimación rápida", about:"Cerca de", eOwe:"Debes", eRes:"Podrías resolver", eDep:"Depósito mensual estimado",
+ eDepSub:function(a,b){return "durante unos "+a+" a "+b+" meses"},
+ eFee:function(a,b){return a===b?"Tarifa del proveedor: "+a+"% de la deuda inscrita, solo después de liquidar":"Tarifa del proveedor: "+a+"–"+b+"% de la deuda inscrita, solo después de liquidar"},
+ eNote:"Es una estimación, no una oferta. Tu plan exacto llega después de una consulta de crédito suave, que no afecta tu puntaje.",
+ peopleCap:"No estás solo en esto. Cada día, personas de tu estado empiezan justo donde estás ahora.",
+ glE:"El programa de un vistazo", glH:"De muchas cuentas a un depósito mensual",
+ glCap:"6 deudas sin garantía · $23,570", bills:["Tarjeta de crédito","Tarjeta de crédito","Tarjeta de crédito","Tarjeta de tienda","Préstamo personal","Factura médica"], billAmt:["$6,240","$4,815","$3,190","$2,420","$4,720","$2,185"],
+ glFlow:"Una empresa con licencia negocia cada deuda", glAcct:"Tu cuenta dedicada", glAcctSub:"A tu nombre · retira cuando quieras", glPer:"al mes", glMonths:"durante unos 36 a 42 meses", glProg:"Tus depósitos crecen y las deudas se liquidan una por una",
+ glSkip:"No se incluyen en un programa: préstamos de auto, préstamos estudiantiles federales y otras deudas con garantía.",
+ glNote:"Ilustración basada en el plan de ejemplo de un perfil de muestra de Texas. Solo se cobra una tarifa después de liquidar una deuda. No es una garantía.",
+ trust:[["⏱","~5 minutos","Nada de formularios largos — solo unas preguntas cortas"],["🔒","Solo consulta suave","Revisar tus opciones nunca afecta tu puntaje de crédito"],["🧭","Ayuda en cada paso","Jay te explica cada pantalla antes de que respondas"],["📜","Empresas con licencia","Tu programa lo maneja una empresa de liquidación con licencia"],["💵","Sin tarifas hasta liquidar","Solo se cobra después de liquidar una deuda"],["🌎","English y Español","Cada pantalla, divulgación y la llamada de bienvenida"]],
+ howE:"Cómo funciona", howH:"Cuatro pasos hacia adelante → ", howH2:"tú tienes el control",
+ how:[["Revisa en 5 minutos","Unas preguntas. Nosotros encontramos tus deudas."],["Te conectamos","Te asignamos una empresa de liquidación con licencia."],["Ahorra en tu propia cuenta","Un depósito mensual en una cuenta a tu nombre."],["Se liquidan tus deudas","Tarifas solo después de liquidar una deuda."]],
+ guide:["Tu guía · Jay","Jay te explica cada pregunta antes de que respondas, en inglés o español — y siempre puedes preguntar “¿por qué necesitan esto?”"],
+ secE:"Hecho para dar confianza", secH:"Tu información está segura y las reglas están de tu lado",
+ sec:[["lock","Encriptación de nivel bancario","Todo lo que ingresas se encripta en tránsito y en reposo."],["shield","Consulta suave, no dura","Revisar tus opciones nunca afecta tu puntaje de crédito."],["scale","Socios con licencia y regulados","Los programas los manejan empresas con licencia, nombradas antes de firmar."],["exit","Sin obligación, cancela cuando quieras","Sin tarifa hasta liquidar una deuda, y puedes salir sin penalización de Debtify."]],
+ stE:"Cómo es", stH:"Cómo te ayuda Debtify a decidir",
+ stories:[["Revisó sus opciones en unos 5 minutos con una consulta suave.","Cris, primera visita"],["Recibió respuestas claras en palabras sencillas, sin llamadas de ventas.","Martin, comparando opciones"],["Vio el depósito, la tarifa y el plazo antes de firmar.","Marina, quiere ver los números primero"],["Comparó la liquidación con otras opciones antes de decidir.","Hellen, evaluando opciones"],["Conoció las desventajas, no solo los beneficios, desde el principio.","Romario, quiere el panorama completo"],["Terminó la revisión en el teléfono de una sola vez.","Marrie, revisando desde el móvil"]],
+ costE:"Costos y requisitos", costH:"Sin tarifa hasta que realmente se liquide una deuda",
+ costBig:"$0", costBigSub:"al inscribirte o mientras ahorras",
+ costP:["Las tarifas de los programas de liquidación son un porcentaje de la deuda que inscribes. En la industria suelen ir del 15% al 25%.","La tarifa solo se cobra después de liquidar una deuda y de que hayas hecho al menos un pago de esa liquidación. No se cobra nada al inscribirte ni mientras ahorras.","Tu tarifa exacta, tu depósito mensual y la duración estimada aparecen en pantalla antes de firmar."],
+ qualH:"Qué deudas califican", qualCan:"Normalmente se pueden inscribir", qualCant:"No se pueden inscribir",
+ qualY:["Tarjetas de crédito","Préstamos personales sin garantía","Facturas médicas","Cuentas en cobranza"], qualN:["Hipotecas","Préstamos de auto","Préstamos estudiantiles federales","Impuestos","Manutención infantil"],
+ qualP:"La mayoría de los programas piden al menos entre $7,500 y $15,000 de deuda elegible.",
+ riskE:"Lo que debes saber", riskH:"Conoce las desventajas antes de empezar",
+ risks:[["Tu puntaje de crédito bajará","El programa normalmente requiere que dejes de pagar a tus acreedores mientras ahorras. Esto afectará tu puntaje de crédito."],["Los acreedores pueden seguir cobrando y demandarte","Los acreedores pueden seguir llamando, cobrar cargos por atraso e intereses, y tomar acciones legales. Tus saldos pueden crecer antes de liquidarse."],["La deuda perdonada puede pagar impuestos","La deuda que se perdona puede contar como ingreso para impuestos. Consulta a un profesional de impuestos sobre tu caso."],["Puedes cancelar cuando quieras","Puedes salir del programa en cualquier momento sin penalización de Debtify."]],
+ faqE:"Preguntas", faqH:"Preguntas frecuentes",
+ faq:[["¿La liquidación de deudas es un préstamo?","No. Ahorras cada mes en una cuenta dedicada a tu nombre, y una empresa de liquidación con licencia negocia con tus acreedores para liquidar cada deuda por menos del saldo total."],["¿Revisar mis opciones afecta mi puntaje de crédito?","No. Debtify usa una consulta de crédito suave, que no afecta tu puntaje. Durante un programa de liquidación tu puntaje suele bajar, porque dejas de pagar a los acreedores mientras ahorras."],["¿Cuándo pago las tarifas?","Solo después de liquidar una deuda y de hacer al menos un pago de esa liquidación. La tarifa es un porcentaje de la deuda inscrita y la ves antes de firmar."],["¿Cuánto dura un programa?","La mayoría dura de 24 a 48 meses. Ves tu estimación antes de firmar. La primera liquidación suele tardar unos meses mientras crece tu cuenta."],["¿Los acreedores pueden seguir llamando o demandarme?","Sí. Los acreedores pueden seguir cobrando y tomar acciones legales mientras se negocian tus deudas. Si te demandan, avisa de inmediato a la empresa de tu programa."],["¿Qué deudas puedo incluir?","Tarjetas de crédito, préstamos personales sin garantía, facturas médicas y cobranzas. No se pueden incluir hipotecas, préstamos de auto, otros préstamos con garantía, préstamos estudiantiles federales, impuestos ni manutención infantil."],["¿Debtify es una empresa de liquidación de deudas?","No. Debtify es una plataforma tecnológica. Tu programa, tu contrato y las negociaciones los ofrece una empresa asociada con licencia, que aparece en pantalla antes de firmar."],["¿Puedo cancelar?","Sí, cuando quieras. El dinero de tu cuenta dedicada es tuyo, menos cualquier cargo de la cuenta."],["¿La deuda perdonada paga impuestos?","Puede ser. La deuda perdonada puede contar como ingreso. Consulta a un profesional de impuestos sobre tu caso."],["¿Me atienden en español?","Sí. Cada pantalla, cada divulgación y la llamada de bienvenida están disponibles en español."]],
+ endH:"¿Listo para ver tus opciones?", endP:"Unos 5 minutos. Sin llamadas de ventas. Tú decides.", reassure:["Jay explica cada paso antes de que respondas","No se cobra nada hasta que decidas inscribirte","Sal cuando quieras — sin penalización de Debtify"],
+ legal:"Debtify es una plataforma tecnológica que te ayuda a revisar si calificas y a inscribirte en programas de liquidación de deudas ofrecidos por empresas asociadas con licencia. Debtify no es un prestamista, bufete de abogados ni organización de reparación de crédito, y no negocia con acreedores. La liquidación de deudas no está disponible en todos los estados. Los resultados varían y no están garantizados. Las tarifas del programa son un porcentaje de la deuda inscrita y solo se cobran después de liquidar una deuda. La liquidación puede afectar tu crédito, los acreedores aún pueden demandarte y la deuda perdonada puede pagar impuestos. Lee todos los materiales del programa antes de inscribirte.",
+ posture:"Debtify es una plataforma tecnológica, no un proveedor de liquidación de deudas. Los programas los ofrecen proveedores asociados con licencia que contratan directamente contigo.",
+ lic:["Debtify, Inc. · 1200 Main St, Suite 400, Houston, TX 77002","[Licencia / NMLS #]","help@godebtify.com · [teléfono]"], links:["Privacidad","Términos","Divulgaciones","Contacto"], stick:"~5 min · consulta suave · sin obligación",
+ toast:function(v,s){return "Solo concepto: en el sitio real esto abre la revisión de 5 minutos con "+v+" y "+s+" ya llenados."}
+}};
+
+var S={lang:"en",band:"15000_25000",state:"TX",tick:0,paused:false,last:{owe:0,res:0,dep:0}};
+var bandOf=function(id){return BANDS.filter(function(b){return b.id===id})[0]};
+var stName=function(c){var m=STATES.filter(function(s){return s[0]===c})[0];return m?m[1]:""};
+var $=function(s,r){return (r||document).querySelector(s)},$$=function(s,r){return [].slice.call((r||document).querySelectorAll(s))};
+var money=function(n){return "$"+Math.round(n).toLocaleString("en-US")};
+var esc=function(t){return String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;")};
+var LOGO='<svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#fff"/><path d="M10 8h6c6 0 9 3.5 9 8s-3 8-9 8h-6z" fill="none" stroke="#F2A93B" stroke-width="3.2"/><path d="M13.5 16.5l2.5 2.5 4-5" fill="none" stroke="#0F2A2E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+function chips(t){return BANDS.map(function(b,i){return '<button type="button" class="chip" data-band="'+b.id+'" aria-pressed="'+(b.id===S.band)+'">'+esc(S.lang==="en"?b.label:t.ranges[i])+'</button>'}).join("")}
+function quick(t,id){
+  return '<form class="qs" onsubmit="return false" aria-label="'+esc(t.see)+'"><div class="q"><span>'+esc(t.qsQ)+'</span><small>'+esc(t.qsSmall)+'</small></div>'
+   +'<div class="chips" role="group">'+chips(t)+'</div>'
+   +'<div class="row2"><label class="sr" for="st'+id+'">State</label><select class="st" id="st'+id+'" data-state><option value="">'+esc(t.statePH)+'</option>'
+   +STATES.map(function(s){return '<option value="'+s[0]+'"'+(s[0]===S.state?' selected':'')+'>'+s[1]+'</option>'}).join("")+'<option value="other"'+(S.state==="other"?' selected':'')+'>'+esc(t.otherState)+'</option></select>'
+   +'<button class="btn" type="submit" data-start>'+esc(t.see)+'</button></div>'
+   +'<div class="note" data-note></div>'
+   +'<div class="micro">'+t.micro.map(function(m){return '<span>'+esc(m)+'</span>'}).join("")+'</div></form>';
+}
+function storyHTML(t){
+  var s=t.story;
+  var stages=s.stages.map(function(g,i){
+    var debt=i===0?'<div class="st-debt"><small>'+esc(s.debtLabel)+'</small><b>'+esc(s.debtAmt)+'</b><span>'+esc(s.debtSub)+'</span></div>':'';
+    return '<article class="stage" data-i="'+i+'" aria-label="'+esc(g.short)+'"><figure class="st-media"><img src="'+STORY[i]+'" alt="'+esc(g.alt)+'" style="object-position:'+STORY_POS[i]+'" width="1600" height="900" decoding="async"'+(i?' loading="lazy"':' fetchpriority="high"')+'><figcaption class="st-cap">'+esc(s.cap)+'</figcaption></figure><div class="st-copy"><p class="st-kicker">'+esc(g.k)+'</p><h3>'+esc(g.h)+'</h3><p class="st-p">'+esc(g.p)+'</p>'+debt+'<div class="st-ctas"><a class="btn" href="#top" data-start>'+esc(s.cta.primary)+'</a><span class="st-micro">'+esc(t.micro.join(" · "))+'</span></div></div></article>';
+  }).join("");
+  return '<section class="story" id="story" aria-labelledby="storyH"><h2 class="sr" id="storyH">'+esc(s.sr)+'</h2><div class="story-track" id="storyTrack"><div class="story-pin" id="storyPin">'+stages+'</div></div>'
+   +'<div class="story-cta"><div class="wrap"><h2>'+esc(s.cta.h)+'</h2><p>'+esc(s.cta.p)+'</p><div class="story-btns"><a class="btn" href="#top" data-start>'+esc(s.cta.primary)+'</a><a class="btn ghost" href="#how">'+esc(s.cta.secondary)+'</a></div></div></div></section>';
+}
+var storyMq=null,storyIO=null,storyFn=null;
+function initStory(){
+  if(storyIO){storyIO.disconnect();storyIO=null}
+  if(storyFn){window.removeEventListener("scroll",storyFn);window.removeEventListener("resize",storyFn);storyFn=null}
+  var track=$("#storyTrack"),pin=$("#storyPin");if(!track)return;
+  var stages=$$(".stage",pin);
+  if(!storyMq){storyMq=matchMedia("(max-width: 900px), (prefers-reduced-motion: reduce)");storyMq.addEventListener("change",function(){initStory()})}
+  if(storyMq.matches){
+    stages.forEach(function(s){s.classList.remove("on","prev")});
+    var io2=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io2.unobserve(e.target)}})},{threshold:.2});
+    stages.forEach(function(s){io2.observe(s)});
+    storyIO=io2;return;
+  }
+  var cur=-1,ticking=false;
+  function show(k){
+    stages.forEach(function(s){s.classList.remove("prev")});
+    if(cur>=0&&cur!==k){stages[cur].classList.remove("on");stages[cur].classList.add("prev")}
+    stages[k].classList.add("on");cur=k;
+  }
+  function apply(){
+    ticking=false;
+    var r=track.getBoundingClientRect(),span=r.height-pin.offsetHeight;if(span<=0)return;
+    var top=parseFloat(getComputedStyle(pin).top)||0,p=Math.max(0,Math.min(1,(top-r.top)/span));
+    var k=Math.min(stages.length-1,Math.floor(p*stages.length));
+    if(k!==cur)show(k);
+  }
+  storyFn=function(){if(!ticking){ticking=true;requestAnimationFrame(apply)}};
+  window.addEventListener("scroll",storyFn,{passive:true});window.addEventListener("resize",storyFn);
+  show(0);apply();
+}
+function build(){
+  var t=L[S.lang];document.documentElement.lang=S.lang;
+  var h='';
+  h+='<div class="bar">'+t.bar+'</div>';
+  h+='<header class="top"><div class="wrap in"><a class="brand" href="#top" aria-label="Debtify">'+LOGO+'Debtify</a><nav class="links" aria-label="Main"><a href="#how">'+t.nav[0]+'</a><a href="#trust">'+t.nav[1]+'</a><a href="#faq">'+t.nav[2]+'</a></nav><span class="call" title="Add your real support number here">☎ '+t.phone+'</span><div class="lang" role="group" aria-label="Language"><button type="button" data-lang="en" aria-pressed="'+(S.lang==="en")+'">EN</button><button type="button" data-lang="es" aria-pressed="'+(S.lang==="es")+'">ES</button></div><a class="btn sm" href="#top" data-start>'+t.cta+'</a></div></header>';
+  h+='<main id="top"><section class="hero"><div class="wrap grid"><div><span class="pill"><i></i>'+esc(t.eyebrow)+'</span><h1 class="hl">'+esc(t.h1a)+' <span class="grad">'+esc(t.h1b)+'</span></h1><p class="sub">'+esc(t.sub)+'</p>'
+   +quick(t,"a")
+   +'<ul class="chk">'+t.chips.map(function(c){return '<li>'+esc(c)+'</li>'}).join("")+'</ul>'
+   +'<div class="people"><div class="stack">'+PHOTOS.map(function(p){return '<img src="'+IMG[p]+'" alt="">'}).join("")+'</div><p>'+esc(t.peopleCap)+'</p></div>'
+   +'<div class="proof">'+['★★★★★','★★★★★','🛡'].map(function(s,i){return '<div class="slot"><span class="stars">'+s+'</span><span>'+esc(t.ratings[i])+'</span></div>'}).join("")+'</div></div>'
+   +'<div class="hv"><div class="hv-art">'+heroArt()+'</div><div class="float c"><i>☎</i> '+esc(t.f3)+'</div><div class="float b"><i>✓</i> '+esc(t.f1)+'</div><div class="plan" aria-live="polite"><div class="top"><span class="tag">'+esc(t.estTag)+'</span><span id="pstate"></span></div>'
+   +'<div class="bars"><div class="bar2"><span>'+esc(t.eOwe)+'</span><div class="track"><div class="fill owe" id="fOwe" style="width:100%"></div></div></div><div class="bar2"><span>'+esc(t.eRes)+'</span><div class="track"><div class="fill pay" id="fRes" style="width:70%"></div></div></div></div>'
+   +'<div class="dep"><div><div class="k">'+esc(t.eDep)+'</div><small id="dsub"></small></div><div class="v" id="dep"></div></div>'
+   +'<p class="feeline" id="feeline"></p><p class="fine">'+esc(t.eNote)+'</p></div><div class="float a"><i>⏱</i> '+esc(t.f2)+'</div></div></div></section>';
+  var items=t.trust.map(function(i){return '<div class="it"><span class="ic">'+i[0]+'</span><div><b>'+esc(i[1])+'</b><span class="t">'+esc(i[2])+'</span></div></div>'}).join("");
+  h+='<div class="rail"><div class="tr"><div class="set">'+items+'</div><div class="set" aria-hidden="true">'+items+'</div></div></div>';
+  var cols=["#64748B","#F0745B","#F2A93B","#4F6EFF","#10B981","#8B5CF6"],rots=["-1deg","1deg","-.6deg","1deg","-1deg",".6deg"];
+  h+='<section class="s"><div class="wrap center"><p class="eyebrow">'+esc(t.glE)+'</p><h2 class="h">'+esc(t.glH)+'</h2><div class="glance"><div class="bills"><div class="cap">'+esc(t.glCap)+'</div>'
+   +t.bills.map(function(b,i){return '<div class="bill" style="--c:'+cols[i]+';--rot:'+rots[i]+'"><span>'+esc(b)+'</span><b>'+t.billAmt[i]+'</b></div>'}).join("")+'</div>'
+   +'<div class="flow"><div class="arr"></div><div class="badge">'+esc(t.glFlow)+'</div></div>'
+   +'<div class="acct"><div class="top"><span class="lk">🔒</span><div>'+esc(t.glAcct)+'<div style="font-size:12px;color:#a9bfe6;font-weight:600">'+esc(t.glAcctSub)+'</div></div></div><div class="num">$460 <small>'+esc(t.glPer)+'</small></div><p style="margin-top:6px">'+esc(t.glMonths)+'</p><div class="prog"><i></i></div><p>'+esc(t.glProg)+'</p></div></div><p class="gnote">'+esc(t.glSkip)+'<br>'+esc(t.glNote)+'</p></div></section>';
+  h+='<section class="s" id="how"><div class="wrap center"><p class="eyebrow">'+esc(t.howE)+'</p><h2 class="h">'+esc(t.howH)+'<span style="color:var(--emerald-ink)">'+esc(t.howH2)+'</span></h2><ol class="journey" id="journey">'
+   +t.how.map(function(s,i){return '<li class="jn" style="--i:'+i+'"><span class="node">'+(i+1)+'</span><div class="jcard"><span class="sart">'+stepArt(i)+'</span><h3>'+esc(s[0])+'</h3><p>'+esc(s[1])+'</p></div></li>'}).join("")
+   +'</ol><div class="guide"><div class="av">'+AVATAR+'</div><div class="bubble"><b>'+esc(t.guide[0])+'</b>'+esc(t.guide[1])+'</div></div></div></section>';
+  h+=storyHTML(t);
+  h+='<section class="s white" id="trust"><div class="wrap center"><p class="eyebrow">'+esc(t.secE)+'</p><h2 class="h">'+esc(t.secH)+'</h2><div class="sec">'+t.sec.map(function(c){return '<div class="sc"><span class="ico">'+SEC_ICONS[c[0]]+'</span><h3>'+esc(c[1])+'</h3><p>'+esc(c[2])+'</p></div>'}).join("")+'</div></div></section>';
+  h+='<section class="s"><div class="wrap center"><p class="eyebrow">'+esc(t.stE)+'</p><h2 class="h">'+esc(t.stH)+'</h2><div class="cf"><div class="cf-stage" aria-live="polite">'
+   +t.stories.map(function(s,i){return '<figure class="cf-card" data-i="'+i+'"><div class="cf-photo"><img src="'+IMG[PHOTOS[i]]+'" alt="'+esc(s[1])+'"></div><figcaption>'+esc(s[1])+'</figcaption><blockquote>'+esc(s[0])+'</blockquote></figure>'}).join("")
+   +'</div><div class="dots">'+t.stories.map(function(s,i){return '<button type="button" data-dot="'+i+'" aria-label="'+esc(s[1])+'"></button>'}).join("")+'</div></div></div></section>';
+  h+='<section class="s white"><div class="wrap center"><p class="eyebrow">'+esc(t.costE)+'</p><h2 class="h">'+esc(t.costH)+'</h2><div class="two">'
+   +'<div class="panel dark"><div class="big">'+esc(t.costBig)+'</div><p style="margin-top:6px;color:#a9bfe6">'+esc(t.costBigSub)+'</p>'+t.costP.map(function(p){return '<p>'+esc(p)+'</p>'}).join("")+'</div>'
+   +'<div class="panel"><h3>'+esc(t.qualH)+'</h3><div class="lbl">'+esc(t.qualCan)+'</div><div class="qy">'+t.qualY.map(function(x){return '<span class="tg y">'+esc(x)+'</span>'}).join("")+'</div><div class="lbl">'+esc(t.qualCant)+'</div><div class="qy">'+t.qualN.map(function(x){return '<span class="tg n">'+esc(x)+'</span>'}).join("")+'</div><p style="color:var(--soft);font-size:14.5px">'+esc(t.qualP)+'</p></div></div></div></section>';
+  h+='<section class="s"><div class="wrap center"><p class="eyebrow">'+esc(t.riskE)+'</p><h2 class="h">'+esc(t.riskH)+'</h2><div class="dn">'+t.risks.map(function(r,i){return '<div class="dc"><div class="art">'+RISK_ART[i]+'</div><h3>'+esc(r[0])+'</h3><p>'+esc(r[1])+'</p></div>'}).join("")+'</div></div></section>';
+  h+='<section class="s white" id="faq"><div class="wrap center"><p class="eyebrow">'+esc(t.faqE)+'</p><h2 class="h">'+esc(t.faqH)+'</h2><div class="faq">'+FAQ_PICK.map(function(k){var f=t.faq[k];return '<details><summary>'+esc(f[0])+'</summary><p>'+esc(f[1])+'</p></details>'}).join("")+'</div><p class="posture">'+esc(t.posture)+'</p></div></section>';
+  h+='<section class="final"><img class="fside l" src="'+IMG.hellen+'" alt=""><img class="fside r" src="'+IMG.romario+'" alt=""><div class="wrap"><h2>'+esc(t.endH)+'</h2><p class="sub">'+esc(t.endP)+'</p>'+quick(t,"b")+'<ul class="reassure">'+t.reassure.map(function(r){return '<li>'+esc(r)+'</li>'}).join("")+'</ul></div></section></main>';
+  h+='<footer><div class="wrap"><p class="legal">'+esc(t.legal)+'</p><p class="posture">'+esc(t.posture)+'</p><div class="lic">'+t.lic.map(function(l){return '<div class="slot">'+esc(l)+'</div>'}).join("")+'</div><p>© 2026 Debtify · '+t.links.map(function(l){return '<a href="#">'+l+'</a>'}).join(" · ")+'</p></div></footer>';
+  $("#app").innerHTML=h;
+  $("#sticky").innerHTML='<a class="btn" href="#top" data-start>'+t.cta+'</a><small>'+esc(t.stick)+'</small>';
+  S.last={owe:0,res:0,dep:0};
+  update();cfUpdate();initStory();
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}})},{threshold:.15});
+  io.observe($("#journey"));
+}
+function anim(el,from,to,fmt,ms){var t0=performance.now();(function f(t){var p=Math.min(1,(t-t0)/ms),e=1-Math.pow(1-p,3);el.textContent=fmt(from+(to-from)*e);if(p<1)requestAnimationFrame(f)})(t0)}
+function update(){
+  /* Same method as the live flow: debt band midpoint + the state's licensed providers, always shown as ranges. */
+  var t=L[S.lang],b=bandOf(S.band),d=b.mid,served=S.state&&S.state!=="other"&&EST[S.state],e=served?EST[S.state][S.band]:null;
+  var rng=function(a,c){return money(a)+" – "+money(c)};
+  $("#pstate").textContent=(served?stName(S.state):t.yourState)+" · "+(S.lang==="en"?b.label:t.ranges[BANDS.indexOf(b)]);
+  anim($("#fOwe"),S.last.owe,d,function(n){return t.about+" "+money(n)},700);S.last.owe=d;
+  if(e){
+    var hiW=Math.max(12,Math.min(100,Math.round(e.resolve[1]/d*100)));
+    $("#fRes").style.width=hiW+"%";$("#fRes").textContent=rng(e.resolve[0],e.resolve[1]);
+    $("#dep").textContent=rng(e.dep[0],e.dep[1]);
+    $("#dsub").textContent=t.eDepSub(e.months[0],e.months[1]);
+    $("#feeline").textContent=t.eFee(e.fee[0],e.fee[1]);
+  }else{
+    $("#fRes").style.width="12%";$("#fRes").textContent="—";$("#dep").textContent="—";$("#dsub").textContent="";$("#feeline").textContent="";
+  }
+  $$(".chip").forEach(function(c){c.setAttribute("aria-pressed",c.dataset.band===S.band)});
+  $$("[data-state]").forEach(function(s){s.value=S.state});
+  var msg=S.band==="lt_7500"?t.warnSmall:(S.state==="other"?t.warnState:"");
+  $$("[data-note]").forEach(function(n){n.className="note"+(msg?" warn":"");n.textContent=msg});
+}
+function cfUpdate(){
+  var cards=$$(".cf-card"),n=cards.length,half=Math.floor(n/2),active=(((-S.tick)%n)+n)%n;
+  cards.forEach(function(c,i){var d=((i-active+n+half)%n)-half;c.style.setProperty("--d",d);c.classList.toggle("on",d===0);c.classList.toggle("far",Math.abs(d)>1);c.setAttribute("aria-hidden",d!==0)});
+  $$(".dots button").forEach(function(b,i){b.classList.toggle("on",i===active)});
+}
+var tt;function toast(m){var e=$("#toast");e.textContent=m;e.classList.add("on");clearTimeout(tt);tt=setTimeout(function(){e.classList.remove("on")},3800)}
+document.addEventListener("click",function(e){
+  var c=e.target.closest(".chip");if(c){S.band=c.dataset.band;update();return}
+  var l=e.target.closest("[data-lang]");if(l){S.lang=l.dataset.lang;build();return}
+  var s=e.target.closest("[data-start]");if(s){e.preventDefault();var t=L[S.lang];var bi=BANDS.indexOf(bandOf(S.band));toast(t.toast(S.lang==="en"?bandOf(S.band).label:t.ranges[bi],S.state&&S.state!=="other"?stName(S.state):t.yourState));return}
+  var dt=e.target.closest("[data-dot]");if(dt){var n=$$(".cf-card").length,a=(((-S.tick)%n)+n)%n;S.tick+=((a-(+dt.dataset.dot))+n)%n;cfUpdate();return}
+  var cd=e.target.closest(".cf-card");if(cd&&!cd.classList.contains("on")){var n2=$$(".cf-card").length,a2=(((-S.tick)%n2)+n2)%n2;S.tick+=((a2-(+cd.dataset.i))+n2)%n2;cfUpdate()}
+});
+document.addEventListener("change",function(e){if(e.target.matches("[data-state]")){S.state=e.target.value;update()}});
+document.addEventListener("mouseover",function(e){if(e.target.closest(".cf"))S.paused=true});
+document.addEventListener("mouseout",function(e){if(e.target.closest(".cf"))S.paused=false});
+setInterval(function(){if(S.paused||matchMedia("(prefers-reduced-motion: reduce)").matches)return;S.tick+=1;cfUpdate()},5000);
+$("#nb").addEventListener("click",function(){$("#notes").classList.toggle("on")});
+build();
+})();
+</script>
+</body>
+</html>
