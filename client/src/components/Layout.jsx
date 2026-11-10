@@ -89,7 +89,6 @@ export function Footer() {
           <p className="foot-posture">{x.posture || BRAND.posture}</p>
           <p className="foot-comp">{x.comp} {x.imgNote}</p>
         </div>
-        {meta?.demoMode && <p className="demo-note">{x.stageNote}</p>}
         <div className="foot-base"><span>© {new Date().getFullYear()} Debtify</span></div>
       </div>
     </footer>

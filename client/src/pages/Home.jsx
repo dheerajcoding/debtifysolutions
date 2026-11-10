@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useApp } from "../context/AppContext.jsx";
 import { AP, RISKS, SITE } from "../lib/copy.js";
@@ -18,9 +18,64 @@ const BILLS = [6240, 4815, 3190, 2420, 4720, 2185];
 const BILL_COLORS = ["#5C7377", "#B3261E", "#F2A93B", "#0B7A6E", "#3CC2AE", "#8F5F00"];
 const TICK = '<svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9" class="v-g"/><path d="M6 10l3 3 5-6" stroke="var(--on-accent)" stroke-width="2" fill="none"/></svg>';
 
+// True once the element has scrolled into view (or straight away without IntersectionObserver / with reduced motion).
+function useSeen(ref) {
+  const [seen, setSeen] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || !("IntersectionObserver" in window) || window.matchMedia("(prefers-reduced-motion: reduce)").matches) { setSeen(true); return; }
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setSeen(true); io.disconnect(); } }, { threshold: 0.25 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  return seen;
+}
+
+// Counts a dollar amount up from 0 once `go` is true.
+function CountUsd({ to, go, delay = 0 }) {
+  const [v, setV] = useState(to);
+  useEffect(() => {
+    if (!go || !(to > 0) || window.matchMedia("(prefers-reduced-motion: reduce)").matches) { setV(to); return; }
+    let raf, t0;
+    const run = (t) => {
+      t0 = t0 ?? t;
+      const k = Math.min(1, Math.max(0, (t - t0 - delay) / 1200));
+      setV(Math.round(to * (1 - Math.pow(1 - k, 3))));
+      if (k < 1) raf = requestAnimationFrame(run);
+    };
+    setV(0);
+    raf = requestAnimationFrame(run);
+    return () => cancelAnimationFrame(raf);
+  }, [go, to]);
+  return usd(v);
+}
+
 export default function Home() {
   const { lang, meta, lead, setUi, a, x: fx } = useApp();
   const nav = useNavigate();
+  const glanceRef = useRef(null);
+  const glanceIn = useSeen(glanceRef);
+  // Curved guide lines from each debt card into the arrow, so the six debts visibly merge into one deposit.
+  const [lines, setLines] = useState([]);
+  useEffect(() => {
+    const g = glanceRef.current;
+    if (!g) return;
+    const measure = () => {
+      const arr = g.querySelector(".flow .arr"), bills = g.querySelectorAll(".bill");
+      if (!arr || window.innerWidth <= 900) { setLines([]); return; }
+      const ex = arr.offsetLeft, ey = arr.offsetTop + arr.offsetHeight / 2;
+      setLines([...bills].map((b) => {
+        // Clean right-angle connector: out of the card, along a shared rail, into the arrow.
+        const sx = b.offsetLeft + b.offsetWidth, sy = b.offsetTop + b.offsetHeight / 2, rx = sx + Math.min(26, (ex - sx) / 2);
+        return `M${sx} ${sy} H${rx} V${ey} H${ex}`;
+      }));
+    };
+    measure();
+    const ro = "ResizeObserver" in window ? new ResizeObserver(measure) : null;
+    ro?.observe(g);
+    window.addEventListener("resize", measure);
+    return () => { ro?.disconnect(); window.removeEventListener("resize", measure); };
+  }, [lang, !!meta?.sample]);
   const x = SITE[lang], ap = AP[lang];
   const guide = x.guide;
   const hp = meta?.sample;
@@ -129,19 +184,25 @@ export default function Home() {
       <section className="s-sec reveal center-sec" id="glance">
         <p className="s-eyebrow">{x.glE}</p>
         <h2 className="s-h2">{x.glH}</h2>
-        <div className="glance">
+        <div className={"glance " + (glanceIn ? "in" : "pre")} ref={glanceRef}>
           <div className="bills">
             <p className="cap">{x.glCap(hp?.includedTlIds?.length ?? BILLS.length, usd(hp?.enrolledDebt ?? BILLS.reduce((s, n) => s + n, 0)))}</p>
             {x.bills.map((b, i) => (
-              <div key={i} className="bill" style={{ "--c": BILL_COLORS[i], "--rot": `${[-1, 1, -0.6, 1, -1, 0.6][i]}deg` }}>
-                <span>{b}</span><b>{usd(BILLS[i])}</b>
+              <div key={i} className="bill" style={{ "--c": BILL_COLORS[i], "--i": i }}>
+                <span>{b}</span><b><CountUsd to={BILLS[i]} go={glanceIn} delay={i * 90} /></b>
               </div>
             ))}
           </div>
+          {lines.length > 0 && (
+            <div className="gl-lines" aria-hidden="true">
+              <svg>{lines.map((d, i) => <path key={i} d={d} pathLength="1" className="gl-line" style={{ "--i": i }} />)}</svg>
+              {lines.map((d, i) => <span key={i} className="gl-dot" style={{ offsetPath: `path("${d}")`, "--i": i }} />)}
+            </div>
+          )}
           <div className="flow"><div className="arr" /><div className="badge">{x.glFlow}</div></div>
           <div className="acct">
             <div className="acct-top"><span className="lk" aria-hidden="true">🔒</span><div>{x.glAcct}</div></div>
-            <div className="num">{hp ? usd(hp.monthlyDeposit) : "—"} <small>{x.glPer}</small></div>
+            <div className="num">{hp ? <CountUsd to={hp.monthlyDeposit} go={glanceIn} delay={700} /> : "—"} <small>{x.glPer}</small></div>
             <p className="mo">{x.glMonths(termText || "36–42")}</p>
             <div className="prog"><i /></div>
             <p>{x.glProg}</p>
@@ -239,8 +300,8 @@ export default function Home() {
       </section>
 
       <section className="s-end">
-        <img className="fside l" src="/testimonials/hellen.jpg" alt="" width="150" height="150" loading="lazy" decoding="async" />
-        <img className="fside r" src="/testimonials/marina.jpg" alt="" width="150" height="150" loading="lazy" decoding="async" />
+        <img className="fside l" src="/footer/footer-1.png" alt="" width="800" height="522" loading="lazy" decoding="async" />
+        <img className="fside r" src="/footer/footer-2.png" alt="" width="740" height="458" loading="lazy" decoding="async" />
         <h2 className="s-h2">{x.endH}</h2>
         <p>{x.endP}</p>
         <ul className="end-reassure">

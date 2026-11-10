@@ -197,7 +197,6 @@ export default function Site() {
           <div className="s-footin">
             <div className="brandmark"><Html as="span" html={LOGO} style={{ display: "contents" }} /><b>Debtify</b></div>
             <p>{x.legal}</p>
-            <p className="demo-note">{x.stageNote}</p>
             <button className="linkbtn" onClick={() => (location.hash = "ops")}>{x.staff}</button>
           </div>
         </footer>

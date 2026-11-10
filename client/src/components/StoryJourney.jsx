@@ -61,12 +61,13 @@ export default function StoryJourney() {
                 <p className="jk">{g.k}</p>
                 <h3>{g.h}</h3>
                 <p className="jp">{g.p}</p>
+                {g.b && <ul className="jb">{g.b.map((t) => <li key={t}>{t}</li>)}</ul>}
                 {i === 0 && (
                   <div className="jdebt"><small>{s.debtLabel}</small><b>{s.debtAmt}</b><span>{s.debtSub}</span></div>
                 )}
                 <div className="jctas">
-                  <Link className="jbtn" to="/apply">{s.cta.primary}</Link>
-                  <span className="jmicro">{s.micro}</span>
+                  <Link className="jbtn" to="/apply">{g.cta}</Link>
+                  <span className="jmicro">{s.micro} · <Link to="/legal/disclosures">{s.disc}</Link></span>
                 </div>
               </div>
             </article>
@@ -80,6 +81,7 @@ export default function StoryJourney() {
           <Link className="jbtn" to="/apply">{s.cta.primary}</Link>
           <Link className="jbtn ghost" to="/#how">{s.cta.secondary}</Link>
         </div>
+        <p className="jstory-fine">{s.micro} · <Link to="/legal/disclosures">{s.disc}</Link></p>
       </div>
     </section>
   );
