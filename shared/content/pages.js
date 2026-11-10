@@ -219,7 +219,7 @@ const HOME_FAQS = [
 ];
 const PAGE_META = { home: {
   title: "Debt settlement, with the downsides first",
-  description: "A self-serve debt settlement check that shows you the credit damage, the lawsuit risk and the tax exposure before it shows you a program. Four minutes, no sales call.",
+  description: "Check your debt settlement options online in about 5 minutes. Soft credit check, costs and risks shown up front, and no obligation. English y Español.",
   alternates: { canonical: "/" }
 }, how: {
   title: "How the debt settlement enrollment process works",

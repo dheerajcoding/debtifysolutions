@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { avatarVariant } from "../lib/viz.js";
 import { Html } from "./ui.jsx";
 
-// items: [line, who, photoUrl?]. Review-style cards with a small round photo; they slide sideways, click a side card to bring it forward.
+// items: [line, who, photoUrl?, state?]. Review-style cards with a small round photo; they slide sideways, click a side card to bring it forward.
 export default function Testimonials({ items }) {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -20,7 +20,7 @@ export default function Testimonials({ items }) {
   return (
     <div className="rv" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocus={() => setPaused(true)} onBlur={() => setPaused(false)}>
       <div className="rv-stage" aria-live="polite">
-        {items.map(([line, who, photo], i) => {
+        {items.map(([line, who, photo, state], i) => {
           const d = ((i - active + n + half) % n) - half;
           return (
             <figure
@@ -33,7 +33,7 @@ export default function Testimonials({ items }) {
               <span className="rv-q" aria-hidden="true">“</span>
               <span className="rv-photo">{photo ? <img src={photo} alt="" width="64" height="64" decoding="async" loading="lazy" /> : <Html html={avatarVariant(i)} />}</span>
               <div className="rv-body">
-                <figcaption>{who}</figcaption>
+                <figcaption>{who}{state && <span className="rv-st"> · {state}</span>}</figcaption>
                 <blockquote>{line}</blockquote>
               </div>
             </figure>

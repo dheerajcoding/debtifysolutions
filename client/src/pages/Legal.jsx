@@ -118,6 +118,14 @@ export function Contact() {
 
 export function NotFound() {
   const { a } = useApp();
+  // Tell search engines not to index unknown addresses, and fix the tab title.
+  useEffect(() => {
+    document.title = `${a.notFoundH} · Debtify`;
+    const m = document.createElement("meta");
+    m.name = "robots"; m.content = "noindex";
+    document.head.appendChild(m);
+    return () => m.remove();
+  }, []);
   return (
     <SiteLayout>
       <div className="page center pad">

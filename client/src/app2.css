@@ -351,7 +351,7 @@ h2.how-h { max-width: none; font-size: clamp(24px, 3.3vw, 40px); text-wrap: nowr
 @media (min-width: 901px) { .hero { grid-template-columns: minmax(0, 1fr) minmax(0, 500px) } }
 .hv { position: relative; display: grid; min-height: 640px; width: 100%; max-width: 500px; justify-self: end }
 .hv-art { grid-area: 1/1; justify-self: end; width: 84%; height: 640px; border-radius: 28px; overflow: hidden; background: linear-gradient(160deg, #DFF1EC, #FDF0D9); box-shadow: 0 30px 70px rgba(0, 0, 0, .4) }
-.hv-art img { width: 100%; height: 100%; display: block; object-fit: cover; object-position: 50% 0; mix-blend-mode: multiply }
+.hv-art img { width: 100%; height: 100%; display: block; object-fit: cover; object-position: 50% 0 }
 .hv .plan { grid-area: 1/1; align-self: end; justify-self: start; width: 78%; max-width: none; margin-bottom: -6px }
 .hv .plan-steps { display: none }
 .hv .plan-dep .v { font-size: 32px; white-space: nowrap }
@@ -362,7 +362,7 @@ h2.how-h { max-width: none; font-size: clamp(24px, 3.3vw, 40px); text-wrap: nowr
 @keyframes hvbob { 50% { transform: translateY(-8px) } }
 @media (max-width: 900px) {
   .hv { display: flex; flex-direction: column; min-height: 0; max-width: none }
-  .hv-art { width: 100%; height: 300px }
+  .hv-art { width: 100%; height: 300px } .hv-art img { height: 100%; object-fit: cover; object-position: 50% 30% }
   .hv .plan { width: 92%; align-self: center; margin: -56px 0 0; position: relative; z-index: 2 }
   .hv-float.c { top: 16px; right: 6px } .hv-float.b { top: 70px; right: 6px }
 }
@@ -628,20 +628,62 @@ footer.s-foot .foot-col a.foot-more { margin-top: 2px; font-weight: 700; color: 
 .jstory-btns { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 24px }
 
 @media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
-  .jstory.enh .jstory-track { height: 330vh; position: relative }
-  .jstory.enh .jstory-pin { position: sticky; top: var(--hdr); height: calc(100vh - var(--hdr)); min-height: 560px; overflow: hidden }
+  .jstory.enh .jstory-track { position: relative }
+  .jstory.enh .jstory-pin { position: relative; height: clamp(560px, 80vh, 720px); overflow: hidden }
   .jstory.enh .jstage { position: absolute; inset: 0; grid-template-columns: 64fr 36fr; visibility: hidden; pointer-events: none; z-index: 1; clip-path: inset(0 0 0 100%) }
   .jstory.enh .jstage.prev { visibility: visible; z-index: 2; clip-path: inset(0) }
-  .jstory.enh .jstage.on { visibility: visible; pointer-events: auto; z-index: 3; clip-path: inset(0); transition: clip-path 1.1s cubic-bezier(.77, 0, .18, 1) }
+  .jstory.enh .jstage.on { visibility: visible; pointer-events: auto; z-index: 3; clip-path: inset(0); transition: clip-path .9s cubic-bezier(.77, 0, .18, 1) }
   .jstory.enh .jstage-media { aspect-ratio: auto }
-  .jstory.enh .jstage-media img { inset: -4%; width: 108%; height: 108%; transform: scale(1.12); transition: transform 6s ease-out; will-change: transform }
+  .jstory.enh .jstage-media img { inset: -4%; width: 108%; height: 108%; transform: scale(1.12); transition: transform 4s ease-out; will-change: transform }
   .jstory.enh .jstage.on .jstage-media img, .jstory.enh .jstage.prev .jstage-media img { transform: scale(1.02) }
   .jstory.enh .jstage-media::after { background: linear-gradient(90deg, transparent 52%, var(--deep) 100%), linear-gradient(0deg, rgba(0, 0, 0, .42), transparent 38%) }
   .jstory.enh .jstage-copy { justify-content: center; padding: 34px clamp(20px, 3.6vw, 68px) 34px clamp(14px, 2.2vw, 40px) }
-  .jstory.enh .jstage-copy > * { opacity: 0; transform: translateY(26px); transition: opacity .7s ease, transform .7s ease }
+  .jstory.enh .jstage-copy > * { opacity: 0; transform: translateY(26px); transition: opacity .5s ease, transform .5s ease }
   .jstory.enh .jstage.on .jstage-copy > * { opacity: 1; transform: none }
-  .jstory.enh .jstage.on .jstage-copy > :nth-child(1) { transition-delay: .55s } .jstory.enh .jstage.on .jstage-copy > :nth-child(2) { transition-delay: .67s } .jstory.enh .jstage.on .jstage-copy > :nth-child(3) { transition-delay: .79s } .jstory.enh .jstage.on .jstage-copy > :nth-child(4) { transition-delay: .91s } .jstory.enh .jstage.on .jstage-copy > :nth-child(5) { transition-delay: 1.03s }
+  .jstory.enh .jstage.on .jstage-copy > :nth-child(1) { transition-delay: .3s } .jstory.enh .jstage.on .jstage-copy > :nth-child(2) { transition-delay: .38s } .jstory.enh .jstage.on .jstage-copy > :nth-child(3) { transition-delay: .46s } .jstory.enh .jstage.on .jstage-copy > :nth-child(4) { transition-delay: .54s } .jstory.enh .jstage.on .jstage-copy > :nth-child(5) { transition-delay: .62s }
   .jstory.enh .jstage.prev .jstage-copy > * { opacity: 1; transform: none; transition: none }
   .jstory.enh .jp { font-size: 18px }
   .jstory.enh .jctas { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; margin-top: 28px }
 }
+
+/* Footer illustration sits whole inside its frame. */
+.fside.l { object-fit: contain; object-position: 50% 50%; background: linear-gradient(160deg, #EAF6F4, #FDF3DE) }
+
+/* Language switch: a glowing gold thumb with a slow shine marks the active language and slides between them. */
+.lang.lang { position: relative; display: inline-grid; grid-template-columns: 1fr 1fr; padding: 3px; overflow: visible; isolation: isolate; border-radius: 999px; border-color: color-mix(in srgb, var(--accent) 45%, var(--line)) }
+.lang.lang button { position: relative; z-index: 1; min-width: 40px; padding: 6px 12px; border-radius: 999px; font-size: 12.5px; font-weight: 800; letter-spacing: .05em; cursor: pointer; transition: color .25s ease, opacity .25s ease; opacity: .72 }
+.lang.lang button:hover { opacity: 1 }
+.lang.lang button[aria-pressed="true"] { opacity: 1; font-weight: 900; color: var(--on-accent); background: var(--accent) }
+.lang.lang button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
+@supports selector(:has(*)) {
+  .lang.lang button[aria-pressed="true"] { background: transparent }
+  .lang.lang::before { content: ""; position: absolute; z-index: 0; top: 3px; bottom: 3px; left: 3px; width: calc(50% - 3px); border-radius: 999px;
+    background: linear-gradient(110deg, var(--accent) 38%, color-mix(in srgb, var(--accent) 35%, #fff) 50%, var(--accent) 62%); background-size: 260% 100%; background-position: 120% 0;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 28%, transparent), 0 4px 14px color-mix(in srgb, var(--accent) 55%, transparent);
+    transition: transform .38s cubic-bezier(.34, 1.4, .5, 1) }
+  .lang.lang:has(button:last-child[aria-pressed="true"])::before { transform: translateX(100%) }
+}
+@media (prefers-reduced-motion: no-preference) { .lang.lang::before { animation: langShine 4.5s ease-in-out infinite } }
+@keyframes langShine { 0%, 62% { background-position: 120% 0 } 100% { background-position: -20% 0 } }
+@media (prefers-reduced-motion: reduce) { .lang.lang::before, .lang.lang button { transition: none } }
+
+/* Closing band images: no frame, edges dissolve into the dark background, slow float. */
+.fside.fside { border: 0; border-radius: 0; box-shadow: none; background: none; object-fit: contain; -webkit-mask-image: radial-gradient(closest-side, #000 42%, rgba(0, 0, 0, .55) 70%, transparent 100%); mask-image: radial-gradient(closest-side, #000 42%, rgba(0, 0, 0, .55) 70%, transparent 100%); filter: brightness(.9) saturate(1.05) }
+@media (min-width: 1200px) { .fside.fside { width: 210px; height: 210px; margin-top: -105px } }
+@media (min-width: 1500px) { .fside.fside { width: 300px; height: 290px; margin-top: -145px } }
+@media (prefers-reduced-motion: no-preference) {
+  .fside.fside { animation: fsFloat 7s ease-in-out infinite }
+  .fside.r { animation-delay: -3.5s }
+}
+@keyframes fsFloat { 0%, 100% { translate: 0 0 } 50% { translate: 0 -8px } }
+
+.rv-st { font-weight: 600; letter-spacing: .02em; text-transform: none; color: var(--soft) }
+
+/* Closing band photos: wide, cropped to fill, edges dissolve. */
+.s-end .fside.fside { object-fit: cover; object-position: 50% 30%; filter: saturate(1.05) }
+@media (min-width: 1200px) { .s-end .fside.fside { width: 250px; height: 170px; margin-top: -85px } }
+@media (min-width: 1500px) { .s-end .fside.fside { width: 380px; height: 250px; margin-top: -125px } }
+
+/* Small pause / play control for the auto-advancing stages. */
+.jpause { position: absolute; left: 18px; bottom: 16px; z-index: 5; width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, .35); background: rgba(0, 0, 0, .35); color: #fff; font-size: 11px; line-height: 1; cursor: pointer; display: grid; place-items: center; backdrop-filter: blur(4px); opacity: .75; transition: opacity .2s }
+.jpause:hover, .jpause:focus-visible { opacity: 1 }

@@ -14,7 +14,7 @@ const BRAND = {
   /** Used in the Terms of Use. Have counsel confirm. */
   governingLaw: "the State of California",
   /** One line. Describes the platform, never promises an outcome. */
-  tagline: "See your real options in four minutes. No sales call required.",
+  tagline: "See your real options in about 5 minutes. No obligation.",
   /**
    * Said on every page that could be mistaken for a provider relationship.
    * This sentence is load-bearing for the licensing posture — see §19 of the dossier.

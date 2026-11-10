@@ -141,12 +141,13 @@ a { color: var(--brand) }
 .call { min-height: 90px }
 
 /* chat placement on full pages */
-.flow-main .fab, .dash-chat .fab { position: fixed; right: 20px; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); margin: 0; z-index: 40 }
-.flow-main .chat, .dash-chat .chat { position: fixed; right: 20px; bottom: 20px; width: min(400px, calc(100vw - 32px)); max-height: min(620px, 78vh); border: 1px solid var(--line); border-radius: 18px; z-index: 41; box-shadow: 0 20px 50px rgba(4,20,18,.25) }
+.flow-main .fab, .dash-chat .fab, .site-chat .fab { position: fixed; right: 20px; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); margin: 0; z-index: 40 }
+.flow-main .chat, .dash-chat .chat, .site-chat .chat { position: fixed; right: 20px; bottom: 20px; width: min(400px, calc(100vw - 32px)); max-height: min(620px, 78vh); border: 1px solid var(--line); border-radius: 18px; z-index: 41; box-shadow: 0 20px 50px rgba(4,20,18,.25) }
 @media (max-width: 640px) {
   .flow-main .fab { bottom: calc(104px + env(safe-area-inset-bottom, 0px)); right: 12px; padding: 5px }
   .flow-main .fab-label { display: none }
-  .flow-main .chat, .dash-chat .chat { left: 0; right: 0; bottom: 0; width: 100%; border-radius: 18px 18px 0 0 }
+  .site-chat .fab { bottom: calc(84px + env(safe-area-inset-bottom, 0px)); right: 16px }
+  .flow-main .chat, .dash-chat .chat, .site-chat .chat { left: 0; right: 0; bottom: 0; width: 100%; border-radius: 18px 18px 0 0 }
 }
 .chat .avatar { width: 30px; height: 30px }
 .fab .avatar { width: 30px; height: 30px }

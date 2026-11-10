@@ -181,3 +181,37 @@ main .cons-grid.reveal-stagger > *, main .sec-grid.reveal-stagger > *, main .gui
 main .reveal { transform: none }
 main .hero, main .heroband .hero, main .plan, main .big { animation: none }
 main .card, main .panel, main .rcard, main .kpi, main .opt, main .phase { animation: none }
+
+
+/* ---------- Homepage motion pack: scroll reveals, hero entrance, CTA polish ---------- */
+@keyframes rvUp { from { opacity: 0; transform: translateY(26px) } }
+@keyframes heroUp { from { opacity: 0; transform: translateY(20px) } }
+@keyframes heroUpT { from { transform: translateY(20px) } }
+@keyframes heroArt { from { opacity: 0; transform: translateX(28px) scale(.97) } }
+@keyframes ctaRing { 0% { box-shadow: 0 0 0 0 rgba(242, 169, 59, .55) } 45%, 100% { box-shadow: 0 0 0 16px rgba(242, 169, 59, 0) } }
+@media (prefers-reduced-motion: no-preference) {
+  html.rv-on main .rv:not(.rv-in) { opacity: 0; transform: translateY(28px) }
+  html.rv-on .rv { transition: opacity .7s var(--ease), transform .7s var(--ease) }
+  html.rv-on main .rv-kids:not(.rv-in) > * { opacity: 0 }
+  .rv-kids.rv-in > * { animation: rvUp .65s var(--ease) backwards }
+  .rv-kids.rv-in > :nth-child(2) { animation-delay: .09s } .rv-kids.rv-in > :nth-child(3) { animation-delay: .18s }
+  .rv-kids.rv-in > :nth-child(4) { animation-delay: .27s } .rv-kids.rv-in > :nth-child(5) { animation-delay: .36s }
+  .rv-kids.rv-in > :nth-child(n+6) { animation-delay: .45s }
+  .rv-in .how-h .go::after { animation: howline 1s .3s cubic-bezier(.4, .1, .2, 1) both; transform-origin: left }
+  .rv-in .how-h .arr { animation: howarr 1.6s 1.2s ease-in-out infinite }
+
+  /* Hero: copy rises in sequence, the picture slides in, the main button gives a soft ring now and then. */
+  .hero-copy > * { animation: heroUp .8s var(--ease) backwards }
+  .hero-copy > h1 { animation-name: heroUpT }
+  .hero-copy > :nth-child(1) { animation-delay: .05s } .hero-copy > :nth-child(2) { animation-delay: .12s }
+  .hero-copy > :nth-child(3) { animation-delay: .22s } .hero-copy > :nth-child(4) { animation-delay: .32s }
+  .hero-copy > :nth-child(5) { animation-delay: .42s } .hero-copy > :nth-child(6) { animation-delay: .52s }
+  .hero-copy > :nth-child(n+7) { animation-delay: .62s }
+  .hv-art { animation: heroArt 1s .2s var(--ease) backwards }
+  .hero .s-ctas .s-btn:first-child { animation: ctaRing 4.2s 2.4s ease-out infinite }
+  .hero .s-ctas .s-btn:first-child:hover { animation: none }
+}
+/* Shine sweep across buttons on hover. */
+.s-btn { position: relative; overflow: hidden }
+.s-btn::after { content: ""; position: absolute; inset: 0; background: linear-gradient(110deg, transparent 32%, rgba(255, 255, 255, .38) 50%, transparent 68%); transform: translateX(-130%); pointer-events: none }
+@media (prefers-reduced-motion: no-preference) { .s-btn:hover::after { transform: translateX(130%); transition: transform .8s var(--ease) } }

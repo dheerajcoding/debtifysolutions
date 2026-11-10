@@ -46,7 +46,7 @@ function ScrollToHash() {
   useEffect(() => {
     if (hash) setTimeout(() => document.getElementById(hash.slice(1))?.scrollIntoView({ behavior: "smooth" }), 50);
     else window.scrollTo(0, 0);
-    if (pathname === "/") document.title = "Debtify · Settle debt on your own terms";
+    if (pathname === "/") document.title = "Debt Settlement Options in About 5 Minutes | Debtify";
     const t = setTimeout(startReveal, 60);
     // Keep canonical in sync with the current route
     let link = document.querySelector('link[rel="canonical"]');

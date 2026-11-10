@@ -6,6 +6,7 @@ import { LOGO } from "../lib/viz.js";
 import { BRAND } from "@shared/config/brand.js";
 import { Html, LangSwitch } from "./ui.jsx";
 import { openCookieSettings } from "./Consent.jsx";
+import Chat from "./Chat.jsx";
 
 export const Logo = () => (
   <Link to="/" className="brandmark" aria-label="Debtify home">
@@ -120,6 +121,7 @@ export function SiteLayout({ children }) {
       <main id="main">{children}</main>
       <Footer />
       <MobileCta />
+      <div className="site-chat"><Chat /></div>
     </>
   );
 }

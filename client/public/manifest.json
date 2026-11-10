@@ -1,7 +1,7 @@
 {
   "name": "Debtify",
   "short_name": "Debtify",
-  "description": "See your real options in four minutes. No sales call.",
+  "description": "Check your debt settlement options in about 5 minutes. No obligation.",
   "start_url": "/dashboard",
   "scope": "/",
   "display": "standalone",

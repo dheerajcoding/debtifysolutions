@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useApp } from "../context/AppContext.jsx";
 import Flow from "../components/Flow.jsx";
 import { Logo, StageProgress } from "../components/Layout.jsx";
@@ -12,6 +12,15 @@ export default function Apply() {
   useEffect(() => {
     document.title = "Apply · Debtify";
   }, []);
+  // Funnel events for analytics (sent only if the visitor accepted cookies and IDs are configured).
+  const sent = useRef(0);
+  useEffect(() => {
+    if (!leadLoaded || step === sent.current) return;
+    sent.current = step;
+    window.gtag?.("event", "apply_step", { step, step_name: x.stepNames?.[step] });
+    if (step === 2) { window.gtag?.("event", "generate_lead"); window.fbq?.("track", "Lead"); }
+    if (step === 10) { window.gtag?.("event", "apply_complete"); window.fbq?.("track", "CompleteRegistration"); }
+  }, [step, leadLoaded]);
 
   return (
     <div className="apply">
