@@ -627,23 +627,35 @@ footer.s-foot .foot-col a.foot-more { margin-top: 2px; font-weight: 700; color: 
 .jstory-end p { margin: 0; color: var(--on-deep-soft); font-size: 17px }
 .jstory-btns { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 24px }
 
-@media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
+/* Sliding stages — all screen sizes where reduced-motion is not preferred */
+@media (prefers-reduced-motion: no-preference) {
   .jstory.enh .jstory-track { position: relative }
-  .jstory.enh .jstory-pin { position: relative; height: clamp(560px, 80vh, 720px); overflow: hidden }
-  .jstory.enh .jstage { position: absolute; inset: 0; grid-template-columns: 64fr 36fr; visibility: hidden; pointer-events: none; z-index: 1; clip-path: inset(0 0 0 100%) }
+  /* mobile/tablet: single column, image ~52% / text fills rest */
+  .jstory.enh .jstory-pin { position: relative; height: clamp(520px, 92svh, 660px); overflow: hidden }
+  .jstory.enh .jstage { position: absolute; inset: 0; grid-template-columns: 1fr; grid-template-rows: 52% 1fr; visibility: hidden; pointer-events: none; z-index: 1; clip-path: inset(0 0 0 100%) }
   .jstory.enh .jstage.prev { visibility: visible; z-index: 2; clip-path: inset(0) }
   .jstory.enh .jstage.on { visibility: visible; pointer-events: auto; z-index: 3; clip-path: inset(0); transition: clip-path .9s cubic-bezier(.77, 0, .18, 1) }
   .jstory.enh .jstage-media { aspect-ratio: auto }
   .jstory.enh .jstage-media img { inset: -4%; width: 108%; height: 108%; transform: scale(1.12); transition: transform 4s ease-out; will-change: transform }
   .jstory.enh .jstage.on .jstage-media img, .jstory.enh .jstage.prev .jstage-media img { transform: scale(1.02) }
-  .jstory.enh .jstage-media::after { background: linear-gradient(90deg, transparent 52%, var(--deep) 100%), linear-gradient(0deg, rgba(0, 0, 0, .42), transparent 38%) }
-  .jstory.enh .jstage-copy { justify-content: center; padding: 34px clamp(20px, 3.6vw, 68px) 34px clamp(14px, 2.2vw, 40px) }
-  .jstory.enh .jstage-copy > * { opacity: 0; transform: translateY(26px); transition: opacity .5s ease, transform .5s ease }
+  .jstory.enh .jstage-copy { justify-content: flex-start; padding: 16px 20px 20px; overflow-y: auto }
+  .jstory.enh .jstage-copy h3 { font-size: clamp(22px, 5.5vw, 32px); margin: 10px 0 10px }
+  .jstory.enh .jstage-copy > * { opacity: 0; transform: translateY(16px); transition: opacity .5s ease, transform .5s ease }
   .jstory.enh .jstage.on .jstage-copy > * { opacity: 1; transform: none }
   .jstory.enh .jstage.on .jstage-copy > :nth-child(1) { transition-delay: .3s } .jstory.enh .jstage.on .jstage-copy > :nth-child(2) { transition-delay: .38s } .jstory.enh .jstage.on .jstage-copy > :nth-child(3) { transition-delay: .46s } .jstory.enh .jstage.on .jstage-copy > :nth-child(4) { transition-delay: .54s } .jstory.enh .jstage.on .jstage-copy > :nth-child(5) { transition-delay: .62s }
   .jstory.enh .jstage.prev .jstage-copy > * { opacity: 1; transform: none; transition: none }
+  .jstory.enh .jctas { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; margin-top: 16px }
+}
+
+/* Desktop: side-by-side image + text layout */
+@media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
+  .jstory.enh .jstory-pin { height: clamp(560px, 80vh, 720px) }
+  .jstory.enh .jstage { grid-template-columns: 64fr 36fr; grid-template-rows: unset }
+  .jstory.enh .jstage-media::after { background: linear-gradient(90deg, transparent 52%, var(--deep) 100%), linear-gradient(0deg, rgba(0, 0, 0, .42), transparent 38%) }
+  .jstory.enh .jstage-copy { justify-content: center; padding: 34px clamp(20px, 3.6vw, 68px) 34px clamp(14px, 2.2vw, 40px); overflow-y: unset }
+  .jstory.enh .jstage-copy h3 { font-size: clamp(26px, 3vw, 46px); margin: 14px 0 14px }
   .jstory.enh .jp { font-size: 18px }
-  .jstory.enh .jctas { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; margin-top: 28px }
+  .jstory.enh .jctas { gap: 10px; margin-top: 28px }
 }
 
 /* Footer illustration sits whole inside its frame. */
@@ -685,5 +697,9 @@ footer.s-foot .foot-col a.foot-more { margin-top: 2px; font-weight: 700; color: 
 @media (min-width: 1500px) { .s-end .fside.fside { width: 380px; height: 250px; margin-top: -125px } }
 
 /* Small pause / play control for the auto-advancing stages. */
-.jpause { position: absolute; left: 18px; bottom: 16px; z-index: 5; width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, .35); background: rgba(0, 0, 0, .35); color: #fff; font-size: 11px; line-height: 1; cursor: pointer; display: grid; place-items: center; backdrop-filter: blur(4px); opacity: .75; transition: opacity .2s }
+/* stage dots + pause button */
+.jdots { position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%); z-index: 5; display: flex; gap: 7px; align-items: center }
+.jdot { display: block; width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,.35); transition: background .3s, transform .3s }
+.jdot.on { background: var(--accent); transform: scale(1.35) }
+.jpause { position: absolute; right: 16px; bottom: 14px; z-index: 5; width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, .35); background: rgba(0, 0, 0, .35); color: #fff; font-size: 11px; line-height: 1; cursor: pointer; display: grid; place-items: center; backdrop-filter: blur(4px); opacity: .75; transition: opacity .2s }
 .jpause:hover, .jpause:focus-visible { opacity: 1 }
