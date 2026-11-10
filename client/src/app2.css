@@ -647,6 +647,14 @@ footer.s-foot .foot-col a.foot-more { margin-top: 2px; font-weight: 700; color: 
   .jstory.enh .jctas { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; margin-top: 16px }
 }
 
+/* Mobile/tablet: hide the illustrative-example box so the CTA always fits */
+@media (max-width: 900px) and (prefers-reduced-motion: no-preference) {
+  .jstory.enh .jdebt { display: none }
+  .jstory.enh .jb { display: none }
+  .jstory.enh .jstage-copy { overflow: hidden }
+  .jstory.enh .jp { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden }
+}
+
 /* Desktop: side-by-side image + text layout */
 @media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
   .jstory.enh .jstory-pin { height: clamp(560px, 80vh, 720px) }
