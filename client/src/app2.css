@@ -13,7 +13,7 @@ html { overflow-x: hidden }
 }
 
 /* ≤360px stage copy: tighten spacing so the CTA button always stays visible */
-@media (max-width: 360px) and (prefers-reduced-motion: no-preference) {
+@media (max-width: 360px) {
   .jstory.enh .jstage-copy { padding: 10px 14px 14px }
   .jstory.enh .jstage-copy h3 { font-size: 18px; margin: 6px 0 6px }
   .jstory.enh .jp { -webkit-line-clamp: 2 }
@@ -48,7 +48,6 @@ html { overflow-x: hidden }
 .pull li.done { color: var(--soft) }
 .pull li.done::before { background: var(--good); border-color: var(--good) }
 @keyframes dfy-spin { to { transform: rotate(360deg) } }
-@media (prefers-reduced-motion: reduce) { .pull li.now::before { animation: none } }
 .edit-bal { font-size: 13.5px }
 .edit-bal summary { cursor: pointer; color: var(--brand); font-weight: 600 }
 .edit-bal[open] { display: flex; flex-direction: column; gap: 6px }
@@ -140,7 +139,6 @@ html { overflow-x: hidden }
 .rv:hover .rv-dots button.on i { animation-play-state: paused }
 @keyframes rv-fill { to { transform: scaleX(1) } }
 @media (max-width: 560px) { .rv-stage { height: 200px } .rv-card { --w: 88%; padding: 20px 18px 22px; display: grid; grid-template-columns: auto 1fr; gap: 14px 14px; align-items: center; min-height: 0 } .rv-body { display: contents } .rv-card figcaption { grid-column: 2; justify-self: start; margin: 0 } .rv-card blockquote { grid-column: 1 / -1 } .rv-photo { width: 48px; height: 48px; border-width: 2px; box-shadow: 0 0 0 2px var(--brand) } .rv-card blockquote { font-size: 17px } .rv-q { font-size: 72px } }
-@media (prefers-reduced-motion: reduce) { .rv-card { transition: none } .rv-dots button.on i { animation: none; transform: scaleX(1) } }
 /* Security / trust band */
 .security-sec { text-align: center }
 .sec-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: 18px; text-align: left }
@@ -291,12 +289,6 @@ main#main { min-height: 64vh }
 .tr-ic::after { content: ""; position: absolute; inset: -4px; border-radius: 50%; border: 2px solid var(--brand); opacity: 0 }
 .tr-h { margin: 0; font-weight: 800; font-size: 14.5px }
 .tr-p { margin: 2px 0 0; font-size: 12.5px; line-height: 1.35; color: var(--soft) }
-@media (prefers-reduced-motion: reduce) {
-  .trustrail { -webkit-mask-image: none; mask-image: none }
-  .tr-track { width: auto; flex-wrap: wrap }
-  .tr-set { flex-wrap: wrap }
-  .tr-set[aria-hidden="true"] { display: none }
-}
 
 /* How it works: journey timeline */
 .journey { list-style: none; margin: 38px 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; position: relative }
@@ -334,24 +326,22 @@ main#main { min-height: 64vh }
 .typing { display: inline-flex; gap: 3px; margin-left: 6px; vertical-align: middle }
 .typing i { width: 5px; height: 5px; border-radius: 50%; background: var(--brand) }
 
-@media (prefers-reduced-motion: no-preference) {
-  .tr-ic::after { animation: trping 3.2s ease-out infinite; animation-delay: calc(var(--i) * .7s) }
-  .journey.in::after { animation: jndraw 1.8s cubic-bezier(.4, .1, .2, 1) both, jnflow 3.2s linear 1.8s infinite }
-  .journey.in .jn-node { animation: jnpop .55s cubic-bezier(.3, 1.6, .5, 1) both; animation-delay: calc(var(--i) * .45s) }
-  .journey.in .jn-node::after { animation: trping 3s ease-out infinite; animation-delay: calc(var(--i) * .45s + 1.5s) }
-  .journey.in .jn-card { animation: fadeUp .6s var(--ease) both; animation-delay: calc(var(--i) * .45s + .2s) }
-  .jn-avatar::after { animation: jnonline 2s ease-in-out infinite }
-  .typing i { animation: jntype 1.2s ease-in-out infinite }
-  .typing i:nth-child(2) { animation-delay: .15s }
-  .typing i:nth-child(3) { animation-delay: .3s }
-}
+.tr-ic::after { animation: trping 3.2s ease-out infinite; animation-delay: calc(var(--i) * .7s) }
+.journey.in::after { animation: jndraw 1.8s cubic-bezier(.4, .1, .2, 1) both, jnflow 3.2s linear 1.8s infinite }
+.journey.in .jn-node { animation: jnpop .55s cubic-bezier(.3, 1.6, .5, 1) both; animation-delay: calc(var(--i) * .45s) }
+.journey.in .jn-node::after { animation: trping 3s ease-out infinite; animation-delay: calc(var(--i) * .45s + 1.5s) }
+.journey.in .jn-card { animation: fadeUp .6s var(--ease) both; animation-delay: calc(var(--i) * .45s + .2s) }
+.jn-avatar::after { animation: jnonline 2s ease-in-out infinite }
+.typing i { animation: jntype 1.2s ease-in-out infinite }
+.typing i:nth-child(2) { animation-delay: .15s }
+.typing i:nth-child(3) { animation-delay: .3s }
 @keyframes trping { 0% { transform: scale(.85); opacity: .55 } 70%, 100% { transform: scale(1.3); opacity: 0 } }
 @keyframes jndraw { from { transform: scaleX(0) } to { transform: scaleX(1) } }
 @keyframes jnflow { to { background-position: -200% 0 } }
 @keyframes jnpop { from { transform: scale(.3); opacity: 0 } to { transform: scale(1); opacity: 1 } }
 @keyframes jnonline { 50% { box-shadow: 0 0 0 5px rgba(34, 197, 94, .25) } }
 @keyframes jntype { 0%, 60%, 100% { transform: translateY(0); opacity: .45 } 30% { transform: translateY(-3px); opacity: 1 } }
-@media (max-width: 760px) { @media (prefers-reduced-motion: no-preference) { .journey.in::after { animation: jndrawy 1.8s cubic-bezier(.4, .1, .2, 1) both, jnflowy 3.2s linear 1.8s infinite } } }
+@media (max-width: 760px) { .journey.in::after { animation: jndrawy 1.8s cubic-bezier(.4, .1, .2, 1) both, jnflowy 3.2s linear 1.8s infinite } }
 @keyframes jndrawy { from { transform: scaleY(0) } to { transform: scaleY(1) } }
 @keyframes jnflowy { to { background-position: 0 -200% } }
 
@@ -362,16 +352,12 @@ h2.how-h { max-width: none; font-size: clamp(24px, 3.3vw, 40px); text-wrap: nowr
 .how-h .go { position: relative; background: linear-gradient(90deg, var(--brand), var(--accent, var(--brand))); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent }
 .how-h .go::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 4px; border-radius: 4px; background: linear-gradient(90deg, var(--brand), var(--accent, var(--brand))) }
 .how-h .arr { display: inline-block; margin-left: 8px; color: var(--accent, var(--brand)) }
-@media (prefers-reduced-motion: no-preference) {
-  .reveal.in .how-h .go::after { animation: howline 1s .3s cubic-bezier(.4, .1, .2, 1) both; transform-origin: left }
-  .reveal.in .how-h .arr { animation: howarr 1.6s 1.2s ease-in-out infinite }
-}
+.reveal.in .how-h .go::after { animation: howline 1s .3s cubic-bezier(.4, .1, .2, 1) both; transform-origin: left }
+.reveal.in .how-h .arr { animation: howarr 1.6s 1.2s ease-in-out infinite }
 @keyframes howline { from { transform: scaleX(0) } to { transform: scaleX(1) } }
 @keyframes howarr { 0%, 100% { transform: translateX(0) } 50% { transform: translateX(7px) } }
-@media (prefers-reduced-motion: no-preference) {
-  .tr-track { animation: trslide 36s linear infinite }
-  .trustrail:hover .tr-track { animation-play-state: paused }
-}
+.tr-track { animation: trslide 36s linear infinite }
+.trustrail:hover .tr-track { animation-play-state: paused }
 @keyframes trslide { from { transform: translateX(-50%) } to { transform: translateX(0) } }
 
 /* Cookie notice */
@@ -481,7 +467,7 @@ footer.s-foot .linkbtn { color: var(--accent) }
 .tr-ic { width: 42px; height: 42px; font-size: 19px }
 .tr-h { font-size: 14.5px }
 .tr-p { white-space: nowrap }
-@media (prefers-reduced-motion: no-preference) { .tr-track { animation-duration: 44s } }
+.tr-track { animation-duration: 44s }
 
 /* Section titles that should read on one line on wide screens */
 .center-sec .s-h2 { max-width: none }
@@ -515,29 +501,25 @@ footer.s-foot .foot-bottom .linkbtn { color: var(--on-deep); font-weight: 400; t
 .bill { transition: transform .22s ease, box-shadow .22s ease }
 .bill:hover { transform: translateX(4px); box-shadow: var(--shadow-lg) }
 .acct .prog i { position: relative; overflow: hidden }
-@media (prefers-reduced-motion: no-preference) {
-  .glance.pre .bill, .glance.pre .flow, .glance.pre .acct { opacity: 0 }
-  .glance.in .bill { animation: billIn .6s cubic-bezier(.2, .7, .2, 1) calc(var(--i) * 90ms) backwards }
-  .glance.in .flow { animation: glFade .6s .55s ease backwards }
-  .glance.in .acct { animation: acctIn .8s .7s cubic-bezier(.2, .7, .2, 1) backwards }
-  .glance.in .acct .prog i { animation: progFill 1.5s 1.2s cubic-bezier(.3, .7, .2, 1) backwards }
-  .acct .prog i::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .55), transparent); transform: translateX(-100%); animation: shimmer 2.8s 2.8s ease-in-out infinite }
-  .acct .lk { animation: lkPulse 2.6s ease-in-out infinite }
-}
+.glance.pre .bill, .glance.pre .flow, .glance.pre .acct { opacity: 0 }
+.glance.in .bill { animation: billIn .6s cubic-bezier(.2, .7, .2, 1) calc(var(--i) * 90ms) backwards }
+.glance.in .flow { animation: glFade .6s .55s ease backwards }
+.glance.in .acct { animation: acctIn .8s .7s cubic-bezier(.2, .7, .2, 1) backwards }
+.glance.in .acct .prog i { animation: progFill 1.5s 1.2s cubic-bezier(.3, .7, .2, 1) backwards }
+.acct .prog i::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .55), transparent); transform: translateX(-100%); animation: shimmer 2.8s 2.8s ease-in-out infinite }
+.acct .lk { animation: lkPulse 2.6s ease-in-out infinite }
 /* Merge connectors: each debt joins a shared rail that runs into the arrow. One calm pass, then still. */
 .glance { position: relative }
 .gl-lines { position: absolute; inset: 0; pointer-events: none; z-index: 1 }
 .gl-lines svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible }
 .gl-line { fill: none; stroke: color-mix(in srgb, var(--brand) 45%, var(--line)); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 0 }
 .gl-dot { position: absolute; left: 0; top: 0; width: 7px; height: 7px; border-radius: 50%; background: var(--brand); box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 22%, transparent); offset-distance: 0%; offset-rotate: 0deg; opacity: 0 }
-@media (prefers-reduced-motion: no-preference) {
-  .glance.pre .gl-line { stroke-dashoffset: 1 }
-  .glance.in .gl-line { animation: lineDraw .7s calc(1.2s + var(--i) * 90ms) cubic-bezier(.4, .1, .2, 1) backwards }
-  .glance.in .gl-dot { animation: dotFlow 1.1s calc(1.9s + var(--i) * 120ms) cubic-bezier(.45, 0, .25, 1) backwards }
-  .glance.in .acct { animation: acctIn .8s .7s cubic-bezier(.2, .7, .2, 1) backwards, acctGlow 1.6s 3s ease-in-out 1 }
-  .acct .prog i::after { animation-iteration-count: 1; animation-delay: 2.7s }
-  .acct .lk { animation: none }
-}
+.glance.pre .gl-line { stroke-dashoffset: 1 }
+.glance.in .gl-line { animation: lineDraw .7s calc(1.2s + var(--i) * 90ms) cubic-bezier(.4, .1, .2, 1) backwards }
+.glance.in .gl-dot { animation: dotFlow 1.1s calc(1.9s + var(--i) * 120ms) cubic-bezier(.45, 0, .25, 1) backwards }
+.glance.in .acct { animation: acctIn .8s .7s cubic-bezier(.2, .7, .2, 1) backwards, acctGlow 1.6s 3s ease-in-out 1 }
+.acct .prog i::after { animation-iteration-count: 1; animation-delay: 2.7s }
+.acct .lk { animation: none }
 @media (max-width: 900px) { .gl-lines { display: none } }
 @keyframes lineDraw { from { stroke-dashoffset: 1 } to { stroke-dashoffset: 0 } }
 @keyframes dotFlow { 0% { offset-distance: 0%; opacity: 0 } 15% { opacity: 1 } 85% { opacity: 1 } 100% { offset-distance: 100%; opacity: 0 } }
@@ -572,11 +554,9 @@ footer.s-foot { padding: 36px 16px 90px }
 .sec-card:hover .sec-ic { transform: rotate(-7deg) scale(1.08) }
 .sec-card h3 { position: relative; z-index: 1; margin: 18px 0 6px; font-size: 17px }
 .sec-card p { position: relative; z-index: 1; font-size: 14.5px }
-@media (prefers-reduced-motion: no-preference) {
-  .sec-ic::after { animation: secping 3.4s ease-out infinite; animation-delay: calc(var(--i) * .8s) }
-  .sec-ic svg { animation: secfloat 4.2s ease-in-out infinite; animation-delay: calc(var(--i) * .5s) }
-  .sec-grid.in .sec-card::before { animation: secbar 1.1s .35s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(var(--i) * .15s + .35s) }
-}
+.sec-ic::after { animation: secping 3.4s ease-out infinite; animation-delay: calc(var(--i) * .8s) }
+.sec-ic svg { animation: secfloat 4.2s ease-in-out infinite; animation-delay: calc(var(--i) * .5s) }
+.sec-grid.in .sec-card::before { animation: secbar 1.1s .35s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(var(--i) * .15s + .35s) }
 @keyframes secping { 0% { transform: scale(.9); opacity: .55 } 70%, 100% { transform: scale(1.25); opacity: 0 } }
 @keyframes secfloat { 50% { transform: translateY(-3px) } }
 @keyframes secbar { from { transform: scaleX(0) } to { transform: scaleX(.22) } }
@@ -663,28 +643,26 @@ footer.s-foot .foot-col a.foot-more { margin-top: 2px; font-weight: 700; color: 
 .jstory-end p { margin: 0; color: var(--on-deep-soft); font-size: 17px }
 .jstory-btns { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 24px }
 
-/* Sliding stages — all screen sizes where reduced-motion is not preferred */
-@media (prefers-reduced-motion: no-preference) {
-  .jstory.enh .jstory-track { position: relative }
-  /* mobile/tablet: single column, image ~52% / text fills rest */
-  .jstory.enh .jstory-pin { position: relative; height: clamp(520px, 92svh, 660px); overflow: hidden }
-  .jstory.enh .jstage { position: absolute; inset: 0; grid-template-columns: 1fr; grid-template-rows: 52% 1fr; visibility: hidden; pointer-events: none; z-index: 1; clip-path: inset(0 0 0 100%) }
-  .jstory.enh .jstage.prev { visibility: visible; z-index: 2; clip-path: inset(0) }
-  .jstory.enh .jstage.on { visibility: visible; pointer-events: auto; z-index: 3; clip-path: inset(0); transition: clip-path .9s cubic-bezier(.77, 0, .18, 1) }
-  .jstory.enh .jstage-media { aspect-ratio: auto }
-  .jstory.enh .jstage-media img { inset: -4%; width: 108%; height: 108%; transform: scale(1.12); transition: transform 4s ease-out; will-change: transform }
-  .jstory.enh .jstage.on .jstage-media img, .jstory.enh .jstage.prev .jstage-media img { transform: scale(1.02) }
-  .jstory.enh .jstage-copy { justify-content: flex-start; padding: 16px 20px 20px; overflow-y: auto }
-  .jstory.enh .jstage-copy h3 { font-size: clamp(22px, 5.5vw, 32px); margin: 10px 0 10px }
-  .jstory.enh .jstage-copy > * { opacity: 0; transform: translateY(16px); transition: opacity .5s ease, transform .5s ease }
-  .jstory.enh .jstage.on .jstage-copy > * { opacity: 1; transform: none }
-  .jstory.enh .jstage.on .jstage-copy > :nth-child(1) { transition-delay: .3s } .jstory.enh .jstage.on .jstage-copy > :nth-child(2) { transition-delay: .38s } .jstory.enh .jstage.on .jstage-copy > :nth-child(3) { transition-delay: .46s } .jstory.enh .jstage.on .jstage-copy > :nth-child(4) { transition-delay: .54s } .jstory.enh .jstage.on .jstage-copy > :nth-child(5) { transition-delay: .62s }
-  .jstory.enh .jstage.prev .jstage-copy > * { opacity: 1; transform: none; transition: none }
-  .jstory.enh .jctas { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; margin-top: 16px }
-}
+/* Sliding stages — all screen sizes */
+.jstory.enh .jstory-track { position: relative }
+/* mobile/tablet: single column, image ~52% / text fills rest */
+.jstory.enh .jstory-pin { position: relative; height: clamp(520px, 92svh, 660px); overflow: hidden }
+.jstory.enh .jstage { position: absolute; inset: 0; grid-template-columns: 1fr; grid-template-rows: 52% 1fr; visibility: hidden; pointer-events: none; z-index: 1; clip-path: inset(0 0 0 100%) }
+.jstory.enh .jstage.prev { visibility: visible; z-index: 2; clip-path: inset(0) }
+.jstory.enh .jstage.on { visibility: visible; pointer-events: auto; z-index: 3; clip-path: inset(0); transition: clip-path .9s cubic-bezier(.77, 0, .18, 1) }
+.jstory.enh .jstage-media { aspect-ratio: auto }
+.jstory.enh .jstage-media img { inset: -4%; width: 108%; height: 108%; transform: scale(1.12); transition: transform 4s ease-out; will-change: transform }
+.jstory.enh .jstage.on .jstage-media img, .jstory.enh .jstage.prev .jstage-media img { transform: scale(1.02) }
+.jstory.enh .jstage-copy { justify-content: flex-start; padding: 16px 20px 20px; overflow-y: auto }
+.jstory.enh .jstage-copy h3 { font-size: clamp(22px, 5.5vw, 32px); margin: 10px 0 10px }
+.jstory.enh .jstage-copy > * { opacity: 0; transform: translateY(16px); transition: opacity .5s ease, transform .5s ease }
+.jstory.enh .jstage.on .jstage-copy > * { opacity: 1; transform: none }
+.jstory.enh .jstage.on .jstage-copy > :nth-child(1) { transition-delay: .3s } .jstory.enh .jstage.on .jstage-copy > :nth-child(2) { transition-delay: .38s } .jstory.enh .jstage.on .jstage-copy > :nth-child(3) { transition-delay: .46s } .jstory.enh .jstage.on .jstage-copy > :nth-child(4) { transition-delay: .54s } .jstory.enh .jstage.on .jstage-copy > :nth-child(5) { transition-delay: .62s }
+.jstory.enh .jstage.prev .jstage-copy > * { opacity: 1; transform: none; transition: none }
+.jstory.enh .jctas { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; margin-top: 16px }
 
 /* Mobile/tablet: hide the illustrative-example box so the CTA always fits */
-@media (max-width: 900px) and (prefers-reduced-motion: no-preference) {
+@media (max-width: 900px) {
   .jstory.enh .jdebt { display: none }
   .jstory.enh .jb { display: none }
   .jstory.enh .jstage-copy { overflow: hidden }
@@ -692,7 +670,7 @@ footer.s-foot .foot-col a.foot-more { margin-top: 2px; font-weight: 700; color: 
 }
 
 /* Desktop: side-by-side image + text layout */
-@media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
+@media (min-width: 901px) {
   .jstory.enh .jstory-pin { height: clamp(560px, 80vh, 720px) }
   .jstory.enh .jstage { grid-template-columns: 64fr 36fr; grid-template-rows: unset }
   .jstory.enh .jstage-media::after { background: linear-gradient(90deg, transparent 52%, var(--deep) 100%), linear-gradient(0deg, rgba(0, 0, 0, .42), transparent 38%) }
@@ -719,18 +697,15 @@ footer.s-foot .foot-col a.foot-more { margin-top: 2px; font-weight: 700; color: 
     transition: transform .38s cubic-bezier(.34, 1.4, .5, 1) }
   .lang.lang:has(button:last-child[aria-pressed="true"])::before { transform: translateX(100%) }
 }
-@media (prefers-reduced-motion: no-preference) { .lang.lang::before { animation: langShine 4.5s ease-in-out infinite } }
+.lang.lang::before { animation: langShine 4.5s ease-in-out infinite }
 @keyframes langShine { 0%, 62% { background-position: 120% 0 } 100% { background-position: -20% 0 } }
-@media (prefers-reduced-motion: reduce) { .lang.lang::before, .lang.lang button { transition: none } }
 
 /* Closing band images: no frame, edges dissolve into the dark background, slow float. */
 .fside.fside { border: 0; border-radius: 0; box-shadow: none; background: none; object-fit: contain; -webkit-mask-image: radial-gradient(closest-side, #000 42%, rgba(0, 0, 0, .55) 70%, transparent 100%); mask-image: radial-gradient(closest-side, #000 42%, rgba(0, 0, 0, .55) 70%, transparent 100%); filter: brightness(.9) saturate(1.05) }
 @media (min-width: 1200px) { .fside.fside { width: 210px; height: 210px; margin-top: -105px } }
 @media (min-width: 1500px) { .fside.fside { width: 300px; height: 290px; margin-top: -145px } }
-@media (prefers-reduced-motion: no-preference) {
-  .fside.fside { animation: fsFloat 7s ease-in-out infinite }
-  .fside.r { animation-delay: -3.5s }
-}
+.fside.fside { animation: fsFloat 7s ease-in-out infinite }
+.fside.r { animation-delay: -3.5s }
 @keyframes fsFloat { 0%, 100% { translate: 0 0 } 50% { translate: 0 -8px } }
 
 .rv-st { font-weight: 600; letter-spacing: .02em; text-transform: none; color: var(--soft) }

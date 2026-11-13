@@ -5,7 +5,7 @@ import { SITE } from "../lib/copy.js";
 
 const IMGS = ["/story/story-1.webp", "/story/story-2.webp", "/story/story-3.webp", "/story/story-4.webp"];
 const POS = ["70% 40%", "40% 45%", "68% 40%", "50% 38%"];
-const ENHANCED = "(prefers-reduced-motion: no-preference)";
+const ENHANCED = "screen";
 
 const DWELL = 5000; // ms each stage stays before the next one wipes in
 

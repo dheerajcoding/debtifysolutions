@@ -359,4 +359,3 @@ td.r, th.r { text-align: right }
   .phone.full .btn, .phone.full .ghost { max-width: none }
 }
 
-@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important } }
