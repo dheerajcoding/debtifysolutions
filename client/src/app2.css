@@ -445,6 +445,49 @@ h2.how-h { max-width: none; font-size: clamp(24px, 3.3vw, 40px); text-wrap: nowr
 .qnote { color: var(--soft); font-size: 14.5px }
 @media (max-width: 900px) { .cost-two { grid-template-columns: 1fr } }
 
+/* ── Costs section 3D motion ── */
+#costs { perspective: 1400px }
+#costs.reveal .cost-benefit,
+#costs.reveal .cost-qual { opacity: 0; transform: perspective(900px) rotateX(22deg) translateY(48px) scale(.93) }
+#costs.reveal .cost-big { opacity: 0; transform: scale(.3) rotateY(-60deg) }
+#costs.reveal .cost-list li { opacity: 0; transform: translateX(-22px) }
+#costs.reveal .qy .tg { opacity: 0; transform: scale(.55) rotate(-10deg) }
+#costs.reveal.in .cost-benefit { animation: costCardIn .8s cubic-bezier(.12, .8, .2, 1) both }
+#costs.reveal.in .cost-qual    { animation: costCardIn .8s cubic-bezier(.12, .8, .2, 1) .2s both }
+@keyframes costCardIn {
+  from { opacity: 0; transform: perspective(900px) rotateX(22deg) translateY(48px) scale(.93) }
+  to   { opacity: 1; transform: none }
+}
+#costs.reveal.in .cost-big { animation: costBigIn .7s cubic-bezier(.3, 1.6, .3, 1) .35s both }
+@keyframes costBigIn {
+  from { opacity: 0; transform: scale(.3) rotateY(-60deg) }
+  to   { opacity: 1; transform: none }
+}
+#costs.reveal.in .cost-list li { animation: costLiIn .5s cubic-bezier(.2, .9, .2, 1) both }
+#costs.reveal.in .cost-list li:nth-child(1) { animation-delay: .52s }
+#costs.reveal.in .cost-list li:nth-child(2) { animation-delay: .60s }
+#costs.reveal.in .cost-list li:nth-child(3) { animation-delay: .68s }
+#costs.reveal.in .cost-list li:nth-child(4) { animation-delay: .76s }
+@keyframes costLiIn { from { opacity: 0; transform: translateX(-22px) } to { opacity: 1; transform: none } }
+#costs.reveal.in .qy .tg { animation: tagBounce .42s cubic-bezier(.35, 1.6, .4, 1) both }
+#costs.reveal.in .cost-qual .qy:nth-of-type(1) .tg:nth-child(1) { animation-delay: .42s }
+#costs.reveal.in .cost-qual .qy:nth-of-type(1) .tg:nth-child(2) { animation-delay: .50s }
+#costs.reveal.in .cost-qual .qy:nth-of-type(1) .tg:nth-child(3) { animation-delay: .58s }
+#costs.reveal.in .cost-qual .qy:nth-of-type(1) .tg:nth-child(4) { animation-delay: .66s }
+#costs.reveal.in .cost-qual .qy:nth-of-type(2) .tg:nth-child(1) { animation-delay: .64s }
+#costs.reveal.in .cost-qual .qy:nth-of-type(2) .tg:nth-child(2) { animation-delay: .70s }
+#costs.reveal.in .cost-qual .qy:nth-of-type(2) .tg:nth-child(3) { animation-delay: .76s }
+#costs.reveal.in .cost-qual .qy:nth-of-type(2) .tg:nth-child(4) { animation-delay: .82s }
+#costs.reveal.in .cost-qual .qy:nth-of-type(2) .tg:nth-child(5) { animation-delay: .88s }
+@keyframes tagBounce { from { opacity: 0; transform: scale(.55) rotate(-10deg) } to { opacity: 1; transform: none } }
+.cost-benefit, .cost-qual { transition: transform .38s cubic-bezier(.2, .8, .2, 1), box-shadow .38s }
+.cost-benefit:hover { transform: perspective(900px) rotateX(-3deg) rotateY(5deg) translateY(-8px); box-shadow: 0 28px 56px rgba(0,0,0,.35) }
+.cost-qual:hover    { transform: perspective(900px) rotateX(-3deg) rotateY(-5deg) translateY(-8px); box-shadow: 0 28px 56px rgba(0,0,0,.35) }
+.cost-benefit { position: relative; border-top: 0; overflow: visible }
+.cost-benefit::after { content: ""; position: absolute; top: -1px; left: 0; right: 0; height: 4px; border-radius: var(--r-card) var(--r-card) 0 0; background: linear-gradient(90deg, var(--brand), var(--accent), var(--brand)); background-size: 200% 100%; animation: brandSlide 2.4s linear infinite; z-index: 1 }
+@keyframes brandSlide { to { background-position: -200% 0 } }
+.cost-big { text-shadow: 0 0 40px color-mix(in srgb, var(--brand) 60%, transparent), 0 3px 0 rgba(0,0,0,.2) }
+
 /* Footer: dark band, legal text, posture line and company details */
 footer.s-foot { background: var(--log-bg); border-top: 0; margin-top: 0; padding: 44px 16px 110px; color: var(--on-deep-soft) }
 .s-footin { color: var(--on-deep-soft); gap: 16px }
