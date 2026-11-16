@@ -12,7 +12,7 @@ import { REVIEWS } from "../lib/testimonials.js";
 import { BRAND } from "@shared/config/brand.js";
 
 const SEC_ICON = { lock: LOCK, shield: SHIELD, scale: SCALE, exit: EXITDOOR };
-const FAQ_PICK =[1, 2, 3, 4, 6, 7];
+const FAQ_PICK = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 const PHOTOS = ["cris", "martin", "marina", "hellen", "romario", "marrie"];
 // Amounts mirror the server's sample tradelines that make up the $23,570 example plan.
 const BILLS = [6240, 4815, 3190, 2420, 4720, 2185];
