@@ -401,9 +401,9 @@ h2.how-h { max-width: none; font-size: clamp(24px, 3.3vw, 40px); text-wrap: nowr
 .glance { display: grid; grid-template-columns: 1fr auto 1fr; gap: 26px; align-items: center; margin-top: 40px; text-align: left }
 .bills { display: grid; gap: 10px }
 .bills .cap { font-size: 13px; font-weight: 700; color: var(--soft) }
-.bill { display: flex; justify-content: space-between; align-items: center; gap: 12px; background: var(--card); border: 1px solid var(--line); border-left: 6px solid var(--c); border-radius: 14px; padding: 13px 16px; box-shadow: var(--shadow); font-weight: 700 }
-.bill span { color: var(--soft); font-weight: 600; font-size: 14px }
-.bill b { font-size: 17px; font-family: var(--display) }
+.bill { display: flex; justify-content: space-between; align-items: center; gap: 12px; background: var(--c); border: none; border-radius: 14px; padding: 13px 16px; box-shadow: 0 4px 18px color-mix(in srgb, var(--c) 45%, transparent); font-weight: 700; color: #fff }
+.bill span { color: rgba(255,255,255,.78); font-weight: 600; font-size: 14px }
+.bill b { font-size: 17px; font-family: var(--display); color: #fff }
 .flow { display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; max-width: 170px; font-size: 13px; font-weight: 700; color: var(--brand-ink) }
 .flow .arr { width: 120px; height: 14px; position: relative; background: repeating-linear-gradient(90deg, var(--brand) 0 10px, transparent 10px 18px); animation: gdash 1s linear infinite }
 .flow .arr::after { content: ""; position: absolute; right: -6px; top: -7px; border-left: 14px solid var(--brand); border-top: 14px solid transparent; border-bottom: 14px solid transparent }
