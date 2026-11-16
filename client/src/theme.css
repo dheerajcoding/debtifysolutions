@@ -101,4 +101,4 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--brand) }
 .ratebar i { background: var(--brand); opacity: .4 }
 .tabs button[aria-selected="true"] { background: var(--navy); color: var(--on-navy) }
 .persona.on { border-color: var(--brand); background: var(--cream) }
-.logo path:first-of-type { stroke: var(--accent) }
+.logo path { stroke: #fff }

@@ -54,6 +54,7 @@ function CountUsd({ to, go, delay = 0 }) {
 export default function Home() {
   const { lang, meta, lead, setUi, a, x: fx } = useApp();
   const nav = useNavigate();
+<<<<<<< Updated upstream
   const glanceRef = useRef(null);
   const glanceIn = useSeen(glanceRef);
   // Curved guide lines from each debt card into the arrow, so the six debts visibly merge into one deposit.
@@ -237,6 +238,7 @@ export default function Home() {
       </section>
 
       <StoryJourney />
+
 
       <section className="s-sec tint security-sec reveal" id="security">
         <p className="s-eyebrow">{x.secE}</p>
