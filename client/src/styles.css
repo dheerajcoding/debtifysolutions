@@ -280,8 +280,7 @@ td.r, th.r { text-align: right }
 
 /* ---------- hero band ---------- */
 .heroband { margin-inline: -16px; padding-inline: 16px; background: var(--deep); color: var(--on-deep); position: relative; overflow: hidden }
-.heroband::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .5;
-  background-image: linear-gradient(var(--deep-line) 1px, transparent 1px); background-size: 100% 36px; mask-image: linear-gradient(90deg, transparent, #000 55%) }
+.heroband::after { display: none }
 .heroband .hero { position: relative; z-index: 1; align-items: center; padding-block: 56px 64px }
 .heroband .s-eyebrow { color: var(--accent) }
 .heroband .s-sub { color: var(--on-deep-soft) }
