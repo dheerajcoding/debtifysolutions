@@ -4,11 +4,6 @@
       <stop offset="0%" stop-color="#18927F"/>
       <stop offset="100%" stop-color="#062D24"/>
     </linearGradient>
-    <linearGradient id="dfy-d" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#FFD166"/>
-      <stop offset="45%" stop-color="#F2A93B"/>
-      <stop offset="100%" stop-color="#C47000"/>
-    </linearGradient>
     <radialGradient id="dfy-sh" cx="35%" cy="18%" r="65%">
       <stop offset="0%" stop-color="rgba(255,255,255,.18)"/>
       <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
@@ -16,6 +11,6 @@
   </defs>
   <rect width="32" height="32" rx="8" fill="url(#dfy-bg)"/>
   <rect width="32" height="32" rx="8" fill="url(#dfy-sh)"/>
-  <path d="M10 8h6c6 0 9 3.5 9 8s-3 8-9 8h-6z" fill="url(#dfy-d)"/>
-  <path d="M13.5 16.5l2.5 2.5 4-5" fill="none" stroke="rgba(255,255,255,.95)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M10 8h6c6 0 9 3.5 9 8s-3 8-9 8h-6z" fill="none" stroke="#F2A93B" stroke-width="3.2"/>
+  <path d="M13.5 16.5l2.5 2.5 4-5" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
