@@ -1,16 +1,23 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
   <defs>
+    <linearGradient id="dfy-bd" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFE066"/>
+      <stop offset="45%" stop-color="#F2A93B"/>
+      <stop offset="70%" stop-color="#0B9E8E"/>
+      <stop offset="100%" stop-color="#063028"/>
+    </linearGradient>
     <linearGradient id="dfy-bg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#18927F"/>
       <stop offset="100%" stop-color="#062D24"/>
     </linearGradient>
     <radialGradient id="dfy-sh" cx="35%" cy="18%" r="65%">
-      <stop offset="0%" stop-color="rgba(255,255,255,.18)"/>
+      <stop offset="0%" stop-color="rgba(255,255,255,.22)"/>
       <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
     </radialGradient>
   </defs>
-  <rect width="32" height="32" rx="8" fill="url(#dfy-bg)"/>
-  <rect width="32" height="32" rx="8" fill="url(#dfy-sh)"/>
+  <rect width="32" height="32" rx="8" fill="url(#dfy-bd)"/>
+  <rect x="2" y="2" width="28" height="28" rx="6.5" fill="url(#dfy-bg)"/>
+  <rect x="2" y="2" width="28" height="28" rx="6.5" fill="url(#dfy-sh)"/>
   <path d="M10 8h6c6 0 9 3.5 9 8s-3 8-9 8h-6z" fill="none" stroke="#F2A93B" stroke-width="3.2"/>
   <path d="M13.5 16.5l2.5 2.5 4-5" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
