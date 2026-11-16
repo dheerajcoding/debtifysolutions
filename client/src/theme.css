@@ -101,9 +101,4 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--brand) }
 .ratebar i { background: var(--brand); opacity: .4 }
 .tabs button[aria-selected="true"] { background: var(--navy); color: var(--on-navy) }
 .persona.on { border-color: var(--brand); background: var(--cream) }
-.logo path:last-of-type { stroke: var(--navy) }
-
-/* Brand mark: white tile, amber D, dark check */
-.logo rect { fill: #fff; stroke: rgba(15, 42, 46, .14); stroke-width: 1 }
 .logo path:first-of-type { stroke: var(--accent) }
-.logo path:last-of-type { stroke: #0F2A2E }
