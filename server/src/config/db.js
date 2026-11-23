@@ -148,7 +148,7 @@ export async function connectDB(uri) {
     return db;
   }
   try {
-    await mongoose.connect(uri, { serverSelectionTimeoutMS: 5000 });
+    await mongoose.connect(uri, { serverSelectionTimeoutMS: 15000, connectTimeoutMS: 15000 });
     Object.assign(db, {
       kind: "mongodb",
       leads: mongoCollection(Lead, "leadId"),

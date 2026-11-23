@@ -138,6 +138,12 @@ export function AppProvider({ children }) {
         return r;
       } catch (e) {
         const L = refs.current.lang;
+        if (e.code === "NOT_FOUND" && refs.current.lead) {
+          // Server lost the lead (restarted while in memory mode) — clear and restart step 1.
+          setLead(null);
+          setUiState(freshUi(PERSONAS[0], refs.current.demo));
+          return null;
+        }
         const known = { BAD_DATE: T[L].badDate, BAD_SSN: T[L].needSsn };
         setUi({ err: known[e.code] || e.message || F[L].somethingWrong, errField: e.field || null, errCode: e.code });
         return null;
