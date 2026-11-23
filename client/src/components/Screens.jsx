@@ -279,6 +279,14 @@ S[4] = (p) => {
   const total = [...en.filter((t) => t.selected && t.enrollable), ...ui.added].reduce((s, t) => s + (t.amount ?? bal(t)), 0);
   const declared = [...tls.filter((t) => t.source !== "consumer"), ...ui.added].reduce((s, t) => s + (t.amount ?? bal(t)), 0);
   const af = ui.addForm;
+  const creditorCounts = {};
+  en.forEach((t) => { creditorCounts[t.creditor] = (creditorCounts[t.creditor] || 0) + 1; });
+  const creditorIdx = {};
+  const creditorLabel = (t) => {
+    if (creditorCounts[t.creditor] <= 1) return t.creditor;
+    creditorIdx[t.creditor] = (creditorIdx[t.creditor] || 0) + 1;
+    return `${t.creditor} ${creditorIdx[t.creditor]}`;
+  };
   return (
     <>
       <GuideTip step={4} {...p} />
@@ -290,7 +298,7 @@ S[4] = (p) => {
         <div className={"card debtcard" + (t.selected ? " on" : "")} key={t.tlId}>
           <label className="debt">
             <input type="checkbox" checked={!!t.selected} disabled={t.needsReview && !t.confirmed} onChange={(e) => act.pick(t.tlId, e.target.checked)} />
-            <span className="grow"><b>{t.creditor}</b><br /><span className="small">{t.needsReview && !t.confirmed ? x.tell : x.accountTypes[t.confirmed || t.type] || x.types[t.type] || t.type} · {x.dpd(t.dpd)}</span></span>
+            <span className="grow"><b>{creditorLabel(t)}</b><br /><span className="small">{t.needsReview && !t.confirmed ? x.tell : x.accountTypes[t.confirmed || t.type] || x.types[t.type] || t.type} · {x.dpd(t.dpd)}</span></span>
             <b>{usd(bal(t))}</b>
           </label>
           {t.needsReview && (
