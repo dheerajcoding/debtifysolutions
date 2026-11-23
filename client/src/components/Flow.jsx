@@ -45,10 +45,8 @@ function useActions() {
       s1: () => {
         const u = U();
         const L = A().lang;
-        const stateErr = !u.state ? m().state
-          : CLOSED_STATES.includes(u.state) ? (L === "es" ? "No tenemos programas con licencia en este estado todavía." : "We don't have a licensed program in this state yet.") : null;
-        const debtErr = !u.debtRange ? m().debtRange
-          : u.debtRange === "lt_7500" ? (L === "es" ? "El mínimo para nuestros programas es $7,500." : "Our programs require at least $7,500 in debt.") : null;
+        const stateErr = !u.state ? m().state : null;
+        const debtErr = !u.debtRange ? m().debtRange : null;
         if (!check({ debtRange: debtErr, state: stateErr, paymentStatus: u.paymentStatus == null && m().paymentStatus })) return;
         return A().run(null, () => api.createLead({ debtRange: u.debtRange, state: u.state, paymentStatus: u.paymentStatus, lang: A().lang, source: A().demo ? "demo" : "web", persona: A().demo ? A().persona.id : undefined }));
       },

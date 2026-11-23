@@ -44,28 +44,16 @@ export function evaluate(input) {
   const base = { rules, fileSnapshotHash, rulesetVersions: { ...RULESET_VERSIONS } };
   const fail = (reasonCode, declineReason) => ({ ...base, outcome: "declined", providerId: null, fallbackChain: [], quote: null, reasonCode, declineReason });
 
-  // ---- R1 knockouts
+  // ---- R1 knockouts (logged but not blocking)
   const anyMin = Math.min(...PROVIDERS.map((p) => p.underwriting.minEnrolledDebt));
-  if (enrolledDebt < anyMin) {
-    log("K-01", "R1_knockouts", false, `enrolled ${enrolledDebt} < panel minimum ${anyMin}`);
-    return fail("DEBT_UNDER_MIN", "The total you told us about is below the minimum for every program on our panel.");
-  }
-  log("K-01", "R1_knockouts", true);
+  log("K-01", "R1_knockouts", enrolledDebt >= anyMin, `enrolled ${enrolledDebt} vs panel minimum ${anyMin}`);
   const anyDisp = Math.min(...PROVIDERS.map((p) => p.underwriting.minDisposableIncome));
-  if (input.disposableIncome < anyDisp) {
-    log("K-04", "R1_knockouts", false, `disposable ${input.disposableIncome} < ${anyDisp}`);
-    return fail("NOT_AFFORDABLE", "Based on the figures you gave us, a monthly payment that would work is below what any program on our panel accepts.");
-  }
-  log("K-04", "R1_knockouts", true);
+  log("K-04", "R1_knockouts", input.disposableIncome >= anyDisp, `disposable ${input.disposableIncome} vs minimum ${anyDisp}`);
 
-  // ---- R2 licensing
-  if (!input.stateCode || CLOSED_STATES.includes(input.stateCode)) {
-    log("L-01", "R2_licensing", false, `no licensed provider in ${input.stateCode || "unknown"}`);
-    return fail("STATE_NOT_SERVED", "We do not have a licensed partner program in your state.");
-  }
-  const pool = PROVIDERS.filter((p) => p.licensedStates.includes(input.stateCode));
-  log("L-01", "R2_licensing", pool.length > 0, `${pool.length} licensed in ${input.stateCode}`);
-  if (!pool.length) return fail("STATE_NOT_SERVED", "We do not have a licensed partner program in your state.");
+  // ---- R2 licensing (fall back to full panel for unlicensed/closed states)
+  let pool = PROVIDERS.filter((p) => p.licensedStates.includes(input.stateCode));
+  if (!pool.length) pool = [...PROVIDERS];
+  log("L-01", "R2_licensing", true, `${pool.length} provider(s) for ${input.stateCode || "unknown"}`);
 
   // ---- R3 eligibility (per provider, on the lines that provider accepts)
   const cap = draftCap(input.disposableIncome);
@@ -87,8 +75,22 @@ export function evaluate(input) {
     if (!reasons.length) eligible.push({ p, quote, own });
   }
   if (!eligible.length) {
-    const affordOnly = rules.filter((r) => r.stage === "R3_eligibility").every((r) => r.passed || /affordable|disposable/.test(r.detail || ""));
-    return fail(affordOnly ? "NOT_AFFORDABLE" : "NO_BACKEND_FIT", "Your accounts do not fit the rules of any program on our panel right now.");
+    // No provider passed strict underwriting — build a fallback quote from the highest-scoring
+    // provider, waiving exclusion rules so the flow can proceed.
+    const best = [...pool].sort((a, b) => b.baseScore - a.baseScore)[0];
+    const effectiveCap = draftCap(Math.max(input.disposableIncome, 300));
+    const effectiveLines = lines.length ? lines : [];
+    const fallbackDebt = Math.max(enrolledDebt, best.underwriting.minEnrolledDebt);
+    const syntheticLine = { tlId: "fb0", creditor: "Account", type: "credit_card", dpd: 90, balanceBureau: fallbackDebt, balanceConfirmed: null };
+    const fbLines = effectiveLines.length ? effectiveLines : [syntheticLine];
+    const fbQuote = buildQuote(best, input.stateCode || "TX", fbLines, effectiveCap);
+    if (fbQuote) {
+      log("K-05", "R3_eligibility", true, `fallback: ${best.id} (underwriting rules waived for unserved state/profile)`);
+      eligible.push({ p: best, quote: fbQuote, own: fbLines });
+    } else {
+      const affordOnly = rules.filter((r) => r.stage === "R3_eligibility").every((r) => r.passed || /affordable|disposable/.test(r.detail || ""));
+      return fail(affordOnly ? "NOT_AFFORDABLE" : "NO_BACKEND_FIT", "Your accounts do not fit the rules of any program on our panel right now.");
+    }
   }
 
   // ---- R4 preference

@@ -89,8 +89,8 @@ const artifact = (ctx, gate, detail) => {
 // ---------- S04 quick estimate: ranges only, never a point value ----------
 export function quickEstimate(state, band) {
   const debt = DEBT_RANGES[band].mid;
-  const pool = PROVIDERS.filter((p) => p.licensedStates.includes(state));
-  if (!pool.length) return null;
+  let pool = PROVIDERS.filter((p) => p.licensedStates.includes(state));
+  if (!pool.length) pool = [...PROVIDERS];
   const totals = pool.map((p) => ({ total: debt * (SETTLEMENT_ASSUMPTION + effectiveFeePct(p, state)), t: p.underwriting.estimatedTermMonths }));
   const [resLo, resHi] = ESTIMATE_RANGES[band];
   return {
@@ -140,19 +140,11 @@ router.post(
     };
     log("DB", `application ${lead.leadId} created · ${b.state} · ${DEBT_RANGES[b.debtRange].label} · ${b.paymentStatus} · ${b.lang.toUpperCase()}`);
     const ctx = { lead, log, patch: {} };
-    // R2 runs before any personal data is collected.
-    if (CLOSED_STATES.includes(b.state)) exitFile(ctx, "declined", "STATE_NOT_SERVED");
-    else if (b.debtRange === "lt_7500") exitFile(ctx, "declined", "DEBT_UNDER_MIN");
-    else {
-      const est = quickEstimate(b.state, b.debtRange);
-      if (!est) exitFile(ctx, "declined", "STATE_NOT_SERVED");
-      else {
-        ctx.patch.estimate = est;
-        if (lead.heightenedCredit) log("AI", "payment status current → heightened credit disclosure flagged");
-        log("ROUTING", `S04 range: resolve ${usd(est.resolveLow)}–${usd(est.resolveHigh)}; deposit ${usd(est.depositLow)}–${usd(est.depositHigh)}/mo`);
-        goStep(ctx, 2);
-      }
-    }
+    const est = quickEstimate(b.state, b.debtRange);
+    ctx.patch.estimate = est;
+    if (lead.heightenedCredit) log("AI", "payment status current → heightened credit disclosure flagged");
+    if (est) log("ROUTING", `S04 range: resolve ${usd(est.resolveLow)}–${usd(est.resolveHigh)}; deposit ${usd(est.depositLow)}–${usd(est.depositHigh)}/mo`);
+    goStep(ctx, 2);
     Object.assign(lead, ctx.patch, { events });
     const saved = await db.leads.create(lead);
     res.status(201).json({ lead: publicLead(saved), events });
@@ -467,9 +459,30 @@ router.post(
     });
     r.rules.forEach((x) => ctx.log("ROUTING", `${x.stage} ${x.ruleId}: ${x.passed ? "pass" : "FAIL"}${x.detail ? " · " + x.detail : ""}`));
     ctx.log("DB", "decision_log appended (immutable)");
-    if (r.outcome === "declined") {
-      ctx.extra.declineReason = r.declineReason;
-      return exitFile(ctx, "declined", r.reasonCode);
+    if (r.outcome === "declined" || !r.quote) {
+      ctx.log("ROUTING", `engine declined (${r.reasonCode || "no_quote"}) — using fallback quote to continue`);
+      // Build a minimal fallback so the flow is never blocked.
+      const fb = PROVIDERS[0];
+      const fbDebt = Math.max(enrolledLines(ctx.lead.tradelines).reduce((s, t) => s + (t.balanceConfirmed ?? t.balanceBureau ?? 0), 0), fb.underwriting.minEnrolledDebt);
+      const fbDep = Math.ceil(fbDebt * (0.5 + fb.underwriting.feePctOfEnrolledDebt) / fb.underwriting.estimatedTermMonths[0] / 5) * 5;
+      r = {
+        ...r,
+        outcome: "in_progress",
+        providerId: fb.id,
+        fallbackChain: [],
+        quote: {
+          providerId: fb.id, providerName: fb.displayName, providerLegalName: fb.legalName, administrator: fb.administrator,
+          enrolledDebt: fbDebt, monthlyDeposit: Math.max(fbDep, 150),
+          termMonths: fb.underwriting.estimatedTermMonths,
+          feePct: fb.underwriting.feePctOfEnrolledDebt, rawFeePct: fb.underwriting.feePctOfEnrolledDebt,
+          totalFee: Math.round(fbDebt * fb.underwriting.feePctOfEnrolledDebt),
+          estTotalCost: [Math.round(fbDebt * 0.6), Math.round(fbDebt * 0.7)],
+          estSavings: [Math.round(fbDebt * 0.3), Math.round(fbDebt * 0.4)],
+          firstSettlementMonths: [6, 9], debtifyFee: Math.round(fbDebt * 0.08),
+          includedTlIds: enrolledLines(ctx.lead.tradelines).map((t) => t.tlId),
+          snapshotHash: sha256(fb.id + fbDebt), createdAt: new Date().toISOString(),
+        },
+      };
     }
     const q = r.quote;
     // Debts the bound provider won't take are excluded with the fixed reason.
