@@ -17,4 +17,4 @@ const DUMMY = [
   { name: "Robert S.", state: "Ohio", photo: "/testimonials/marrie.jpg", quote: { en: "Clear, honest and easy to follow. I knew exactly what came next.", es: "Claro, honesto y fácil de seguir. Sabía exactamente qué venía después." } },
 ];
 
-export const REVIEWS = REAL.length ? REAL : DUMMY;
+export const REVIEWS = REAL.length ? REAL : (import.meta.env.DEV ? DUMMY : []);

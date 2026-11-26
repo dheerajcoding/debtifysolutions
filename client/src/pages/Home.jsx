@@ -12,7 +12,7 @@ import { REVIEWS } from "../lib/testimonials.js";
 import { BRAND } from "@shared/config/brand.js";
 
 const SEC_ICON = { lock: LOCK, shield: SHIELD, scale: SCALE, exit: EXITDOOR };
-const FAQ_PICK = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+const FAQ_PICK = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const PHOTOS = ["cris", "martin", "marina", "hellen", "romario", "marrie"];
 // Amounts mirror the server's sample tradelines that make up the $23,570 example plan.
 const BILLS = [6240, 4815, 3190, 2420, 4720, 2185];
@@ -110,11 +110,23 @@ export default function Home() {
             <p className="s-eyebrow">{x.eyebrow}</p>
             <h1 className="s-h1">{x.h1}</h1>
             <p className="s-sub">{x.heroSub}</p>
-            <div className="s-ctas">
-              <button className="s-btn" onClick={() => start()}>{resume ? a.continueApp : ap.start}</button>
-              <Link className="s-btn ghostbtn" to="/#how">{x.cta2}</Link>
-            </div>
-            <p className="hero-meta">{resume ? a.stepOf(lead.step, fx.stepNames[lead.step]) : ap.meta}</p>
+            {resume ? (
+              <div className="s-ctas">
+                <button className="s-btn" onClick={() => start()}>{a.continueApp}</button>
+                <p className="hero-meta">{a.stepOf(lead.step, fx.stepNames[lead.step])}</p>
+              </div>
+            ) : (
+              <div className="hero-bands">
+                <p className="band-q">{x.bandQ}</p>
+                <p className="band-sub">{x.bandSub}</p>
+                <div className="band-btns">
+                  {x.bands.map(([label, range]) => (
+                    <button key={range} className="s-btn band-btn" onClick={() => start(range)}>{label}</button>
+                  ))}
+                </div>
+                <p className="hero-meta">{x.bandMeta}</p>
+              </div>
+            )}
             <ul className="trust">
               {x.chips.map((c) => (
                 <li key={c}><Html as="span" className="ic" html={TICK} />{c}</li>
@@ -297,7 +309,7 @@ export default function Home() {
       <section className="s-sec reveal" id="faq">
         <p className="s-eyebrow">{x.faqE}</p>
         <h2 className="s-h2">{x.faqH}</h2>
-        <div className="faq">{faqs.map(([qq, ans]) => <details key={qq}><summary>{qq}</summary><p>{ans}</p></details>)}</div>
+        <div className="faq">{faqs.map(([qq, ans], i) => <details key={qq} open={i < 2 || undefined}><summary>{qq}</summary><p>{ans}</p></details>)}</div>
         <p className="posture">{x.posture || BRAND.posture}</p>
       </section>
 

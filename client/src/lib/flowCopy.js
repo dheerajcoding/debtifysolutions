@@ -116,8 +116,8 @@ export const F = {
 
 // Jay's short tip per screen: [what she says, why we ask], plus suggested questions.
 export const G = {
-  1: { en: ["Hi, I'm Jay. This takes about 5 minutes, and you can stop any time.", "Programs have minimum amounts and each partner company serves certain states. This tells us quickly if it's worth continuing."],
-       es: ["Hola, soy Jay. Esto toma unos 5 minutos y puedes parar cuando quieras.", "Los programas tienen montos mínimos y cada empresa asociada atiende ciertos estados. Así sabemos rápido si vale la pena seguir."],
+  1: { en: ["Hi, I'm Jay — your automated guide, not a salesperson. I'll explain each question before you answer it. This takes about 5 minutes and you can stop any time. If you'd rather talk to a person, you can ask for a call at any point.", "Programs have minimum amounts and each partner company serves certain states. This tells us quickly if it's worth continuing."],
+       es: ["Hola, soy Jay — tu guía automatizado, no un vendedor. Te explicaré cada pregunta antes de que respondas. Esto toma unos 5 minutos y puedes parar cuando quieras. Si prefieres hablar con una persona, puedes pedirlo en cualquier momento.", "Los programas tienen montos mínimos y cada empresa asociada atiende ciertos estados. Así sabemos rápido si vale la pena seguir."],
        q: { en: ["What debts can I include?", "Is this a loan?"], es: ["¿Qué deudas puedo incluir?", "¿Esto es un préstamo?"] } },
   2: { en: ["Here's a rough idea. No account or password needed: your progress is saved on this device.", "We ask for your email and phone to send your plan and documents, and we verify the phone with a code."],
        es: ["Aquí tienes una idea general. No necesitas cuenta ni contraseña: tu progreso se guarda en este dispositivo.", "Pedimos tu correo y teléfono para que puedas volver después y para enviarte tus documentos."],

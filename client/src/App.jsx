@@ -22,6 +22,7 @@ const NotFound = part(() => import("./pages/Legal.jsx"), "NotFound");
 const Privacy = part(() => import("./pages/Legal.jsx"), "Privacy");
 const Terms = part(() => import("./pages/Legal.jsx"), "Terms");
 const GuidePage = part(() => import("./pages/Content.jsx"), "GuidePage");
+const GuidesIndex = part(() => import("./pages/Content.jsx"), "GuidesIndex");
 const LegalDisclosures = part(() => import("./pages/Content.jsx"), "LegalDisclosures");
 const StatePage = part(() => import("./pages/Content.jsx"), "StatePage");
 
@@ -80,7 +81,7 @@ export default function App() {
         <Route path="/portal" element={<Navigate to="/dashboard" replace />} />
         <Route path="/how-it-works" element={<Navigate to="/#how" replace />} />
         <Route path="/alternatives" element={<Navigate to="/" replace />} />
-        <Route path="/guides" element={<Navigate to="/" replace />} />
+        <Route path="/guides" element={<GuidesIndex />} />
         <Route path="/guides/:slug" element={<GuidePage />} />
         <Route path="/states" element={<Navigate to="/" replace />} />
         <Route path="/states/:code" element={<StatePage />} />

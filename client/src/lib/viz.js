@@ -39,7 +39,7 @@ export function viz(kind, L, ctx = {}) {
   if (kind === "compare") {
     const p = ctx.p, W = 200, cw = Math.round(p.estTotalCost / p.enrolledDebt * W);
     return S(300, 100, `<text x="10" y="22" class="v-t">${en ? "You owe today" : "Debes hoy"}</text><rect x="92" y="10" width="${W}" height="18" rx="4" class="v-i" opacity=".75"/><text x="${92 + W - 6}" y="23" text-anchor="end" class="v-tw">${usd(p.enrolledDebt)}</text>
-      <text x="10" y="52" class="v-t">${en ? "Est. total paid" : "Total estimado"}</text><rect x="92" y="40" width="${cw}" height="18" rx="4" class="v-b"/><text x="${92 + cw - 6}" y="53" text-anchor="end" class="v-tw">${usd(p.estTotalCost)}</text>
+      <text x="10" y="52" class="v-t">${en ? "Total deposited" : "Total depositado"}</text><rect x="92" y="40" width="${cw}" height="18" rx="4" class="v-b"/><text x="${92 + cw - 6}" y="53" text-anchor="end" class="v-tw">${usd(p.estTotalCost)}</text>
       <rect x="${92 + cw}" y="40" width="${W - cw}" height="18" rx="4" class="v-at"/><text x="92" y="76" class="v-t">${en ? "Est. saved" : "Ahorro est."} ${usd(p.estSavings)}</text><text x="10" y="92" class="v-t">${en ? "Estimate only · includes program fees" : "Solo estimación · incluye tarifas"}</text>`, en ? "Debt today compared with the estimated total you would pay" : "Deuda de hoy comparada con el total estimado que pagarías");
   }
   if (kind === "feeTimeline") {

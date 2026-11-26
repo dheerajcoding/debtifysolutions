@@ -30,6 +30,7 @@ export function Header() {
         <nav id="siteNav" aria-label="Main">
           <Link to="/#how">{a.nav.how}</Link>
           <Link to="/#security">{lang === "es" ? "Seguridad" : "Why trust us"}</Link>
+          <Link to="/guides">{lang === "es" ? "Guías" : "Guides"}</Link>
           <Link to="/#faq">{lang === "es" ? "Preguntas" : "FAQ"}</Link>
         </nav>
         <div className="right">
@@ -66,6 +67,7 @@ export function Footer() {
             <h4>{x.footExplore}</h4>
             <Link to="/#how">{a.nav.how}</Link>
             <Link to="/#security">{es ? "Seguridad" : "Why trust us"}</Link>
+            <Link to="/guides">{es ? "Guías" : "Guides"}</Link>
             <Link to="/#faq">{es ? "Preguntas" : "FAQ"}</Link>
             <Link to="/apply">{a.nav.start}</Link>
           </nav>
