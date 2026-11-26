@@ -182,7 +182,7 @@ export const SITE = {
     storiesNote: "Photos are stock images used for illustration. They do not show customers.",
     story: {
       sr: "Your journey in four stages",
-      debtLabel: "Illustrative example", debtAmt: "$40,000", debtSub: "in unsecured debt",
+      debtLabel: "Illustrative example", debtAmt: "$23,570", debtSub: "in unsecured debt",
       micro: "Free to check · Soft credit check · No obligation · Results vary", disc: "Important disclosures",
       stages: [
         { k: "Stage 01 — The burden", h: "Debt can make every day feel heavier.", cta: "Check my options", p: "Juggling payments on $23,570 of unsecured debt? You're not alone, and there are options worth exploring.", alt: "A worried man reviewing bills at a kitchen table late in the evening" },
@@ -281,7 +281,7 @@ export const SITE = {
     storiesNote: "Las fotos son imágenes de archivo usadas como ilustración. No muestran clientes.",
     story: {
       sr: "Tu recorrido en cuatro etapas",
-      debtLabel: "Ejemplo ilustrativo", debtAmt: "$40,000", debtSub: "en deuda sin garantía",
+      debtLabel: "Ejemplo ilustrativo", debtAmt: "$23,570", debtSub: "en deuda sin garantía",
       micro: "Gratis para revisar · Consulta suave de crédito · Sin obligación · Los resultados varían", disc: "Divulgaciones importantes",
       stages: [
         { k: "Etapa 01 — La carga", h: "La deuda puede hacer que cada día se sienta más pesado.", cta: "Ver mis opciones", p: "¿Haciendo malabares con pagos de $23,570 en deuda sin garantía? No estás solo, y hay opciones que vale la pena explorar.", alt: "Un hombre preocupado revisando facturas en la mesa de la cocina por la noche" },
@@ -375,6 +375,6 @@ export const AP = {
     planSteps: ["Soft credit check", "Matched with a licensed company", "Deposits build, debts settle one by one"], planNote: "An illustration, not an offer. Program fee is included above. What you would actually pay depends on what your creditors agree to. Your own figures are shown before you sign." },
   es: { progress: "Tu progreso", home: "Inicio de Debtify", resume: n => `Continuar en el paso ${n}`, start: "Ver mis opciones", meta: "Gratis para revisar · Consulta suave de crédito · Sin obligación",
     safe: ["Consulta de crédito suave: tu puntaje no se afecta", "Sin costo por revisar tus opciones", "Puedes parar cuando quieras antes de firmar"],
-    planTag: "Plan de ejemplo", planWhere: "Texas · perfil de muestra", owe: "Debes hoy", pay: "Total estimado", dep: "Depósito mensual", depSub: m => `durante unos ${m} meses, a una cuenta a tu nombre`,
+    planTag: "Plan de ejemplo", planWhere: "Texas · perfil de muestra", owe: "Debes hoy", pay: "Total depositado", dep: "Depósito mensual", depSub: m => `durante unos ${m} meses, a una cuenta a tu nombre`,
     planSteps: ["Consulta de crédito suave", "Te conectamos con una empresa con licencia", "Tus depósitos crecen y las deudas se liquidan una por una"], planNote: "Estimaciones de un perfil de ejemplo, con tarifas incluidas. No es una garantía. Tus cifras aparecen antes de firmar." },
 };

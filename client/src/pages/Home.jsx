@@ -85,10 +85,12 @@ export default function Home() {
   // The sample plan reports ranges (honest estimates); render them as a range and
   // size the "est. total paid" bar off the upper end.
   const rng = (v) => (Array.isArray(v) ? v : [v, v]);
-  const cost = rng(hp?.estTotalCost), term = rng(hp?.termMonths);
-  const costText = hp ? (cost[0] === cost[1] ? usd(cost[0]) : `${usd(cost[0])} – ${usd(cost[1])}`) : "";
+  const term = rng(hp?.termMonths);
+  // Use monthly × term for "Total deposited" so the number always reconciles with what's shown
+  const deposit = hp ? [Math.round(hp.monthlyDeposit * term[0]), Math.round(hp.monthlyDeposit * term[1])] : [0, 0];
+  const costText = hp ? (deposit[0] === deposit[1] ? usd(deposit[0]) : `${usd(deposit[0])} – ${usd(deposit[1])}`) : "";
   const termText = hp ? (term[0] === term[1] ? `${term[0]}` : `${term[0]}–${term[1]}`) : "";
-  const payW = hp ? Math.max(12, Math.min(100, Math.round((cost[1] / hp.enrolledDebt) * 100))) : 0;
+  const payW = hp ? Math.max(12, Math.min(100, Math.round((deposit[1] / hp.enrolledDebt) * 100))) : 0;
   const start = (range) => {
     if (range) setUi({ debtRange: range });
     nav("/apply");
