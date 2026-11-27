@@ -10,6 +10,7 @@ import Testimonials from "../components/Testimonials.jsx";
 import StoryJourney from "../components/StoryJourney.jsx";
 import { REVIEWS } from "../lib/testimonials.js";
 import { BRAND } from "@shared/config/brand.js";
+import { GUIDES } from "@shared/content/guides/index.js";
 
 const SEC_ICON = { lock: LOCK, shield: SHIELD, scale: SCALE, exit: EXITDOOR };
 const FAQ_PICK = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -288,7 +289,7 @@ export default function Home() {
             </div>
           </>
         )}
-        <Link className="s-btn stories-cta" to="/apply">{x.cta}</Link>
+        <Link className="s-btn stories-cta" data-cta="cta_wyg" to="/apply">{x.cta}</Link>
       </section>
 
       <section className="s-sec reveal center-sec" id="costs">
@@ -332,6 +333,20 @@ export default function Home() {
         <p className="posture">{x.posture || BRAND.posture}</p>
       </section>
 
+      <section className="s-sec reveal" id="guides-home">
+        <p className="s-eyebrow">{lang === "es" ? "Guías de recursos" : "Resource guides"}</p>
+        <h2 className="s-h2">{lang === "es" ? "Respuestas a las preguntas que más importan" : "Answers to the questions that matter most"}</h2>
+        <div className="guide-home-grid">
+          {GUIDES.map((g) => (
+            <Link key={g.slug} to={`/guides/${g.slug}`} className="guide-home-card">
+              <p className="ghc-title">{g.title}</p>
+              <span className="ghc-arr">→</span>
+            </Link>
+          ))}
+        </div>
+        <Link className="s-btn ghostbtn guides-all-btn" to="/guides">{lang === "es" ? "Ver todas las guías" : "View all guides"}</Link>
+      </section>
+
       <section className="s-end">
         <img className="fside l" src="/footer/footer-family.webp" alt="" width="760" height="460" loading="lazy" decoding="async" />
         <img className="fside r" src="/footer/footer-check.webp" alt="" width="760" height="460" loading="lazy" decoding="async" />
@@ -340,7 +355,7 @@ export default function Home() {
         <ul className="end-reassure">
           {x.endReassure.map((r) => <li key={r}><Html as="span" className="ic" html={TICK} />{r}</li>)}
         </ul>
-        <Link className="s-btn" to="/apply">{x.cta}</Link>
+        <Link className="s-btn" data-cta="cta_end" to="/apply">{x.cta}</Link>
       </section>
     </SiteLayout>
   );

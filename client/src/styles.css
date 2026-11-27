@@ -289,6 +289,14 @@ td.r, th.r { text-align: right }
 .heroband .trust li { color: var(--on-deep) }
 .heroband .trust .v-g { fill: var(--accent) }
 .hero-meta { font-size: 13px; color: var(--on-deep-soft) }
+.guide-home-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; max-width: 740px; margin: 28px auto 24px; text-align: left }
+@media (max-width: 600px) { .guide-home-grid { grid-template-columns: 1fr } }
+.guide-home-card { display: flex; align-items: center; justify-content: space-between; gap: 12px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; text-decoration: none; transition: border-color .18s, transform .18s, box-shadow .18s }
+.guide-home-card:hover { border-color: var(--brand); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.12) }
+.ghc-title { font-size: 14px; font-weight: 600; color: var(--ink); margin: 0; line-height: 1.4 }
+.ghc-arr { font-size: 16px; color: var(--brand); flex-shrink: 0; transition: transform .15s }
+.guide-home-card:hover .ghc-arr { transform: translateX(3px) }
+.guides-all-btn { margin-top: 8px }
 .wyg-sub { max-width: 540px; margin: 0 auto 32px; font-size: 16px; line-height: 1.65; color: var(--soft) }
 .wyg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; max-width: 700px; margin: 0 auto 36px; text-align: left }
 @media (max-width: 600px) { .wyg-grid { grid-template-columns: 1fr } }

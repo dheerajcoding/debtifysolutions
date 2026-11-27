@@ -40,7 +40,7 @@ export function Header() {
           {/* Show "My application" only when there is an active or enrolled lead */}
           {lead && <Link className="navlink hide-sm" to="/dashboard">{a.nav.dashboard}</Link>}
           {/* CTA: "Continue" only while mid-flow; once done, reset to "Check my options" */}
-          <Link id="siteCta" to="/apply">
+          <Link id="siteCta" data-cta="cta_header" to="/apply">
             {isActive ? (lang === "es" ? "Continuar" : "Continue") : SITE[lang].cta}
           </Link>
         </div>
@@ -61,13 +61,14 @@ export function Footer() {
           <div className="foot-brand">
             <Logo />
             <p className="foot-tag">{x.footTag}</p>
-            <Link className="foot-cta" to="/apply">{x.cta}</Link>
+            <Link className="foot-cta" data-cta="cta_footer" to="/apply">{x.cta}</Link>
           </div>
           <nav className="foot-col" aria-label={x.footExplore}>
             <h4>{x.footExplore}</h4>
             <Link to="/#how">{a.nav.how}</Link>
             <Link to="/#security">{es ? "Seguridad" : "Why trust us"}</Link>
             <Link to="/guides">{es ? "Guías" : "Guides"}</Link>
+            <Link to="/states">{es ? "Tu estado" : "Debt relief in your state"}</Link>
             <Link to="/#faq">{es ? "Preguntas" : "FAQ"}</Link>
             <Link to="/apply">{a.nav.start}</Link>
           </nav>
