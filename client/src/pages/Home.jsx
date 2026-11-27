@@ -279,9 +279,14 @@ export default function Home() {
             <p className="s-eyebrow">{x.wygE}</p>
             <h2 className="s-h2">{x.wygH}</h2>
             <p className="s-sub wyg-sub">{x.wygP}</p>
-            <ul className="wyg-list">
-              {x.wygList.map((item) => <li key={item}>{item}</li>)}
-            </ul>
+            <div className="wyg-grid">
+              {x.wygList.map((item, i) => (
+                <div key={item} className="wyg-card" style={{ animationDelay: `${i * 0.09}s` }}>
+                  <span className="wyg-num">{String(i + 1).padStart(2, "0")}</span>
+                  <p>{item}</p>
+                </div>
+              ))}
+            </div>
           </>
         )}
         <Link className="s-btn stories-cta" to="/apply">{x.cta}</Link>
