@@ -123,7 +123,7 @@ export default function Home() {
                 <p className="band-sub">{x.bandSub}</p>
                 <div className="band-btns">
                   {x.bands.map(([label, range]) => (
-                    <button key={range} className="s-btn band-btn" onClick={() => start(range)}>{label}</button>
+                    <button key={range} className="band-btn" onClick={() => start(range)}>{label}<span className="band-arr">→</span></button>
                   ))}
                 </div>
                 <p className="hero-meta">{x.bandMeta}</p>
