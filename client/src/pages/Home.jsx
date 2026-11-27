@@ -282,7 +282,6 @@ export default function Home() {
             <div className="wyg-grid">
               {x.wygList.map((item, i) => (
                 <div key={item} className="wyg-card" style={{ animationDelay: `${i * 0.09}s` }}>
-                  <span className="wyg-num">{String(i + 1).padStart(2, "0")}</span>
                   <p>{item}</p>
                 </div>
               ))}
